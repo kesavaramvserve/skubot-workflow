@@ -1,0 +1,162 @@
+body {
+    background-image: url("../images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    /* height:100vh !important; */
+}
+.content{
+    margin-top: 50px;
+    padding: 0 70px 0 70px;
+}
+.mm-logo{
+    width: 110px;
+}
+.login-heading{
+    color: white;
+}
+.login-sub-heading{
+    color: #FFFFFFCC;
+    font-size: 10px;
+    text-decoration: none;
+}
+.login-sub-heading:hover{
+    color: #FFFFFFCC;
+}
+.label{
+    color: white;
+    font-size: 10px;
+}
+.submit-button{
+    background-color: #C8EB7D;
+    font-size: 15px;
+
+}
+/* Hide the default checkbox */
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 2px solid #999;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s;
+    float: left;
+  }
+  
+  /* Style the custom checkbox when checked */
+  input[type="radio"]:checked {
+    border-color: #C8EB7D; /* Change the border color when checked */
+    background-color: #C8EB7D; /* Change the background color when checked */
+  }
+  
+  /* Style the tick mark inside the checkbox */
+  input[type="checkbox"]:checked::before {
+    content: "\2713"; /* Unicode character for checkmark */
+    display: block;
+    color: #000000; /* Change the color of the tick mark */
+    text-align: center;
+    line-height: 16px;
+  }
+  input{
+    font-size: 12px !important;
+  }
+  .select-input{
+    color: grey;
+    font-size: 12px !important;
+  }
+  .sku-button{
+    background-color: #50555d;
+    border-radius: 25px;
+    padding: 0px 50px;
+    color: #C8EB7D;
+  }
+  .sku-button:hover{
+    color: #C8EB7D;
+  }
+  .tick-icon{
+    margin-left: -37%;
+    /* width: 35px; */
+    margin-top: -4%;
+  }
+  .sku-count{
+    margin-left: 30%;
+    font-size: 25px;
+  }
+  .btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 999px;
+    text-align: right;
+    opacity: 0;
+    outline: none;
+    background: #fff;
+    cursor: pointer;
+    display: block;
+}
+span.input-group-btn {
+  background-color: white;
+  border-radius: 0 5px 5px 0;
+}
+.text-input{
+  border: none;
+  background-color: white !important;
+}
+.error{
+  color: red;
+}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1031; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+/* Modal Content */
+.modal-content {
+  background-color: #36384d;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: -2%;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+textarea{
+  font-size: 12px !important;
+}
+@media (max-width: 844px) {
+    body{
+      height:100vh !important;
+    }
+}

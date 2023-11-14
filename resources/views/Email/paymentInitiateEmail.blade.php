@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{asset('client/bootstrap/css/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{asset('client/bootstrap/css/bootstrap.min.css')}}">
+    <script src="{{asset('client/bootstrap/js/bootstrap.js')}}"></script>
+    <script src="{{asset('client/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Merch Metric</title>
+    <style>
+        .main{
+            height : 100vh;
+            background-position: center;
+            background-repeat:no-repeat;
+            background-size: cover;
+            background-image:linear-gradient(45deg,rgba(8,83,156, 0.75),rgba(245,70,66, 0.75)), url(https://sivab3.sg-host.com/public/client/images/background.jpg);
+            width: 100%;
+        }
+        .content{
+            /* width: 100%; */
+            /* height: 500px; */
+            background-color: #ffffff;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: 140px 50px 50px 50px;
+            max-width: 100%;
+            max-height: 100%;
+            overflow: auto;
+            border-radius : 20px;
+        }
+        .img-fluid{
+            max-width: 20%;
+        }
+        .title{
+            color : rgba(8,83,156, 0.75);
+            padding : 20px 30px 10px 20px;
+            background-color: #ffffff;
+            border-radius : 20px 20px 0 0;
+        }
+        .text{
+            /* margin-top : 50px; */
+            /* color : rgba(8,83,156, 0.75); */
+            /* padding : 20px 30px 10px 20px; */
+            text-align : justify;
+            font-size : 15px;
+            text-indent: 85px;
+        }
+        .thanks{
+            padding : 20px 30px 10px 20px;
+            background-color: #ffffff;
+            border-radius : 0 0 20px 20px;
+        }
+        .cta-button{
+            display: inline-block;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            color: #ffffff !important;
+            background-color: #28a745;
+            border-color: #28a745;
+            text-decoration: none;
+        }
+        .cta-button:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid main">
+        <br>
+        <div class="row content">
+            <div class="col-12 title text-center" style="text-align:center;">
+                <p class="text">Payment Initiated</p>
+                
+            </div>
+            <div class="col-12 mt-5 thanks">
+                <p>Regards,</p>
+                <h3>Merch Metric Team</h3>
+                <img src="https://members.merchmetric.com/public/images/MM-logo.png" alt="logo" class="img-fluid" width="100px">
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

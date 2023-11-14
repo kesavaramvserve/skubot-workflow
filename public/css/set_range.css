@@ -1,0 +1,243 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+.head-section{
+    background-image: url('../images/header_background.png');
+    height: 250px;
+    width: 100%;
+    position: absolute;
+    z-index: 0;
+}
+.profile{
+    float: left;
+    margin-right: 4%;
+}
+.user{
+    float: left;
+    margin-right: 25%;
+    color: white;
+}
+.logout{
+    float: left;
+}
+.btn-danger{
+    background-color: #FF553E;
+    border-color: #FF553E;
+}
+.gen-padding{
+    padding: 2% 5%;
+}
+.user-details{
+    width: 310px;
+}
+.user-name{
+    margin-bottom: 0rem !important;
+}
+.user-role{
+    color: #C8EB7D;
+    font-size: 12px;
+}
+/* main-section */
+.main-section{
+    min-height: 500px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    position: relative;
+    z-index: 100;
+    margin-top: 12%;
+}
+.col-1{
+    width: 5%;
+}
+.col-10{
+    width: 90%;
+}
+.heading{
+    padding: 1% 3%;
+    background-color: #F9F9F9;
+    border-radius: 10px 10px 0 0;
+    height: 18% !important;
+}
+.page-heading{
+    font-size: 29px;
+    font-weight: 600;
+    margin-left: 10%;
+}
+.filter-section{
+    padding: 2% 3%;
+}
+.filter-select{
+    border: 1px solid #DED2D9;
+    padding: 7px 10px;
+    border-radius: 5px;
+    color: #27293E;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background:url(../images/arrow.png) 90% 50% no-repeat;
+    font-size: 14px;
+    width: 100%;
+}
+.submit-button{
+    background-color: #C8EB7D;
+    font-size: 14px !important;
+    border-radius: 10px;
+}
+.submit-button-reverse{
+    font-size: 14px !important;
+    border: 1px solid #C8EB7D;
+    border-radius: 10px;
+}
+.table-section{
+    padding: 0;
+}
+th{
+    height: 50px;
+    font-size: 14px;
+}
+.head1{
+    background-color: #39BC86 !important;
+    border-radius: 10px 0 0 0;
+}
+.head2{
+    border-bottom: 2px solid #E03F35 !important;
+}
+.head3{
+    border-bottom: 2px solid #FFD3D0 !important;
+}
+.head4{
+    border-bottom: 2px solid #FFE29A !important;
+}
+.head5{
+    border-bottom: 2px solid #B2DCB8 !important;
+}
+.head6{
+    border-bottom: 2px solid #39BC86 !important;
+}
+.progress{
+    height: 2px !important;
+}
+.data2-progress{
+    background-color: #FFD3D0 !important;
+}
+.data2-progress-bar{
+    background-color: #E03F35 !important;
+}
+.data3-progress{
+    background-color: #FFD3D0 !important;
+}
+.data3-progress-bar{
+    background-color: #D89692 !important;
+}
+.data4-progress{
+    background-color: #FFE29A !important;
+}
+.data4-progress-bar{
+    background-color: #DEBC69 !important;
+}
+.data5-progress{
+    background-color: #e8f5ea !important;
+}
+.data5-progress-bar{
+    background-color: #B2DCB8 !important;
+}
+.data6-progress{
+    background-color: #c4ebdb !important;
+}
+.data6-progress-bar{
+    background-color: #39BC86 !important;
+}
+.data-row{
+    width: 100% !important;
+}
+.data1{
+    background-color: #E8F4E8 !important;
+}
+.table-row{
+    font-size: 12px !important;
+}
+.checkbox{
+    margin-right: 4%;
+}
+.quantity{
+    width: 40%;
+    border: 1px solid #DED2D9;
+    padding: 0%;
+}
+.minus{
+    border: 1px solid #DED2D9;
+    padding: 0% 1%;
+}
+.plus{
+    border: 1px solid #DED2D9;
+    padding: 0% 1%;
+}
+.range1{
+    color: #E03F35;
+}
+.range2{
+    color: #D89792;
+}
+.range3{
+    color: #DEBC69;
+}
+.range4{
+    color: #9CD3A4;
+}
+.range5{
+    color: #39BC86;
+}
+.error{
+    color: red;
+}
+/* Hide the default number input arrows */
+.no-arrows::-webkit-inner-spin-button,
+.no-arrows::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+.no-arrows {
+/* For Firefox */
+-moz-appearance: textfield;
+}
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1031; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+}
+
+/* The Close Button */
+.close2 {
+    color: #aaaaaa;
+    /* float: right; */
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 96%;
+}
+
+.close2:hover,
+.close2:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}

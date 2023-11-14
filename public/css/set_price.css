@@ -1,0 +1,135 @@
+body{
+    background-color : #f2f3f7;
+}
+.header{
+    box-shadow: 0px 15px 10px -15px #111;
+    background-color : #ffffff;
+}
+.user_role{
+    margin-right:30px;
+    color: #d98d4f;
+    font-weight : bold;
+}
+.content-section{
+    /* height : 100vh; */
+    background-color : #ffffff;
+    margin : 30px;
+    border-radius : 20px;
+}
+.title-section{
+    height : 40px;
+    background-image:linear-gradient(45deg,rgba(79,103,189,255),rgba(230,142,58,255));
+    border-radius : 20px 20px 0px 0px;
+}
+.dot {
+    height: 10px;
+    width: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    margin : 0 10px 0 20px;
+}
+.website_list{
+    color: #fff;
+    font-weight : 600;
+}
+.back{
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+.back:hover{
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+.table-section{
+    padding: 0 30px 0 20px;
+    text-align : center;
+}
+.website-details-section{
+    padding : 30px 30px 0 30px;
+}
+.head1{
+    background-color: #f6f6f6;
+    width: 20%;
+    height: 50px;
+    border-radius : 20px 0 0 0;
+}
+.head2{
+    background-color: #ef9b9b;
+    width: 15%;
+    height: 50px;
+}
+.head3{
+    background-color: #f6c056;
+    width: 15%;
+    height: 50px;
+}
+.head4{
+    background-color: #eff078;
+    width: 15%;
+    height: 50px;
+}
+.head5{
+    background-color: #80edc6;
+    width: 15%;
+    height: 50px;
+}
+.head6{
+    background-color: #77c382;
+    width: 15%;
+    height: 50px;
+    border-radius : 0 20px 0 0;
+}
+.data1{
+    background-color: #eaeaea;
+    height: 50px;
+    text-align: end;
+    padding-right: 3%;
+}
+.data2{
+    background-color: #e49495;
+    height: 50px;
+}
+.data3{
+    background-color: #ebb752;
+    height: 50px;
+}
+.data4{
+    background-color: #e5e573;
+    height: 50px;
+}
+.data5{
+    background-color: #7ce2bd;
+    height: 50px;
+}
+.data6{
+    background-color: #72ba7b;
+    height: 50px;
+}
+.data1-first{
+    border-radius : 0  0 0 20px;
+}
+.data6-last{
+    border-radius : 0 0 20px 0;
+}
+.input{
+    width: 80%;
+    border: none;
+    height: 25px;
+    border-radius: 4px;
+    text-align: center;
+    outline: none;
+}
+.submit-section{
+    padding: 30px;
+}
+.submit-button{
+    margin-left: 89%;
+    border: none;
+    background-color: #d98d4f;
+    color: #fff;
+    padding: 3px 40px 3px 40px;
+    border-radius: 7px;
+}

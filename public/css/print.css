@@ -1,0 +1,183 @@
+@media print {
+    .ignore-print{
+        display: none !important;
+    }
+    .border1{
+        margin-top: -1115px;
+        margin-left: -80px;
+        z-index: 10000;
+    }
+    .border1-img{
+        width:120%;
+        height:130vh
+    }
+    .border2{
+        margin-top: -1200px;
+        margin-left: -80px;
+        z-index: 10000;
+    }
+    .border2-img{
+        width:120%;
+        height:130vh
+    }
+    .col-md-10{
+        float: left;
+        width: 80%;
+    }
+    .col-md-2{
+        float: left;
+        width: 20%;
+    }
+    #overall_chart_div{
+        width: 300px;
+        height: 300px;
+        margin-left: 15%;
+    }
+    /* #title_chart_div{
+        width: 350px;
+        height: 300px;
+        margin-left: -25%;
+        float: left;
+    }
+    #description_chart_div{
+        width: 350px;
+        height: 300px;
+        margin-left: 25%;
+        float: left;
+    }
+    #feature_chart_div{
+        width: 350px;
+        height: 300px;
+        margin-left: -15%;
+        float: left;
+        margin-top: 3%;
+    }
+    #specification_chart_div{
+        width: 350px;
+        height: 300px;
+        margin-left: 25%;
+        float: left;
+        margin-top: 3%;
+    }
+    #image_chart_div{
+        width: 350px;
+        height: 300px;
+        margin-left: 10%;
+        margin-top: 3%;
+    } */
+    #title_chart_div{
+        width: 300px;
+        height: 300px;
+        margin-left: -10%;
+        z-index: 100;
+        margin-top: -10%;
+    }
+    #description_chart_div{
+        width: 300px;
+        height: 300px;
+        margin-left: 20%;
+        z-index: 90;
+        margin-top: -10%;
+    }
+    #feature_chart_div{
+        width: 300px;
+        height: 300px;
+        margin-top: 30%;
+        margin-left: -85%;
+        z-index: 100;
+    }
+    #specification_chart_div{
+        width: 300px;
+        height: 300px;
+        margin-left: 20%;
+        z-index: 90;
+        margin-top: 30%;
+    }
+    #image_chart_div{
+        width: 300px;
+        height: 300px;
+        margin-left: 20%;
+        margin-top: 10%;
+    }
+    .print-logo1{
+        text-align : center;
+    }
+    .print-logo2{
+        text-align : center;
+        margin-top: 150px;
+    }
+    .table-section{
+        padding: 0 30px 30px 20px;
+        text-align : center;
+    }
+    .head1{
+        background-color: #f6f6f6;
+        width: 20%;
+        height: 70px;
+        border-radius : 20px 0 0 0;
+    }
+    .head2{
+        background-color: #ef9b9b;
+        width: 15%;
+        height: 70px;
+    }
+    .head3{
+        background-color: #f6c056;
+        width: 15%;
+        height: 70px;
+    }
+    .head4{
+        background-color: #eff078;
+        width: 15%;
+        height: 70px;
+    }
+    .head5{
+        background-color: #80edc6;
+        width: 15%;
+        height: 70px;
+    }
+    .head6{
+        background-color: #77c382;
+        width: 15%;
+        height: 70px;
+        border-radius : 0 20px 0 0;
+    }
+    .data1{
+        background-color: #eaeaea;
+        height: 100px;
+        text-align: end;
+        padding-right: 3%;
+    }
+    .data2{
+        background-color: #e49495;
+        height: 100px;
+    }
+    .data3{
+        background-color: #ebb752;
+        height: 100px;
+    }
+    .data4{
+        background-color: #e5e573;
+        height: 100px;
+    }
+    .data5{
+        background-color: #7ce2bd;
+        height: 100px;
+    }
+    .data6{
+        background-color: #72ba7b;
+        height: 100px;
+    }
+    .data1-first{
+        border-radius : 0  0 0 20px;
+    }
+    .data6-last{
+        border-radius : 0 0 20px 0;
+    }
+    text.gtitle {
+        font-weight: bold !important;
+    }
+    text.title {
+        font-weight: bold;
+    }
+  }

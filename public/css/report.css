@@ -1,0 +1,242 @@
+body{
+    background-color : #f2f3f7;
+}
+.header{
+    box-shadow: 0px 15px 10px -15px #111;
+    background-color : #ffffff;
+}
+.user_role{
+    margin-right:30px;
+    color: #d98d4f;
+    font-weight : bold;
+}
+.content-section{
+    /* height : 100vh; */
+    background-color : #ffffff;
+    margin : 30px;
+    border-radius : 20px;
+}
+.title-section{
+    height : 40px;
+    background-image:linear-gradient(45deg,rgba(79,103,189,255),rgba(230,142,58,255));
+    border-radius : 20px 20px 0px 0px;
+}
+.dot {
+    height: 10px;
+    width: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    margin : 0 10px 0 20px;
+}
+.website_list{
+    color: #fff;
+    font-weight : 600;
+}
+.back{
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+.back:hover{
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+.table-section{
+    padding: 0 30px 30px 20px;
+    text-align : center;
+}
+.website-details-section{
+    padding : 30px 30px 0 30px;
+}
+.head1{
+    background-color: #f6f6f6;
+    width: 20%;
+    height: 70px;
+    border-radius : 20px 0 0 0;
+}
+.head2{
+    background-color: #ef9b9b;
+    width: 15%;
+    height: 70px;
+}
+.head3{
+    background-color: #f6c056;
+    width: 15%;
+    height: 70px;
+}
+.head4{
+    background-color: #eff078;
+    width: 15%;
+    height: 70px;
+}
+.head5{
+    background-color: #80edc6;
+    width: 15%;
+    height: 70px;
+}
+.head6{
+    background-color: #77c382;
+    width: 15%;
+    height: 70px;
+    border-radius : 0 20px 0 0;
+}
+.data1{
+    background-color: #eaeaea;
+    height: 100px;
+    text-align: end;
+    padding-right: 3%;
+}
+.data2{
+    background-color: #e49495;
+    height: 100px;
+}
+.data3{
+    background-color: #ebb752;
+    height: 100px;
+}
+.data4{
+    background-color: #e5e573;
+    height: 100px;
+}
+.data5{
+    background-color: #7ce2bd;
+    height: 100px;
+}
+.data6{
+    background-color: #72ba7b;
+    height: 100px;
+}
+.data1-first{
+    border-radius : 0  0 0 20px;
+}
+.data6-last{
+    border-radius : 0 0 20px 0;
+}
+.input{
+    width: 80%;
+    border: none;
+    height: 25px;
+    border-radius: 4px;
+    text-align: center;
+    outline: none;
+}
+.submit-section{
+    padding: 30px;
+}
+.submit-button{
+    /* margin-left: 89%; */
+    border: none;
+    background-color: #d98d4f;
+    color: #fff;
+    padding: 3px 40px 3px 40px;
+    border-radius: 7px;
+    text-decoration: none;
+}
+.submit-button:hover{
+    color: #fff;
+}
+.chart-section{
+    padding: 30px;
+}
+.overall-chart{
+    width: 100%;
+}
+svg.main-svg{
+    background-color:  transparent !important;
+}
+.modebar-container {
+    display: none !important;
+}
+rect {
+    fill: transparent !important;
+}
+g.legend {
+    display: none;
+}
+.checkbox{
+    height: 20px;
+    width: 20px;
+}
+.edit{
+    text-decoration: none;
+    margin-right: 20px;
+}
+.edit:hover{
+    text-decoration: none;
+    color:#fff;
+}
+#brand{
+    width: 100%;
+}
+.send-mail{
+    border: none;
+    background-color: rgba(79,103,189,255);
+    color: #fff;
+    padding: 5px 40px 5px 40px;
+    border-radius: 7px;
+    text-decoration: none;
+}
+.send-mail:hover{
+    color: #fff;
+}
+.chart{
+    margin-left: -30%;
+}
+text.gtitle {
+    font-weight: bold !important;
+}
+text.title {
+    font-weight: bold;
+}
+select#category {
+    width: 100%;
+}
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1031; /* Sit on top */
+    padding-top: 50px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    /* float: right; */
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 96%;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.only-print{
+    display: none !important;
+}
+.error{
+    color: red;
+}
+select#description_category {
+    width: 40%;
+}
