@@ -16,6 +16,7 @@ class CreateWebsiteDatasTable extends Migration
         Schema::create('website_datas', function (Blueprint $table) {
             $table->id();
             $table->integer('website_id');
+            $table->integer('client_file_id')->nullable();
             $table->integer('status')->default(0);
             $table->integer('batch_id')->nullable();
             $table->string('supplier_type')->nullable();

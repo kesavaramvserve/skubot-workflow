@@ -12,6 +12,7 @@ class WebsiteData extends Model
     protected $fillable = [
         'id',
         'website_id',
+        'client_file_id',
         'status',
         'title',
         'description',

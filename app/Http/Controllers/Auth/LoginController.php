@@ -37,10 +37,13 @@ class LoginController extends Controller
           case 'Super Admin':
             return '/super-admin';
             break;
-          case 'Operation':
+          case 'PM':
             return '/website';
             break; 
           case 'Team Lead':
+            return '/website_list';
+            break;
+          case 'Scrapper':
             return '/website_list';
             break;
           case 'PA':

@@ -8,7 +8,7 @@
                     <div class="col-md-6 col-xs-12 mt-3">
                         <div class="float-end">
                             <?php $route = Route::current()->getName(); ?>
-                            <a class="menu-item {{$route =='super-admin.index' ? 'active' : '' }}" href="{{route('super-admin.index')}}">Websites</a>
+                            <a class="menu-item {{$route =='super-admin.index' ? 'active' : '' }}" href="{{route('super-admin.index')}}">Projects</a>
                             <a class="menu-item {{$route =='users.index' ? 'active' : '' }}" href="{{route('users.index')}}">Users</a>
                             <a class="menu-item {{$route =='roles.index' ? 'active' : '' }}" href="{{route('roles.index')}}">Roles</a>
                         </div>
@@ -34,6 +34,7 @@
                                 <th class="">Name</th>
                                 <th class="">Email</th>
                                 <th class="">Role</th>
+                                <th class="">Status</th>
                                 <th class="">Action</th>
                             </thead>
                             <tbody>
@@ -52,6 +53,13 @@
                                         {{ $v }}
                                         @endforeach
                                     @endif
+                                    </td>
+                                    <td class="">
+                                        @if($user->status == '1')
+                                            <span class="badge bg-success">Active</span>
+                                        @else
+                                            <span class="badge bg-danger">Inactive</span>
+                                        @endif
                                     </td>
                                     <td class="">
                                     <a class="" href="{{ route('users.edit',$enc_id) }}"><img src="{{asset('client/images/edit.png')}}" alt="Edit" title="Edit"></a>

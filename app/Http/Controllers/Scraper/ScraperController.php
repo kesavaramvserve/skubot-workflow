@@ -34,6 +34,7 @@ class ScraperController extends Controller
         $scraper = ScraperData::create([
             'scraper_user_id'   => auth()->user()->id,
             'website_id'        => $request->website_id,
+            'client_file_id'    => $request->client_file_id,
             'path'              => $filename,
         ]);
 
@@ -43,10 +44,12 @@ class ScraperController extends Controller
 
         
         $cron_job = CronJob::insert([
-            'user_id' => auth()->user()->id,
-            'website_id'=> $request->website_id,
-            'scrappe_file_id' => $scraper->id,
-            'status' => 0
+            'user_id'           => auth()->user()->id,
+            'website_id'        => $request->website_id,
+            'client_file_id'    => $request->client_file_id,
+            'enhance_status'    => $request->enhance_status,
+            'scrappe_file_id'   => $scraper->id,
+            'status'            => 0
         ]);
 
         // Add Data History

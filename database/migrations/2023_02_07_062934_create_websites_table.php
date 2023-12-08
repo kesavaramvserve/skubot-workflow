@@ -24,6 +24,15 @@ class CreateWebsitesTable extends Migration
             $table->string('website');
             $table->text('description')->nullable();
             $table->integer('status')->default(0);
+            $table->string('platform')->nullable();
+            $table->string('platform_details')->nullable();
+            $table->string('workflow_settings')->nullable();
+            $table->integer('project_status')->nullable();
+            $table->string('reason')->nullable();
+            $table->integer('download_image')->nullable();
+            $table->integer('download_asset')->nullable();
+            $table->integer('time_track')->nullable();
+            $table->integer('enhance_status')->default(0);
             $table->integer('post_payment_status')->default(0);
             $table->string('post_payment_id')->nullable();
             $table->string('validation_status')->nullable();

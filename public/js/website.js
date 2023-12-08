@@ -32,6 +32,13 @@ $(document).ready(function() {
         $("#assign_tl_form")[0].reset();
     });
 
+    // project settings _close Close Button
+    $(document).on("click",".project_settings_close",function() {
+        $("#project_settings").hide();
+        $(".error").empty();
+        $("#project_settings_form")[0].reset();
+    });
+
     // Add More Close Button
     $(document).on("click",".close6",function() {
         $(".error").empty();
@@ -152,6 +159,42 @@ $(document).ready(function() {
         // }
     });
 
+    // Project Settings Validation
+    $("#project_settings").on("submit", function (e) {
+        var platform            = $("#platform").val();
+        var workflow_settings   = $("#workflow_settings").val();
+        var project_status      = $("#project_status").val();
+        var download_image      = $("input[name=download_image]").is(":checked");
+        var download_asset      = $("input[name=download_asset]").is(":checked");
+        var time_track          = $("input[name=time_track]").is(":checked");
+        
+        $(".error").empty();
+        if(platform.length < 1){
+            e.preventDefault();
+            $("#platform").after('<span class="error">This field is required </span>');
+        }
+        if(workflow_settings.length < 1){
+            e.preventDefault();
+            $("#workflow_settings").after('<span class="error">This field is required </span>');
+        }
+        if(project_status.length < 1){
+            e.preventDefault();
+            $("#project_status").after('<span class="error">This field is required </span>');
+        }
+        if(!download_image){
+            e.preventDefault();
+            $("#download_image").after('<span class="error">This field is required </span>');
+        }
+        if(!download_asset){
+            e.preventDefault();
+            $("#download_asset").after('<span class="error">This field is required </span>');
+        }
+        if(!time_track){
+            e.preventDefault();
+            $("#time_track").after('<span class="error">This field is required </span>');
+        }
+    });
+
 
     // Add More Website Form Submit
     $("#add_more_form").on("submit", function (e) {
@@ -169,11 +212,89 @@ $(document).ready(function() {
 
     // Assign TL
     $(document).on("click",".assign_tl",function() {
-        $("#assign_tl").show();
+        
         var website_id = $(this).attr('data-id');
+        // $.ajax({
+        //     url: '/get_tl_list', // Replace with your Laravel endpoint URL
+        //     method: 'GET',
+        //     data: {
+        //         // Data to be sent in the request body (if needed)
+        //         key1: website_id,
+        //     },
+        //     success: function(response){
+        //         // Handle the successful response from the server
+        //         console.log(response);
+        //         let selectedOptions = response; // Array of values to be selected
+
+        //         selectedOptions.forEach(value => {
+        //             console.log(value);
+        //             $('select[id^="tl"] option[value="'+value+'"]').prop('selected', true);
+        //         });
+        //     },
+        //     error: function(xhr, status, error){
+        //         // Handle errors
+        //         console.error(error);
+        //     }
+        // });
+        $("#assign_tl").show();
         var website_tl_id = $(this).attr('data-tl-id');
         $("#assign_tl_website_id").val(website_id);
         $('select[name^="tl"] option[value="'+website_tl_id+'"]').attr("selected","selected");
+    });
+
+    // Project Settings
+    $(document).on("click",".project_settings",function() {
+        $("#project_settings").show();
+        var website_id = $(this).attr('data-id');
+        
+
+        
+        var platform = $(this).attr('data-platform');
+        var platform_details = $(this).attr('data-platform-details');
+        var workflow_settings = $(this).attr('data-workflow-settings');
+        var project_status = $(this).attr('data-project-status');
+        var reason = $(this).attr('data-reason');
+        var download_image = $(this).attr('data-download-image');
+        var download_asset = $(this).attr('data-download-asset');
+        var time_track = $(this).attr('data-time-track');
+        var project_name = $(this).attr('data-project-name');
+
+        $("#project_settings_website_id").val(website_id);
+        $("#project_name").val(project_name);
+        $('select[name^="platform"] option[value="'+platform+'"]').attr("selected","selected");
+        $('select[name^="workflow_settings"] option[value="'+workflow_settings+'"]').attr("selected","selected");
+        $('select[name^="project_status"] option[value="'+project_status+'"]').attr("selected","selected");
+        if(platform_details){
+            $("#platform_details_div").append('<div class="mb-3"><label for="platform_details"><strong>Platform Details</strong></label><input type="text" class="form-control" name="platform_details" value="'+platform_details+'" id="platform_details" required></div>');
+        }
+        if(reason){
+            $("#reason_div").append('<div class="mb-3"><label for="reason"><strong>Reason</strong></label><select name="reason" id="reason" class="form-control" required><option value="">select Reason</option><option value="completed">Completed</option><option value="closed">Closed</option><option value="canceled">Canceled</option></select></div>');
+            $('select[name^="reason"] option[value="'+reason+'"]').attr("selected","selected");
+        }
+
+        $('input[name=download_image][value="'+download_image+'"]').prop('checked', true);
+        $('input[name=download_asset][value="'+download_asset+'"]').prop('checked', true);
+        $('input[name=time_track][value="'+time_track+'"]').prop('checked', true);
+    });
+
+    // Platform on change
+    $(document).on("change","#platform",function() {
+        var platform = $(this).val();
+        if(platform == 'other'){
+            $("#platform_details_div").append('<div class="mb-3"><label for="platform_details"><strong>Platform Details</strong></label><input type="text" class="form-control" name="platform_details" id="platform_details" required></div>');
+        }else{
+            $("#platform_details_div").empty();
+        }
+    });
+
+    // Project Status on change
+    $(document).on("change","#project_status",function() {
+        var project_status = $(this).val();
+        if(project_status == 0){
+            $("#reason_div").append('<div class="mb-3"><label for="reason"><strong>Reason</strong></label><select name="reason" id="reason" class="form-control" required><option value="">select Reason</option><option value="completed">Completed</option><option value="closed">Closed</option><option value="canceled">Canceled</option></select></div>');
+        }else{
+            $("#reason_div").empty();
+        }
     });
 
 });

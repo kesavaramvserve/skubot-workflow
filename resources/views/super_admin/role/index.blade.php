@@ -8,7 +8,7 @@
                     <div class="col-md-6 col-xs-12 mt-3">
                         <div class="float-end">
                             <?php $route = Route::current()->getName(); ?>
-                            <a class="menu-item {{$route =='super-admin.index' ? 'active' : '' }}" href="{{route('super-admin.index')}}">Websites</a>
+                            <a class="menu-item {{$route =='super-admin.index' ? 'active' : '' }}" href="{{route('super-admin.index')}}">Projects</a>
                             <a class="menu-item {{$route =='users.index' ? 'active' : '' }}" href="{{route('users.index')}}">Users</a>
                             <a class="menu-item {{$route =='roles.index' ? 'active' : '' }}" href="{{route('roles.index')}}">Roles</a>
                         </div>

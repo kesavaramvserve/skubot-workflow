@@ -16,6 +16,15 @@ class WebsiteEnhanceData extends Model
         'title',
         'description',
         'brand',
+        'title_metadata',
+        'description_metadata',
+        'keywords_metadata',
+        'title_metadata_length',
+        'description_metadata_length',
+        'keywords_metadata_length',
+        'rating',
+        'rating_count',
+        'qa_count',
         'category',
         'stock',
         'title_character_count',
@@ -34,6 +43,8 @@ class WebsiteEnhanceData extends Model
         'qc_id',
         'da_id',
         'qa_id',
+        'pa_started_at',
+        'pa_ended_at',
         'pa_approved_at',
         'qc_approved_at',
         'da_approved_at',
@@ -78,6 +89,21 @@ class WebsiteEnhanceData extends Model
         return $this->hasMany(WebsiteImage::class, 'website_data_id', 'id');
     }
     
+    public function getEnhanceFeature()
+    {
+        return $this->hasMany(WebsiteEnhanceFeature::class, 'website_enhance_data_id', 'id');
+    }
+
+    public function getEnhanceSpecification()
+    {
+        return $this->hasMany(WebsiteEnhanceSpecification::class, 'website_enhance_data_id', 'id');
+    }
+    
+    public function getEnhanceImage()
+    {
+        return $this->hasMany(WebsiteEnhanceImage::class, 'website_enhance_data_id', 'id');
+    }
+
     public function getTL()
     {
         return $this->hasOne(User::class, 'id', 'tl_id');

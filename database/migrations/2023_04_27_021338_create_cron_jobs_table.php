@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('website_id');
+            $table->integer('client_file_id')->nullable();
             $table->integer('scrappe_file_id');
             $table->integer('status');
+            $table->integer('enhance_status')->nullable();
             $table->timestamps();
         });
     }

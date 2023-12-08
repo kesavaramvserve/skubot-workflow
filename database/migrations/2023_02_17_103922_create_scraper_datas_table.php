@@ -17,6 +17,7 @@ class CreateScraperDatasTable extends Migration
             $table->id();
             $table->integer('scraper_user_id');
             $table->integer('website_id');
+            $table->integer('client_file_id')->nullable();
             $table->string('path');
             $table->timestamps();
         });

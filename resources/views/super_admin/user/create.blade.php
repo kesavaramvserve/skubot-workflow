@@ -61,6 +61,15 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group mb-3">
+                            <select name="status" id="status" class="form-control">
+                                <option value="">Select Status</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-xs-12 col-sm-12 col-md-12" id="tl_div">
 
                     </div>

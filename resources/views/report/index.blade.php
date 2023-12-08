@@ -2983,7 +2983,7 @@
                                 <span style="font-size: 10px;">{{$title_report[0]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                             </div>
                             <!-- Notes -->
-                            <div>
+                            <div style="min-height:150px;">
                                 <p style="font-size: 8px;">{{$title_arr[$title_val]}}</p>
                                 <?php $title_val++ ?>
                             </div>
@@ -3001,11 +3001,11 @@
                         @if($title_report[1] != 0)
                         <div class="print-chart-content2">
                             <!-- SKU Count -->
-                            <div style="font-weight: bold;color: #EEBF4B;">
+                            <div style="font-weight: bold;color: #FFD3D0;">
                                 <span style="font-size: 10px;">{{$title_report[1]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                             </div>
                             <!-- Notes -->
-                            <div>
+                            <div style="min-height:150px;">
                                 <p style="font-size: 8px;">{{$title_arr[$title_val]}}</p>
                                 <?php $title_val++ ?>
                             </div>
@@ -3023,11 +3023,11 @@
                         @if($title_report[2] != 0)
                         <div class="print-chart-content3">
                             <!-- SKU Count -->
-                            <div style="font-weight: bold;color: #92CA92;">
+                            <div style="font-weight: bold;color: #EEBF4B;">
                                 <span style="font-size: 10px;">{{$title_report[2]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                             </div>
                             <!-- Notes -->
-                            <div>
+                            <div style="min-height:150px;">
                                 <p style="font-size: 8px;">{{$title_arr[$title_val]}}</p>
                                 <?php $title_val++ ?>
                             </div>
@@ -3045,11 +3045,11 @@
                         @if($title_report[3] != 0)
                         <div class="print-chart-content4">
                             <!-- SKU Count -->
-                            <div style="font-weight: bold;color: #39BC86;">
+                            <div style="font-weight: bold;color: #92CA92;">
                                 <span style="font-size: 10px;">{{$title_report[3]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                             </div>
                             <!-- Notes -->
-                            <div>
+                            <div style="min-height:150px;">
                                 <p style="font-size: 8px;">{{$title_arr[$title_val]}}</p>
                                 <?php $title_val++ ?>
                             </div>
@@ -3102,7 +3102,7 @@
                             <span style="font-size: 10px;">{{$description_report[0]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 7px;">{{$description_arr[$description_val]}}</p>
                             <?php $description_val++ ?>
                         </div>
@@ -3124,7 +3124,7 @@
                             <span style="font-size: 10px;">{{$description_report[1]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 7px;">{{$description_arr[$description_val]}}</p>
                             <?php $description_val++ ?>
                         </div>
@@ -3146,7 +3146,7 @@
                             <span style="font-size: 10px;">{{$description_report[2]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 7px;">{{$description_arr[$description_val]}}</p>
                             <?php $description_val++ ?>
                         </div>
@@ -3168,7 +3168,7 @@
                             <span style="font-size: 10px;">{{$description_report[3]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 7px;">{{$description_arr[$description_val]}}</p>
                             <?php $description_val++ ?>
                         </div>
@@ -3220,7 +3220,7 @@
                             <span style="font-size: 10px;">{{$feature_report[0]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 8px;">{{$feature_arr[$feature_val]}}</p>
                             <?php $feature_val++ ?>
                         </div>
@@ -3242,7 +3242,7 @@
                             <span style="font-size: 10px;">{{$feature_report[1]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 8px;">{{$feature_arr[$feature_val]}}</p>
                             <?php $feature_val++ ?>
                         </div>
@@ -3264,7 +3264,7 @@
                             <span style="font-size: 10px;">{{$feature_report[2]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 8px;">{{$feature_arr[$feature_val]}}</p>
                             <?php $feature_val++ ?>
                         </div>
@@ -3286,7 +3286,7 @@
                             <span style="font-size: 10px;">{{$feature_report[3]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 8px;">{{$feature_arr[$feature_val]}}</p>
                             <?php $feature_val++ ?>
                         </div>
@@ -3338,7 +3338,7 @@
                             <span style="font-size: 10px;">{{$specification_report[0]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 8px;">{{$specification_arr[$specification_val]}}</p>
                             <?php $specification_val++ ?>
                         </div>
@@ -3356,11 +3356,11 @@
                     @if($specification_report[1] != 0)
                     <div class="print-chart-content2">
                         <!-- SKU Count -->
-                        <div style="font-weight: bold;color: #EEBF4B;">
+                        <div style="font-weight: bold;color: #FFD3D0;">
                             <span style="font-size: 10px;">{{$specification_report[1]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 8px;">{{$specification_arr[$specification_val]}}</p>
                             <?php $specification_val++ ?>
                         </div>
@@ -3378,11 +3378,11 @@
                     @if($specification_report[2] != 0)
                     <div class="print-chart-content3">
                         <!-- SKU Count -->
-                        <div style="font-weight: bold;color: #92CA92;">
+                        <div style="font-weight: bold;color: #EEBF4B;">
                             <span style="font-size: 10px;">{{$specification_report[2]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 8px;">{{$specification_arr[$specification_val]}}</p>
                             <?php $specification_val++ ?>
                         </div>
@@ -3400,11 +3400,11 @@
                     @if($specification_report[3] != 0)
                     <div class="print-chart-content4">
                         <!-- SKU Count -->
-                        <div style="font-weight: bold;color: #39BC86;">
+                        <div style="font-weight: bold;color: #92CA92;">
                             <span style="font-size: 10px;">{{$specification_report[3]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 8px;">{{$specification_arr[$specification_val]}}</p>
                             <?php $specification_val++ ?>
                         </div>
@@ -3456,7 +3456,7 @@
                             <span style="font-size: 10px;">{{$image_report[0]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 8px;">{{$image_arr[$image_val]}}</p>
                             <?php $image_val++ ?>
                         </div>
@@ -3474,11 +3474,11 @@
                     @if($image_report[1] != 0)
                     <div class="print-chart-content2">
                         <!-- SKU Count -->
-                        <div style="font-weight: bold;color: #EEBF4B;">
+                        <div style="font-weight: bold;color: #FFD3D0;">
                             <span style="font-size: 10px;">{{$image_report[1]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 8px;">{{$image_arr[$image_val]}}</p>
                             <?php $image_val++ ?>
                         </div>
@@ -3496,11 +3496,11 @@
                     @if($image_report[2] != 0)
                     <div class="print-chart-content3">
                         <!-- SKU Count -->
-                        <div style="font-weight: bold;color: #92CA92;">
+                        <div style="font-weight: bold;color: #EEBF4B;">
                             <span style="font-size: 10px;">{{$image_report[2]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 8px;">{{$image_arr[$image_val]}}</p>
                             <?php $image_val++ ?>
                         </div>
@@ -3518,11 +3518,11 @@
                     @if($image_report[3] != 0)
                     <div class="print-chart-content4">
                         <!-- SKU Count -->
-                        <div style="font-weight: bold;color: #39BC86;">
+                        <div style="font-weight: bold;color: #92CA92;">
                             <span style="font-size: 10px;">{{$image_report[3]}} </span><span style="margin-left: 3%;font-size: 8px;">SKUs</span>
                         </div>
                         <!-- Notes -->
-                        <div>
+                        <div style="min-height:150px;">
                             <p style="font-size: 8px;">{{$image_arr[$image_val]}}</p>
                             <?php $image_val++ ?>
                         </div>
@@ -3562,72 +3562,85 @@
                             <td>Image Quality</td>
                             <td>
                                 @if($lesser_width_percentage == 100)
-                                    Your Website all the images shows less than the standard resolution of 200px . Images should be of high quality and resolution to ensure that customers can clearly see the details of the product. Large image files can slow down page loading times, affecting user experience and SEO.                                
+                                    Your website currently displays product images at a resolution below the standard 200 pixels. It is essential to feature high-quality and high-resolution images to enable customers to clearly discern product details. However, it's important to optimize image file sizes to prevent slowing down page loading times, which can impact both user experience and SEO.                                
                                 @else
-                                    Your Website images show that {{$lesser_width_percentage}}% are less than the standard resolution of 200px . Images should be of high quality and resolution to ensure that customers can clearly see the details of the product. Large image files can slow down page loading times, affecting user experience and SEO.                                
+                                    The product images on your website indicate that {{$lesser_width_percentage}}% fall below the standard resolution of 200px. It is essential to maintain high-quality and resolution in images to enable customers to easily discern product details. However, it's important to balance this with the potential impact of large image files on page loading times, which can adversely affect user experience and SEO.
                                 @endif
                             </td>
                         </tr>
                         @endif
+                        @if($img_alt_percentage > 10)
                         <tr>
                             <td>Image Alt Tag</td>
                             <td>
                                 @if($img_alt_percentage == 100)
-                                    All of your images lack alt text. It's crucial to provide descriptive alt text for images. Alt text is important for accessibility and it can also have a positive impact on SEO.
+                                    All your product images are missing alt text, which is essential for accessibility and can also positively influence SEO. It's crucial to include descriptive alt text for each image.
                                 @else
-                                    {{$img_alt_percentage}}% of your images lack alt text. It's crucial to provide descriptive alt text for images. Alt text is important for accessibility and it can also have a positive impact on SEO.
+                                    Alt text is missing for {{$img_alt_percentage}}%  of your product images. It is essential to include descriptive alt text for images, as this not only enhances accessibility but also contributes positively to SEO.
                                 @endif
                             </td>
                         </tr>
+                        @endif
+                        @if($title_metadata_percentage > 10)
                         <tr>
                             <td>Meta Titles</td>
                             <td>
                                 @if($title_metadata_percentage == 100)
-                                    Analysis of your site's meta titles reveals that all are surpass the 70-character threshold.  If your title is too long, it might get cut off in search engine results, potentially affecting click-through rates and user understanding of the page's content.
+                                    Analysis of your website's meta titles indicates that all of them exceeds the 70-character threshold. Having titles that are too lengthy may result in truncation in search engine results, potentially impacting click-through rates and user comprehension of the page's content.
                                 @else
-                                    Analysis of your site's meta titles reveals that over {{$title_metadata_percentage}}% surpass the 70-character threshold.  If your title is too long, it might get cut off in search engine results, potentially affecting click-through rates and user understanding of the page's content.
+                                    Analysis of your website's meta titles indicates that more than {{$title_metadata_percentage}}% exceeds the 70-character threshold. Having titles that are too lengthy may result in truncation in search engine results, potentially impacting click-through rates and user comprehension of the page's content.
                                 @endif
                             </td>
                         </tr>
+                        @endif
+                        @if($description_metadata_percentage > 10)
                         <tr>
                             <td>Meta Descriptions</td>
                             <td>
                                 @if($description_metadata_percentage == 100)
-                                    Our analysis found that all of your descriptions exceed 170 characters. It is a good idea to keep your key information within the standard range. This ensures that your description is concise and impactful, while also minimizing the risk of it getting cut off in search results.</td>
+                                    On our analysis we found that all of your product's meta descriptions exceeds the 170 characters threshold. Recommended to keep your key information within the standard range. This ensures that your description is concise and impactful, while also minimizing the risk of it getting cut off in search results
                                 @else    
-                                    Our analysis found that more than {{$description_metadata_percentage}}% of your descriptions exceed 170 characters. It is a good idea to keep your key information within the standard range. This ensures that your description is concise and impactful, while also minimizing the risk of it getting cut off in search results.</td>
+                                    On our analysis we found that more than {{$description_metadata_percentage}}% of your product's meta descriptions exceeds the 170 characters threshold. Recommended to keep your key information within the standard range. This ensures that your description is concise and impactful, while also minimizing the risk of it getting cut off in search results.
                                 @endif
+                            </td>
                         </tr>
+                        @endif
+                        @if($keywords_metadata_percentage > 10)
                         <tr>
                             <td>Meta Keywords</td>
                             <td>
                                 @if($keywords_metadata_percentage == 100)
-                                    All the meta keywords on your website comprise less than ten Keywords. Enhancing your site's performance could be achieved by incorporating highly relevant keywords within this area.
+                                    All the product meta keywords on your website consist of fewer than ten Keywords. It is recommended to include highly relevant keywords to improve your's site performance and enhance the product visibility.
                                 @else
-                                    {{$keywords_metadata_percentage}} % of the meta keywords on your website comprise less than ten Keywords. Enhancing your site's performance could be achieved by incorporating highly relevant keywords within this area.
+                                    {{$keywords_metadata_percentage}} % of the product meta keywords on your website consist of fewer than ten Keywords. It is recommended to include highly relevant keywords to improve your's site performance and enhance the product visibility.
                                 @endif
                             </td>
                         </tr>
+                        @endif
+                        @if($rating_per > 10)
                         <tr>
                             <td>Rating</td>
                             <td>
                                 @if($rating_per == 100)     
-                                    We find all the product pages are without customer reviews. Ratings on product pages are a valuable tool for both customers and businesses. They help build trust, aid in decision-making, provide feedback for improvement, and contribute to a positive shopping experience. Businesses should actively encourage customers to leave ratings and respond to reviews to maximize the benefits of this feature.
+                                We've observed that customer reviews are absent from all product pages. Ratings displayed on these pages serve as a valuable resource for both customers and businesses. They play a crucial role in fostering trust, aiding decision-making, offering constructive feedback for enhancement, and enhancing the overall shopping experience. It is advisable for businesses to actively promote customer engagement in leaving ratings and to respond to reviews, thereby maximizing the advantages derived from this feature.
                                 @else
-                                    We find {{$rating_per}}% of the product pages are without customer reviews. Ratings on product pages are a valuable tool for both customers and businesses. They help build trust, aid in decision-making, provide feedback for improvement, and contribute to a positive shopping experience. Businesses should actively encourage customers to leave ratings and respond to reviews to maximize the benefits of this feature.
+                                    We've observed that {{$rating_per}}% of the product pages are without customer reviews. Ratings displayed on these pages serve as a valuable resource for both customers and businesses. They play a crucial role in fostering trust, aiding decision-making, offering constructive feedback for enhancement, and enhancing the overall shopping experience. It is advisable for businesses to actively promote customer engagement in leaving ratings and to respond to reviews, thereby maximizing the advantages derived from this feature.
                                 @endif
                             </td>
                         </tr>
+                        @endif
+                        @if($faq_per > 10)
                         <tr>
                             <td>FAQ</td>
                             <td>
                                 @if($faq_per == 100)
-                                    Our analysis reveals that all the product pages lack FAQs. Incorporating FAQs on product pages offers numerous advantages, including improving the user experience, fostering trust, decreasing cart abandonment rates, conserving customer service representative (CSR) resources, addressing technical queries, and enhancing SEO benefits.
+                                    Our analysis indicates that all the product pages lack FAQs. Integrating Frequently Asked Questions (FAQs) on these pages presents various benefits. These include enhancing user experience, building trust, reducing cart abandonment rates, saving customer service representative (CSR) resources, addressing technical queries, and improving SEO benefits.
                                 @else
-                                    Our analysis reveals that {{$faq_per}}% of product pages lack FAQs. Incorporating FAQs on product pages offers numerous advantages, including improving the user experience, fostering trust, decreasing cart abandonment rates, conserving customer service representative (CSR) resources, addressing technical queries, and enhancing SEO benefits.
+                                    Our analysis indicates that {{$faq_per}}% of product pages lack FAQs. Integrating Frequently Asked Questions (FAQs) on these pages presents various benefits. These include enhancing user experience, building trust, reducing cart abandonment rates, saving customer service representative (CSR) resources, addressing technical queries, and improving SEO benefits.
                                 @endif
                             </td>
                         </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>

@@ -25,10 +25,13 @@ class RedirectIfAuthenticated
                 $role = auth()->user()->getrole->name; 
                 if($role=='Super Admin'){
                     return redirect('/super-admin');
-                }elseif($role=='Operation'){
+                }elseif($role=='PM'){
                     return redirect('/website');
                 }
                 elseif($role=='Team Lead'){
+                    return redirect('/website_list');
+                }
+                elseif($role=='Scrapper'){
                     return redirect('/website_list');
                 }
                 elseif($role=='PA'){

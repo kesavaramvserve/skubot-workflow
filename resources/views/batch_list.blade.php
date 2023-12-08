@@ -53,6 +53,9 @@
             font-size: 20px;
             margin-left:5%;
         }
+        .heading{
+            height : 100px !important;
+        }
         @media (max-width: 844px) {
     
             .main-section{
@@ -86,7 +89,6 @@
 </head>
 <body>
     <?php 
-        $user_role = auth()->user()->getrole->name;
         $enc_id = Illuminate\Support\Facades\Crypt::encryptString($website_id);
     ?>
     <div class="container-fluid">
@@ -165,8 +167,10 @@
                                     <a href="javascript:void(0)" class="btn submit-button-reverse update_to_live">Update to Live</a>
                                 @endif
                             @endif
-                            <!-- Export Button -->
-                            <a href="javascript:void(0)" class="btn submit-button export mb-3">Export</a>
+                            @if($workflow != 'single')
+                                <!-- Export Button -->
+                                <a href="javascript:void(0)" class="btn submit-button export mb-3">Export</a>
+                            @endif
                         </div>
                     </div>
                     
@@ -182,55 +186,58 @@
                         <div class="col-12 table-section table-responsive">
                             <form action="{{route('download_batch')}}" method="post" class="form_class" id="export_form">
                                 @csrf
-                                <!-- <form action="{{route('assign_users')}}" method="post" id="assign_users_form">
+                                <!-- <form action="{{route('single_assign_users')}}" method="post" id="assign_users_form">
                                     @csrf -->
                                 <input name="pa_id" type="hidden" value="" id="pa_id">
                                 <input name="qc_id" type="hidden" value="" id="qc_id">
                                 <input name="da_id" type="hidden" value="" id="da_id">
+                                <input name="workflow" type="hidden" value="{{$workflow}}" id="workflow">
                                 <input name="qa_id" type="hidden" value="" id="qa_id">
                                 <input name="batch_status" type="hidden" value="{{$status}}" id="batch_status">
                                 <input name="role" type="hidden" value="{{$current_role}}" id="role">
                                 <input name="website_id" type="hidden" value="{{$website_id}}" id="">
                                 <table class="table">
+                                    @if($workflow == 'single')
                                     <thead>
                                         <th><input type="checkbox" id="checkbox_controller"></th>
                                         <th class="">S.No</th>
-                                        @if($user_role != 'Client')
-                                            <th class="">Batch ID</th>
-                                        @endif
-                                        <th class="">Category/Brand</th>
-                                        <th class="">Total Records</th>
-                                        @if($user_role != 'Client')
-                                            <th class="">TL</th>
-                                            <th class="">PA</th>
-                                            <th class="">QC</th>
-                                            <th class="">DA</th>
-                                            <th class="">QA</th>
-                                            <th class="">Date Alloted</th>
-                                            <th class="">Note</th>
-                                        @endif
+                                        <th class="">Client File</th>
+                                        <th class="">Category</th>
+                                        <th class="">MPN</th>
+                                        <th class="">Product ID</th>
+                                        <th class="">PA</th>
+                                        <th class="">QC</th>
+                                        <th class="">DA</th>
+                                        <th class="">QA</th>
+                                        <th class="">Date Alloted</th>
+                                        <th class="">Note</th>
                                     </thead>
                                     <tbody>
                                         @if(!blank($datas))
                                             @foreach($datas as $sno => $data)
+                                            <?php 
+                                                $enc_sku_id = Illuminate\Support\Facades\Crypt::encryptString($data->id);
+                                            ?>
                                             <tr>
-                                                <!-- batch_id checkbox -->
+                                                <!-- sku_id checkbox -->
                                                 <td>
-                                                    <input type="checkbox" class="checkbox" name="batch[]" value="{{$data->batch_id}}">
+                                                    <input type="checkbox" class="checkbox" name="batch[]" value="{{$data->id}}">
                                                 </td>
                                                 <td class="">{{++$sno}}</td>
                                                 @if($user_role != 'Client')
                                                     <td class="">{{$data->batch_id}}</td>
                                                 @endif
-                                                <td class="">{{$data->supplier_type}}</td>
-                                                <td class="">{{$data->total}}</td>
+                                                <td class="">
+                                                    {{$data->category}}
+                                                    @if($data->pa_started_at == null)
+                                                        <a href="#" data-route="{{route('sku',$enc_sku_id)}}" class="input-link">Input</a>
+                                                    @else
+                                                        <a href="{{route('sku',$enc_sku_id)}}" target="__blank" class="">Input</a>
+                                                    @endif
+                                                </td>
+                                                <td class="">{{$data->mpn}}</td>
+                                                <td class="">{{$data->p_id}}</td>
                                                 @if($user_role != 'Client')
-                                                    <!-- TL -->
-                                                    <td>
-                                                        @if($data->getTL)
-                                                            {{$data->getTL->first_name}}
-                                                        @endif
-                                                    </td>
                                                     <!-- pa -->
                                                     <td>
                                                         @if($data->getPA)
@@ -286,6 +293,114 @@
                                             </tr>
                                         @endif
                                     </tbody>
+                                    @endif
+                                    @if($workflow == 'bulk')
+                                        <thead>
+                                            <th><input type="checkbox" id="checkbox_controller"></th>
+                                            <th class="">S.No</th>
+                                            @if($user_role != 'Client')
+                                                @if($workflow != 'single')
+                                                    <th class="">Batch ID</th>
+                                                    <th class="">Total Records</th>
+                                                @else
+                                                    <th class="">Client File</th>
+                                                @endif
+                                            @endif
+                                            <th class="">Category/Brand</th>
+                                            
+                                            @if($user_role != 'Client')
+                                                <!-- <th class="">TL</th> -->
+                                                <th class="">MPN</th>
+                                                <th class="">Produc ID</th>
+                                                <th class="">PA</th>
+                                                <th class="">QC</th>
+                                                <th class="">DA</th>
+                                                <th class="">QA</th>
+                                                <th class="">Date Alloted</th>
+                                                <th class="">Note</th>
+                                            @endif
+                                        </thead>
+                                        <tbody>
+                                            @if(!blank($datas))
+                                                @foreach($datas as $sno => $data)
+                                                <tr>
+                                                    <!-- batch_id checkbox -->
+                                                    <td>
+                                                        <input type="checkbox" class="checkbox" name="batch[]" value="{{$data->batch_id}}">
+                                                    </td>
+                                                    <td class="">{{++$sno}}</td>
+                                                    @if($user_role != 'Client')
+                                                        <td class="">{{$data->batch_id}}</td>
+                                                    @endif
+                                                    <!-- <td class="">{{$data->supplier_type}}</td> -->
+                                                    <td class="">{{$data->category}}</td>
+                                                    <td class="">{{$data->mpn}}</td>
+                                                    <td class="">{{$data->p_id}}</td>
+                                                    <!-- <td class="">{{$data->total}}</td> -->
+                                                    @if($user_role != 'Client')
+                                                        <!-- TL -->
+                                                        <!-- <td>
+                                                            @if($data->getTL)
+                                                                {{$data->getTL->first_name}}
+                                                            @endif
+                                                        </td> -->
+                                                        <!-- pa -->
+                                                        <td>
+                                                            @if($data->getPA)
+                                                                {{$data->getPA->first_name}}
+                                                            @endif
+                                                        </td>
+                                                        <!-- qc -->
+                                                        <td>
+                                                            @if($data->getQC)
+                                                                {{$data->getQC->first_name}}
+                                                            @endif
+                                                        </td>
+                                                        <!-- da -->
+                                                        <td>
+                                                            @if($data->getDA)
+                                                                {{$data->getDA->first_name}}
+                                                            @endif
+                                                        </td>
+                                                        <!-- qa -->
+                                                        <td>
+                                                            @if($data->getQA)
+                                                                {{$data->getQA->first_name}}
+                                                            @endif
+                                                        </td>
+                                                        <td class="">
+                                                            @if($user_role == 'Team Lead')
+                                                                {{$data->getWebsite->tl_assigned_at}}
+                                                            @elseif($user_role == 'PA')
+                                                                {{$data->pa_assigned_at}}
+                                                            @elseif($user_role == 'QC')
+                                                                {{$data->qc_assigned_at}}
+                                                            @elseif($user_role == 'QA')
+                                                                {{$data->qa_assigned_at}}
+                                                            @endif
+                                                        </td>
+                                                        <td class="">
+                                                            
+                                                        </td>
+                                                    @endif
+                                                </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    @if($user_role != 'Client')
+                                                        <td colspan="12" style="text-align: center;">
+                                                            NO Data Found
+                                                        </td>
+                                                    @else
+                                                        <td colspan="4" style="text-align: center;">
+                                                            NO Data Found
+                                                        </td>
+                                                    @endif
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    @endif
+                                    
                                 </table>
                                 <input type="submit" id="submit_button">
                             </form>
@@ -383,7 +498,33 @@
     @endif
 
 <Script>
-    
+    // $(document).on("click",".data_input",function() {
+    //     var sku_id = 'eyJpdiI6ImsyWmhISG1mYUlYMUZxMHAwM0dlRGc9PSIsInZhbHVlIjoiajJ0ME5yZ3kwYUZGR1BaaFc2VUgvQT09IiwibWFjIjoiNDg5YTYyMGNjNGExZjA0N2I2OTE0YjYyMDg5MGI5ZDBjOGY0ZjlkMmUzOTQ0OGJiMDNlNTI1MDNjYWEyZTQxMCIsInRhZyI6IiJ9';
+    //     if(confirm("Are you sure you want to start?")) {
+    //         var parameterValue = "your_parameter_value_here";
+    //         window.location.href = "{{ route('sku', ':parameter') }}".replace(':parameter', sku_id);
+    //     } else {
+    //         // Do something else or leave it empty
+    //     }
+    // });
+
+    $('.input-link').on('click', function(e) {
+        e.preventDefault();
+        
+        var route = $(this).data('route');
+        
+        if (confirm('Are you sure you want to Start?')) {
+            var win = window.open(route, '_blank');
+            if (win) {
+                // Browser has allowed opening in new tab
+                win.focus();
+            } else {
+                // Browser has blocked opening in new tab
+                alert('Please allow popups for this site to open the link.');
+            }
+        }
+    });
+
     // Import enhanced Data
     $(document).on("click",".enhance-import",function() {
         $("#myModal3").show();
@@ -456,7 +597,7 @@
             $("#checkbox_error").empty();
             $("#myModal2").show();
             $(".form_class").attr("id","assign_users_form");
-            $(".form_class").attr("action","{{route('assign_users')}}");
+            $(".form_class").attr("action","{{route('single_assign_users')}}");
         }else{
             $("#checkbox_error").empty();
             $("#checkbox_error").append('<span class="error">Please Select checkbox</span>');
@@ -522,7 +663,8 @@
             $("#checkbox_error").append('<span class="error">Please Select checkbox</span>');
         }                
     });
+    
 
-</Script>   
+</Script>  
 </body>
 </html>

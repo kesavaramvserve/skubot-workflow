@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Website;
 use App\Models\User;
+use App\Models\ProjectUser;
 use App\Models\WebsiteEnhanceData;
 use App\Models\WebsiteFeature;
 use App\Models\WebsiteSpecification;
@@ -168,100 +169,287 @@ class TLController extends Controller
         return redirect()->back()->with('success','Batch Splitted Successfully!');
     }
 
-    public function assign_users(Request $request)
+    public function single_assign_users(Request $request)
     {
-        $batchs = $request->batch;
-        $status = $request->batch_status;
-        $pa_id = $request->pa_id;
-        $qc_id = $request->qc_id;
-        $da_id = $request->da_id;
-        $qa_id = $request->qa_id;
-        // dd($status);
-        foreach($batchs as $batch){
+        // dd($request);
+        $batchs         = $request->batch;
+        $website_id     = $request->website_id;
+        $website_name   = Website::where('id',$website_id)->value('website');
+        $user_id        = auth()->user()->id;
+        $workflow       = $request->workflow;
+        $status         = $request->batch_status;
+        $pa_id          = $request->pa_id;
+        $qc_id          = $request->qc_id;
+        $da_id          = $request->da_id;
+        $qa_id          = $request->qa_id;
+        if($workflow == 'bulk'){
+            foreach($batchs as $batch){
 
-            if($request->pa_id){
-                // Assign PA
-                if($status == 'inqueue'){
-                    $res = WebsiteEnhanceData::where('batch_id',$batch)->where('pa_done',null)->update([
-                        'pa_id'             => $pa_id,
-                        'pa_done'           => 0,
-                        'pa_assigned_at'    => Carbon::now(),
-                    ]);
+                if($request->pa_id){
+                    // Assign PA
+                    if($status == 'inqueue'){
+                        $res = WebsiteEnhanceData::where('batch_id',$batch)->where('pa_done',null)->update([
+                            'pa_id'             => $pa_id,
+                            'pa_done'           => 0,
+                            'pa_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
+                    // Re-Assign PA
+                    if($status == 'inprogress'){
+                        $res = WebsiteEnhanceData::where('batch_id',$batch)->where('pa_done',0)->update([
+                            'pa_id'             => $pa_id,
+                            'pa_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
                 }
-                // Re-Assign PA
-                if($status == 'inprogress'){
-                    $res = WebsiteEnhanceData::where('batch_id',$batch)->where('pa_done',0)->update([
-                        'pa_id'             => $pa_id,
-                        'pa_assigned_at'    => Carbon::now(),
-                    ]);
+    
+                if($request->qc_id){
+                    // WebsiteEnhanceData::where('batch_id',$batch)->where('qc_done','!=',1)->update([
+                    //     'qc_id'             => $qc_id,
+                    //     'qc_assigned_at'    => Carbon::now(),
+                    // ]);
+                    // Assign QC
+                    if($status == 'inqueue'){
+                        $res = WebsiteEnhanceData::where('batch_id',$batch)->where('qc_done',0)->update([
+                            'qc_id'             => $qc_id,
+                            'qc_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
+                    // Re-Assign QC
+                    if($status == 'inprogress'){
+                        $res = WebsiteEnhanceData::where('batch_id',$batch)->where('qc_done',0)->update([
+                            'qc_id'             => $qc_id,
+                            'qc_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
                 }
-            }
-
-            if($request->qc_id){
-                // WebsiteEnhanceData::where('batch_id',$batch)->where('qc_done','!=',1)->update([
-                //     'qc_id'             => $qc_id,
-                //     'qc_assigned_at'    => Carbon::now(),
-                // ]);
-                // Assign QC
-                if($status == 'inqueue'){
-                    $res = WebsiteEnhanceData::where('batch_id',$batch)->where('qc_done',0)->update([
-                        'qc_id'             => $qc_id,
-                        'qc_assigned_at'    => Carbon::now(),
-                    ]);
+    
+                if($request->da_id){
+                    // WebsiteEnhanceData::where('batch_id',$batch)->where('da_done','!=',1)->update([
+                    //     'da_id'             => $da_id,
+                    //     'da_assigned_at'    => Carbon::now(),
+                    // ]);
+                    // Assign DA
+                    if($status == 'inqueue'){
+                        $res = WebsiteEnhanceData::where('batch_id',$batch)->where('da_done',0)->update([
+                            'da_id'             => $da_id,
+                            'da_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
+                    // Re-Assign DA
+                    if($status == 'inprogress'){
+                        $res = WebsiteEnhanceData::where('batch_id',$batch)->where('da_done',0)->update([
+                            'da_id'             => $da_id,
+                            'da_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
                 }
-                // Re-Assign QC
-                if($status == 'inprogress'){
-                    $res = WebsiteEnhanceData::where('batch_id',$batch)->where('qc_done',0)->update([
-                        'qc_id'             => $qc_id,
-                        'qc_assigned_at'    => Carbon::now(),
-                    ]);
-                }
-            }
-
-            if($request->da_id){
-                // WebsiteEnhanceData::where('batch_id',$batch)->where('da_done','!=',1)->update([
-                //     'da_id'             => $da_id,
-                //     'da_assigned_at'    => Carbon::now(),
-                // ]);
-                // Assign DA
-                if($status == 'inqueue'){
-                    $res = WebsiteEnhanceData::where('batch_id',$batch)->where('da_done',0)->update([
-                        'da_id'             => $da_id,
-                        'da_assigned_at'    => Carbon::now(),
-                    ]);
-                }
-                // Re-Assign DA
-                if($status == 'inprogress'){
-                    $res = WebsiteEnhanceData::where('batch_id',$batch)->where('da_done',0)->update([
-                        'da_id'             => $da_id,
-                        'da_assigned_at'    => Carbon::now(),
-                    ]);
-                }
-            }
-
-            if($request->qa_id){
-                // WebsiteEnhanceData::where('batch_id',$batch)->where('qa_done','!=',1)->update([
-                //     'qa_id'             => $qa_id,
-                //     'qa_assigned_at'    => Carbon::now(),
-                // ]);
-
-                // Assign QA
-                if($status == 'inqueue'){
-                    $res = WebsiteEnhanceData::where('batch_id',$batch)->where('qa_done',0)->update([
-                        'qa_id'             => $qa_id,
-                        'qa_assigned_at'    => Carbon::now(),
-                    ]);
-                }
-                // Re-Assign QA
-                if($status == 'inprogress'){
-                    $res = WebsiteEnhanceData::where('batch_id',$batch)->where('qa_done',0)->update([
-                        'qa_id'             => $qa_id,
-                        'qa_assigned_at'    => Carbon::now(),
-                    ]);
+    
+                if($request->qa_id){
+                    // WebsiteEnhanceData::where('batch_id',$batch)->where('qa_done','!=',1)->update([
+                    //     'qa_id'             => $qa_id,
+                    //     'qa_assigned_at'    => Carbon::now(),
+                    // ]);
+    
+                    // Assign QA
+                    if($status == 'inqueue'){
+                        $res = WebsiteEnhanceData::where('batch_id',$batch)->where('qa_done',0)->update([
+                            'qa_id'             => $qa_id,
+                            'qa_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
+                    // Re-Assign QA
+                    if($status == 'inprogress'){
+                        $res = WebsiteEnhanceData::where('batch_id',$batch)->where('qa_done',0)->update([
+                            'qa_id'             => $qa_id,
+                            'qa_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
                 }
             }
         }
-        return redirect()->route('website_list.index')->with('success','Users Assigned Successfully!');
+        if($workflow == 'single'){
+            foreach($batchs as $batch){
+
+                if($request->pa_id){
+                    // Assign PA
+                    if($status == 'inqueue'){
+                        // dd($pa_id);
+                        $res = WebsiteEnhanceData::where('id',$batch)->where('pa_done',null)->update([
+                            'pa_id'             => $pa_id,
+                            'pa_done'           => 0,
+                            'pa_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
+                    // Re-Assign PA
+                    if($status == 'inprogress'){
+                        $res = WebsiteEnhanceData::where('id',$batch)->where('pa_done',0)->update([
+                            'pa_id'             => $pa_id,
+                            'pa_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
+                }
+    
+                if($request->qc_id){
+                    // WebsiteEnhanceData::where('id',$batch)->where('qc_done','!=',1)->update([
+                    //     'qc_id'             => $qc_id,
+                    //     'qc_assigned_at'    => Carbon::now(),
+                    // ]);
+                    // Assign QC
+                    if($status == 'inqueue'){
+                        $res = WebsiteEnhanceData::where('id',$batch)->where('qc_done',0)->update([
+                            'qc_id'             => $qc_id,
+                            'qc_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
+                    // Re-Assign QC
+                    if($status == 'inprogress'){
+                        $res = WebsiteEnhanceData::where('id',$batch)->where('qc_done',0)->update([
+                            'qc_id'             => $qc_id,
+                            'qc_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
+                }
+    
+                if($request->da_id){
+                    // WebsiteEnhanceData::where('id',$batch)->where('da_done','!=',1)->update([
+                    //     'da_id'             => $da_id,
+                    //     'da_assigned_at'    => Carbon::now(),
+                    // ]);
+                    // Assign DA
+                    if($status == 'inqueue'){
+                        $res = WebsiteEnhanceData::where('id',$batch)->where('da_done',0)->update([
+                            'da_id'             => $da_id,
+                            'da_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
+                    // Re-Assign DA
+                    if($status == 'inprogress'){
+                        $res = WebsiteEnhanceData::where('id',$batch)->where('da_done',0)->update([
+                            'da_id'             => $da_id,
+                            'da_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
+                }
+    
+                if($request->qa_id){
+                    // WebsiteEnhanceData::where('id',$batch)->where('qa_done','!=',1)->update([
+                    //     'qa_id'             => $qa_id,
+                    //     'qa_assigned_at'    => Carbon::now(),
+                    // ]);
+    
+                    // Assign QA
+                    if($status == 'inqueue'){
+                        $res = WebsiteEnhanceData::where('id',$batch)->where('qa_done',0)->update([
+                            'qa_id'             => $qa_id,
+                            'qa_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
+                    // Re-Assign QA
+                    if($status == 'inprogress'){
+                        $res = WebsiteEnhanceData::where('id',$batch)->where('qa_done',0)->update([
+                            'qa_id'             => $qa_id,
+                            'qa_assigned_at'    => Carbon::now(),
+                        ]);
+                    }
+                }
+            }
+        }
+
+        $user_role          = ProjectUser::where('website_id',$website_id)->where('user_id',$user_id)->value('user_role');
+        // dd($user_role);
+        if($user_role == 'Team Lead'){
+            $role               = $request->role;
+            $current_role       = $role;
+            $user_where_id      = $role.'_id';
+            $user_where_done    = $role.'_done';
+            $tl_id              = auth()->user()->id;
+            
+            if($status == 'inqueue'){
+                $heading = strtoupper($role)." InQueue";
+                // dd($role);
+                if($workflow == 'bluk'){                
+                    if($role == 'PA'){
+                        $datas = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where($user_where_id,null)->orderBy('total', 'desc')->groupBy('batch_id')->get();
+                    }elseif($role == 'QC'){
+                        $datas = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where($user_where_id,null)->where('pa_done',1)->orderBy('total', 'desc')->groupBy('batch_id')->get();
+                    }elseif($role == 'QA'){
+                        $datas = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where($user_where_id,null)->where('qc_done',1)->orderBy('total', 'desc')->groupBy('batch_id')->get();
+                    }
+                }
+                if($workflow == 'single'){
+                    if($role == 'PA'){
+                        $datas = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where($user_where_id,null)->get();
+                    }elseif($role == 'QC'){
+                        $datas = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where($user_where_id,null)->where('pa_done',1)->get();
+                    }elseif($role == 'QA'){
+                        $datas = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where($user_where_id,null)->where('qc_done',1)->get();
+                    }
+                }
+            }
+            if($status == 'inprogress'){
+                $heading = strtoupper($role)." InProgress";
+                if($workflow == 'bluk'){
+                    if($user_role == 'pa'){
+                        $datas = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where($user_where_done,0)->orWhere('reject_status',1)->orderBy('total', 'desc')->groupBy('batch_id')->get();
+                    }else{
+                        $datas = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where($user_where_id,'!=',null)->where($user_where_done,0)->orderBy('total', 'desc')->groupBy('batch_id')->get();
+                    }
+                }
+                if($workflow == 'single'){               
+                    if($user_role == 'pa'){
+                        $datas = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where($user_where_done,0)->orWhere('reject_status',1)->get();
+                    }else{
+                        $datas = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where($user_where_id,'!=',null)->where($user_where_done,0)->get();
+                    }
+                }
+            }
+            if($status == 'rejected'){
+                $heading = "QC Rejected";
+                if($workflow == 'bluk'){
+                    $datas = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where($user_where_done,0)->where('reject_status',1)->orderBy('total', 'desc')->groupBy('batch_id')->get();
+                }
+                if($workflow == 'single'){                
+                    $datas = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where($user_where_done,0)->where('reject_status',1)->get();
+                }
+            }
+            if($status == 'reworked'){
+                $heading = "Rework Done";
+                if($workflow == 'bluk'){
+                    $datas = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where($user_where_done,1)->where('reject_status',1)->orderBy('total', 'desc')->groupBy('batch_id')->get();
+                }
+                if($workflow == 'single'){
+                    $datas = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where($user_where_done,1)->where('reject_status',1)->get();
+                }
+            }
+            if($status == 'completed'){
+                // $heading = strtoupper($role)." Completed";
+                $heading = "Completed Queue";
+                if($workflow == 'bluk'){
+                    $datas = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where('live_updated_at',null)->where($user_where_done,1)->orderBy('total', 'desc')->groupBy('batch_id')->get();
+                }
+                if($workflow == 'single'){
+                    $datas = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('live_updated_at',null)->where($user_where_done,1)->get();
+                }
+            }
+            if($status == 'updated'){
+                $heading = "Live Updated";
+                if($workflow == 'bluk'){
+                    $datas = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where('live_updated_at','!=',null)->orderBy('total', 'desc')->groupBy('batch_id')->get();
+                }
+                if($workflow == 'single'){
+                    $datas = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('live_updated_at','!=',null)->get();
+                }
+            }
+            // dd($datas);
+            $pa_lists = User::where('tl_id',$tl_id)->role('PA')->get();
+            $qc_lists = User::where('tl_id',$tl_id)->role('QC')->get();
+            $da_lists = User::where('tl_id',$tl_id)->role('DA')->get();
+            $qa_lists = User::where('tl_id',$tl_id)->role('QA')->get();
+            return view('batch_list',compact('datas','pa_lists','qc_lists','da_lists','qa_lists','website_id','status','heading','website_name','role','current_role','user_role','workflow'))->with('success','Users Assigned Successfully!');
+        }
+        
+        // return redirect()->back()->with('success','Users Assigned Successfully!');
     }
 
     public function enhance_data(Request $request)

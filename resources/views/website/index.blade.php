@@ -23,6 +23,11 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
     <!-- Website Page CSS -->
     <link rel="stylesheet" href="{{ asset('css/website_list.css') }}">
+    <style>
+        .multiselect-dropdown{
+            width : 100% !important;
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid">
@@ -63,7 +68,7 @@
                 <!-- Table Heading -->
                 <div class="row heading">
                     <div class="col-12">
-                        <h4 class="float-start mt-2">Website List</h4>
+                        <h4 class="float-start mt-2">Project List</h4>
                     </div>
                 </div>
                 <!-- Filters -->
@@ -113,7 +118,7 @@
                                 <th style="min-width:110px !important;">Client Name </th>
                                 <th style="min-width:130px !important;">Client Email </th>
                                 <th style="min-width:140px !important;">Company Name </th>
-                                <th style="min-width:80px !important;">Website </th>
+                                <th style="min-width:80px !important;">Project </th>
                                 <th style="min-width:50px !important;">Action </th>
                                 <th style="min-width:100px !important;">Import Status </th>
                                 <th style="min-width:100px !important;">Val. Status </th>
@@ -282,10 +287,10 @@
                 <!-- Team Lead -->
                 <div class="mb-3">
                     <label for="tl"><strong>Select Team Lead</strong></label>
+                    
                     <select name="tl" id="tl" class="form-control">
-                        <option value="">select Team Lead</option>
                         @foreach($team_lead_list as $team_lead_lists)
-                            <option value="{{$team_lead_lists->id}}">{{$team_lead_lists->first_name}}</option>
+                        <option value="{{$team_lead_lists->id}}" >{{$team_lead_lists->first_name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -297,7 +302,122 @@
     </div>
 </div>
 
+<!-- Project Settings Modal -->
+<div id="project_settings" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="project_settings_close">&times;</span>
+        <div class="row">
+            <form action="{{route('project_settings')}}" method="post" enctype="multipart/form-data" id="project_settings_form">
+                @csrf
+                <input type="hidden" name="website_id" value="" id="project_settings_website_id"> 
+                <!-- Project Name -->
+                <div class="mb-3">
+                    <label for="project_name"><strong>Project Name</strong></label>
+                    <input type="text" class="form-control" name="project_name" id="project_name" readonly>
+                </div>
+                <!-- Platform -->
+                <div class="mb-3">
+                    <label for="platform"><strong>Platform</strong></label>
+                    <select name="platform" id="platform" class="form-control">
+                        <option value="">select Platform</option>
+                        <option value="wordpress">Wordpress</option>
+                        <option value="shopify">Shopify</option>
+                        <option value="megento">Megento</option>
+                        <option value="bigcommerce">Bigcommerce</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div id="platform_details_div">
+
+                </div>
+                <!-- Workflow Settings -->
+                <div class="mb-3">
+                    <label for="workflow_settings"><strong>Workflow Settings</strong></label>
+                    <select name="workflow_settings" id="workflow_settings" class="form-control">
+                        <option value="">select Workflow Settings</option>
+                        <option value="single">Single</option>
+                        <option value="bulk">Bulk</option>
+                        <option value="both">Both</option>
+                    </select>
+                </div>
+                <!-- Project Status -->
+                <div class="mb-3">
+                    <label for="project_status"><strong>Project Status</strong></label>
+                    <select name="project_status" id="project_status" class="form-control">
+                        <option value="">select Project Status</option>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+                </div>
+                <div id="reason_div">
+
+                </div>
+                <!-- Download Image -->
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="workflow_settings"><strong>Download Image</strong></label>
+                        </div>
+                        <div class="col-9">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="download_image" id="download_image1" value="1">
+                                <label class="form-check-label" for="download_image1">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline" id="download_image">
+                                <input class="form-check-input" type="radio" name="download_image" id="download_image2" value="0">
+                                <label class="form-check-label" for="download_image2">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Download Asset -->
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="workflow_settings"><strong>Download Asset</strong></label>
+                        </div>
+                        <div class="col-9">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="download_asset" id="download_asset1" value="1">
+                                <label class="form-check-label" for="download_asset1">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline" id="download_asset">
+                                <input class="form-check-input" type="radio" name="download_asset" id="download_asset2" value="0">
+                                <label class="form-check-label" for="download_asset2">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Time Track -->
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="time_track"><strong>Time Track</strong></label>
+                        </div>
+                        <div class="col-9">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="time_track" id="time_track1" value="1">
+                                <label class="form-check-label" for="time_track1">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline" id="time_track">
+                                <input class="form-check-input" type="radio" name="time_track" id="time_track2" value="0">
+                                <label class="form-check-label" for="time_track2">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <input type="submit" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="{{ asset('js/website.js') }}"></script>
+<!-- Multi Dropdown JS -->
+<script src="{{ asset('js/multiselect-dropdown.js') }}"></script>
 <!-- Data table JavaScript -->
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 

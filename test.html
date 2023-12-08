@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add/Remove Fields</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="fieldContainer">
+        <div class="field">
+            <input type="text" name="field[]" placeholder="Enter something">
+            <button class="removeField">Remove</button>
+        </div>
+    </div>
+    <button id="addField">Add Field</button>
+
+    <script>
+        $(document).ready(function(){
+            // Add Field
+            $('#addField').click(function(){
+                var fieldHTML = '<div class="field"><input type="text" name="field[]" placeholder="Enter something"><button class="removeField">Remove</button></div>';
+                $('#fieldContainer').append(fieldHTML);
+            });
+
+            // Remove Field
+            $('#fieldContainer').on('click', '.removeField', function(){
+                $(this).parent('.field').remove();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -12,4 +12,9 @@ class ClientRequestData extends Model
     protected $fillable = [
         'id','website_id','path'
     ];
+
+    public function getScarperData()
+    {
+        return $this->hasOne(ScraperData::class, 'client_file_id', 'id');
+    }
 }

@@ -23,6 +23,11 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
     <!-- Website Page CSS -->
     <link rel="stylesheet" href="{{ asset('css/website_list.css') }}">
+    <style>
+        .multiselect-dropdown{
+            width : 100% !important;
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid">
@@ -68,7 +73,7 @@
                 <!-- Table Heading -->
                 <div class="row heading">
                     <div class="col-12">
-                        <h4 class="float-start mt-2">Website List</h4>
+                        <h4 class="float-start mt-2">Project List</h4>
                     </div>
                 </div>
                 <!-- Filters -->
@@ -103,7 +108,8 @@
                                 <!-- <th style="min-width:110px !important;">Client Name <img class="sort" src="{{asset('client/images/sort.png')}}"></th>
                                 <th style="min-width:130px !important;">Client Email <img class="sort" src="{{asset('client/images/sort.png')}}"></th>
                                 <th style="min-width:140px !important;">Company Name <img class="sort" src="{{asset('client/images/sort.png')}}"></th> -->
-                                <th style="min-width:80px !important;">Website </th>
+                                <th style="min-width:80px !important;">Project </th>
+                                <th style="min-width:80px !important;">Role </th>
                                 <th style="min-width:50px !important;">Action </th>
                             </thead>
                             <tbody>
@@ -117,13 +123,13 @@
         </div>
     </div>
 
-<!-- The Support Modal (enhance data import)-->
+<!-- Import Client File from TL Login-->
     <div id="myModal3" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
             <div class="row">
-                <form action="{{route('enhance_data')}}" method="post" enctype="multipart/form-data" id="support_enhance">
+                <form action="{{route('import_client_file')}}" method="post" enctype="multipart/form-data" id="support_enhance">
                     @csrf
                     <input type="hidden" name="website_id" value="" id="website_id3"> 
                     <div class="mb-3">
@@ -138,47 +144,190 @@
         </div>
     </div>
 
-<!-- Batch Modal-->
+<!-- Assign Users from TL login-->
     <div id="batch_modal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
             <span class="batch_close">&times;</span>
             <div class="row">
-                <form action="{{route('batch_list.store')}}" method="post" enctype="multipart/form-data" id="batch_form">
+                <form action="{{route('assign_users')}}" method="post" enctype="multipart/form-data" id="batch_form">
                     @csrf
-                    <input type="hidden" name="website_id" value="" id="batch_website_id"> 
-                    @if($user_role == 'Team Lead')
+                    <input type="hidden" name="website_id" value="" id="batch_website_id">
+
+                    <!-- Select Scrapper -->
                     <div class="mb-3">
-                        <label for="role">Select Role</label>
-                        <select name="role" id="role" class="form-control">
-                            <option value="">Select Role</option>
-                            <option value="pa">PA</option>
-                            <option value="qc">QC</option>
-                            <option value="qa">QA</option>
+                        <label for="scrapper">Select Scrapper</label>
+                        <select name="scrapper[]" id="scrapper" class="form-control" multiple multiselect-search="true" multiselect-select-all="true" multiselect-max-items="3" onchange="console.log(this.selectedOptions)">
+                            @foreach($other_user_list as $other_user_lists)
+                                <option value="{{$other_user_lists->id}}" >{{$other_user_lists->first_name}}</option>
+                            @endforeach
                         </select>
                     </div>
+                    
+                    <!-- Select PA -->
                     <div class="mb-3">
-                        <label for="status">Select Status</label>
-                        <select name="status" id="status" class="form-control">
-                            <option value="">Select role first</option>
+                        <label for="pa">Select PA</label>
+                        <select name="pa[]" id="pa" class="form-control" multiple multiselect-search="true" multiselect-select-all="true" multiselect-max-items="3" onchange="console.log(this.selectedOptions)">
+                            @foreach($other_user_list as $other_user_lists)
+                                <option value="{{$other_user_lists->id}}" >{{$other_user_lists->first_name}}</option>
+                            @endforeach
                         </select>
                     </div>
-                    @else
-                    <input type="hidden" name="role" value="{{$user_role}}" id="role">
+
+                    <!-- Select QC -->
                     <div class="mb-3">
-                        <label for="status">Select Status</label>
-                        <select name="status" id="status" class="form-control">
-                            <option value="">Select Status</option>
-                            <option value="inprogress">IN-Progress</option>
-                            @if($user_role == 'PA')
-                            <option value="rejected">Rejected</option>
-                            @elseif($user_role == 'QC')
-                            <option value="reworked">Rework Done</option>
-                            @endif
-                            <option value="completed">Completed</option>
+                        <label for="qc">Select QC</label>
+                        <select name="qc[]" id="qc" class="form-control" multiple multiselect-search="true" multiselect-select-all="true" multiselect-max-items="3" onchange="console.log(this.selectedOptions)">
+                            @foreach($other_user_list as $other_user_lists)
+                                <option value="{{$other_user_lists->id}}" >{{$other_user_lists->first_name}}</option>
+                            @endforeach
                         </select>
                     </div>
-                    @endif
+
+                    <!-- Select QA -->
+                    <div class="mb-3">
+                        <label for="qa">Select QA</label>
+                        <select name="qa[]" id="qa" class="form-control" multiple multiselect-search="true" multiselect-select-all="true" multiselect-max-items="3" onchange="console.log(this.selectedOptions)">
+                            @foreach($other_user_list as $other_user_lists)
+                                <option value="{{$other_user_lists->id}}" >{{$other_user_lists->first_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <input type="submit" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!-- Import Scrapped File from Scrapper Login-->
+    <div id="import_scrapped_file_modal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="import_scrapped_file_close">&times;</span>
+            <div class="row">
+                <form action="{{route('scraper_upload')}}" method="post" enctype="multipart/form-data" id="import_scrapped_file_form">
+                    @csrf
+                    <input type="hidden" name="website_id" value="" id="import_scrapped_file_website_id"> 
+                    <div class="mb-3">
+                        <label for="file">Import Scrapped File</label>
+                        <input type="file" name="file" class="form-control" id="import_scrapped_file_input">
+                    </div>
+                    <div class="mb-3">
+                        <input type="submit" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!-- Project Settings Modal -->
+    <div id="project_settings" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="project_settings_close">&times;</span>
+            <div class="row">
+                <form action="{{route('project_settings')}}" method="post" enctype="multipart/form-data" id="project_settings_form">
+                    @csrf
+                    <input type="hidden" name="website_id" value="" id="project_settings_website_id"> 
+                    <!-- Project Name -->
+                    <div class="mb-3">
+                        <label for="project_name"><strong>Project Name</strong></label>
+                        <input type="text" class="form-control" name="project_name" id="project_name" readonly>
+                    </div>
+                    <!-- Platform -->
+                    <div class="mb-3">
+                        <label for="platform"><strong>Platform</strong></label>
+                        <select name="platform" id="platform" class="form-control">
+                            <option value="">select Platform</option>
+                            <option value="wordpress">Wordpress</option>
+                            <option value="shopify">Shopify</option>
+                            <option value="megento">Megento</option>
+                            <option value="bigcommerce">Bigcommerce</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div id="platform_details_div">
+
+                    </div>
+                    <!-- Workflow Settings -->
+                    <div class="mb-3">
+                        <label for="workflow_settings"><strong>Workflow Settings</strong></label>
+                        <select name="workflow_settings" id="workflow_settings" class="form-control">
+                            <option value="">select Workflow Settings</option>
+                            <option value="single">Single</option>
+                            <option value="bulk">Bulk</option>
+                            <option value="both">Both</option>
+                        </select>
+                    </div>
+                    <!-- Project Status -->
+                    <div class="mb-3">
+                        <label for="project_status"><strong>Project Status</strong></label>
+                        <select name="project_status" id="project_status" class="form-control">
+                            <option value="">select Project Status</option>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+                    <div id="reason_div">
+
+                    </div>
+                    <!-- Download Image -->
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-3">
+                                <label for="workflow_settings"><strong>Download Image</strong></label>
+                            </div>
+                            <div class="col-9">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="download_image" id="download_image1" value="1">
+                                    <label class="form-check-label" for="download_image1">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline" id="download_image">
+                                    <input class="form-check-input" type="radio" name="download_image" id="download_image2" value="0">
+                                    <label class="form-check-label" for="download_image2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Download Asset -->
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-3">
+                                <label for="workflow_settings"><strong>Download Asset</strong></label>
+                            </div>
+                            <div class="col-9">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="download_asset" id="download_asset1" value="1">
+                                    <label class="form-check-label" for="download_asset1">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline" id="download_asset">
+                                    <input class="form-check-input" type="radio" name="download_asset" id="download_asset2" value="0">
+                                    <label class="form-check-label" for="download_asset2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Time Track -->
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-3">
+                                <label for="time_track"><strong>Time Track</strong></label>
+                            </div>
+                            <div class="col-9">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="time_track" id="time_track1" value="1">
+                                    <label class="form-check-label" for="time_track1">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline" id="time_track">
+                                    <input class="form-check-input" type="radio" name="time_track" id="time_track2" value="0">
+                                    <label class="form-check-label" for="time_track2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="mb-3">
                         <input type="submit" class="btn btn-primary">
                     </div>
@@ -189,6 +338,8 @@
 
 <!-- Data table JavaScript -->
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<!-- Multi Dropdown JS -->
+<script src="{{ asset('js/multiselect-dropdown.js') }}"></script>
 
 <!-- Render Table datas -->
 <script type="text/javascript">
@@ -216,6 +367,7 @@
             // {data: 'client_email', name: 'email', orderable: true},
             // {data: 'company_name', name: 'company_name', orderable: true},
             {data: 'website', name: 'website', orderable: true},
+            {data: 'role', name: 'role', orderable: true},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
@@ -241,7 +393,7 @@
 
 <script>
     // Support Import enhanced Data
-    $(document).on("click",".enhance-import",function() {
+    $(document).on("click",".import_client_file",function() {
         $("#myModal3").show();
         var website_id = $(this).attr('data-id');
         $("#website_id3").val(website_id);
@@ -263,11 +415,126 @@
         $("#myModal3").hide();
     });
 
+    // Import Scrapped File - On Click
+    $(document).on("click",".import_scrapped_file",function() {
+        $("#import_scrapped_file_modal").show();
+        var website_id = $(this).attr('data-id');
+        $("#import_scrapped_file_website_id").val(website_id);
+    });
+    // Import Scrapped File - Form Submit
+    $("#import_scrapped_file_form").on("submit", function (e) {
+        var data = $("#import_scrapped_file_input").val();
+        $(".error").empty();
+        // alert(data);
+        if(data.length < 1){
+            e.preventDefault();
+            $("#import_scrapped_file_input").after('<span class="error">This field is required </span>');
+        }
+    });
+    // Support Close Button
+    $(document).on("click",".import_scrapped_file_close",function() {
+        $("#import_scrapped_file_form")[0].reset();
+        $(".error").empty();
+        $("#import_scrapped_file_modal").hide();
+    });
+
+
     // Open Batch Modal
-    $(document).on("click",".select_batch",function() {
+    $(document).on("click",".assign_users",function() {
         $("#batch_modal").show();
         var website_id = $(this).attr('data-id');
         $("#batch_website_id").val(website_id);
+        $.ajax({
+            url: '/get_scrapper_list', // Replace with your Laravel endpoint URL
+            method: 'GET',
+            data: {
+                // Data to be sent in the request body (if needed)
+                key2: website_id,
+            },
+            success: function(response){
+                // Handle the successful response from the server
+                console.log(response);
+                let selectedOptions = response; // Array of values to be selected
+
+                selectedOptions.forEach(value => {
+                    console.log(value);
+                    $('select[id^="scrapper"] option[value="'+value+'"]').prop('selected', true);
+                });
+            },
+            error: function(xhr, status, error){
+                // Handle errors
+                console.error(error);
+            }
+        });
+
+        $.ajax({
+            url: '/get_pa_list', // Replace with your Laravel endpoint URL
+            method: 'GET',
+            data: {
+                // Data to be sent in the request body (if needed)
+                key2: website_id,
+            },
+            success: function(response){
+                // Handle the successful response from the server
+                console.log(response);
+                let selectedOptions = response; // Array of values to be selected
+
+                selectedOptions.forEach(value => {
+                    console.log(value);
+                    $('select[id^="pa"] option[value="'+value+'"]').prop('selected', true);
+                });
+            },
+            error: function(xhr, status, error){
+                // Handle errors
+                console.error(error);
+            }
+        });
+
+        $.ajax({
+            url: '/get_qc_list', // Replace with your Laravel endpoint URL
+            method: 'GET',
+            data: {
+                // Data to be sent in the request body (if needed)
+                key2: website_id,
+            },
+            success: function(response){
+                // Handle the successful response from the server
+                console.log(response);
+                let selectedOptions = response; // Array of values to be selected
+
+                selectedOptions.forEach(value => {
+                    console.log(value);
+                    $('select[id^="qc"] option[value="'+value+'"]').prop('selected', true);
+                });
+            },
+            error: function(xhr, status, error){
+                // Handle errors
+                console.error(error);
+            }
+        });
+
+        $.ajax({
+            url: '/get_qa_list', // Replace with your Laravel endpoint URL
+            method: 'GET',
+            data: {
+                // Data to be sent in the request body (if needed)
+                key2: website_id,
+            },
+            success: function(response){
+                // Handle the successful response from the server
+                console.log(response);
+                let selectedOptions = response; // Array of values to be selected
+
+                selectedOptions.forEach(value => {
+                    console.log(value);
+                    $('select[id^="qa"] option[value="'+value+'"]').prop('selected', true);
+                });
+            },
+            error: function(xhr, status, error){
+                // Handle errors
+                console.error(error);
+            }
+        });
     });
         // Add status Value
         $(document).on("change","#role",function() {
@@ -313,6 +580,101 @@
     $(document).on("change","#action-select",function() {
         var val = $(this).val();
         $("#"+val).trigger("click");
+    });
+
+    // Project Settings Modal Open
+    $(document).on("click",".project_settings",function() {
+        $("#project_settings").show();
+        var website_id = $(this).attr('data-id');  
+        var platform = $(this).attr('data-platform');
+        var platform_details = $(this).attr('data-platform-details');
+        var workflow_settings = $(this).attr('data-workflow-settings');
+        var project_status = $(this).attr('data-project-status');
+        var reason = $(this).attr('data-reason');
+        var download_image = $(this).attr('data-download-image');
+        var download_asset = $(this).attr('data-download-asset');
+        var time_track = $(this).attr('data-time-track');
+        var project_name = $(this).attr('data-project-name');
+
+        $("#project_settings_website_id").val(website_id);
+        $("#project_name").val(project_name);
+        $('select[name^="platform"] option[value="'+platform+'"]').attr("selected","selected");
+        $('select[name^="workflow_settings"] option[value="'+workflow_settings+'"]').attr("selected","selected");
+        $('select[name^="project_status"] option[value="'+project_status+'"]').attr("selected","selected");
+        if(platform_details){
+            $("#platform_details_div").append('<div class="mb-3"><label for="platform_details"><strong>Platform Details</strong></label><input type="text" class="form-control" name="platform_details" value="'+platform_details+'" id="platform_details" required></div>');
+        }
+        if(reason){
+            $("#reason_div").append('<div class="mb-3"><label for="reason"><strong>Reason</strong></label><select name="reason" id="reason" class="form-control" required><option value="">select Reason</option><option value="completed">Completed</option><option value="closed">Closed</option><option value="canceled">Canceled</option></select></div>');
+            $('select[name^="reason"] option[value="'+reason+'"]').attr("selected","selected");
+        }
+
+        $('input[name=download_image][value="'+download_image+'"]').prop('checked', true);
+        $('input[name=download_asset][value="'+download_asset+'"]').prop('checked', true);
+        $('input[name=time_track][value="'+time_track+'"]').prop('checked', true);
+    });
+
+    // Platform on change
+    $(document).on("change","#platform",function() {
+        var platform = $(this).val();
+        if(platform == 'other'){
+            $("#platform_details_div").append('<div class="mb-3"><label for="platform_details"><strong>Platform Details</strong></label><input type="text" class="form-control" name="platform_details" id="platform_details" required></div>');
+        }else{
+            $("#platform_details_div").empty();
+        }
+    });
+
+    // Project Status on change
+    $(document).on("change","#project_status",function() {
+        var project_status = $(this).val();
+        if(project_status == 0){
+            $("#reason_div").append('<div class="mb-3"><label for="reason"><strong>Reason</strong></label><select name="reason" id="reason" class="form-control" required><option value="">select Reason</option><option value="completed">Completed</option><option value="closed">Closed</option><option value="canceled">Canceled</option></select></div>');
+        }else{
+            $("#reason_div").empty();
+        }
+    });
+
+    // Project Settings Validation
+    $("#project_settings").on("submit", function (e) {
+        var platform            = $("#platform").val();
+        var workflow_settings   = $("#workflow_settings").val();
+        var project_status      = $("#project_status").val();
+        var download_image      = $("input[name=download_image]").is(":checked");
+        var download_asset      = $("input[name=download_asset]").is(":checked");
+        var time_track          = $("input[name=time_track]").is(":checked");
+        
+        $(".error").empty();
+        if(platform.length < 1){
+            e.preventDefault();
+            $("#platform").after('<span class="error">This field is required </span>');
+        }
+        if(workflow_settings.length < 1){
+            e.preventDefault();
+            $("#workflow_settings").after('<span class="error">This field is required </span>');
+        }
+        if(project_status.length < 1){
+            e.preventDefault();
+            $("#project_status").after('<span class="error">This field is required </span>');
+        }
+        if(!download_image){
+            e.preventDefault();
+            $("#download_image").after('<span class="error">This field is required </span>');
+        }
+        if(!download_asset){
+            e.preventDefault();
+            $("#download_asset").after('<span class="error">This field is required </span>');
+        }
+        if(!time_track){
+            e.preventDefault();
+            $("#time_track").after('<span class="error">This field is required </span>');
+        }
+    });
+
+    // project settings _close Close Button
+    $(document).on("click",".project_settings_close",function() {
+        $("#project_settings").hide();
+        $(".error").empty();
+        $("#project_settings_form")[0].reset();
     });
 </script>
 

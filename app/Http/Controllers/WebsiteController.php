@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\User;
 use App\Models\WebsiteData;
 use App\Models\DataHistory;
+use App\Models\ProjectUser;
 use Response;
 use DB;
 use DataTables;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use App\Exports\CommonSkuExport;
 use Excel;
+use Illuminate\Support\Collection;
 
 class WebsiteController extends Controller
 {
@@ -41,6 +43,17 @@ class WebsiteController extends Controller
         //     return view('website.index',compact('datas')); 
         // }
         $team_lead_list = User::role('Team Lead')->get();
+        $other_user_list = User::whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'Team Lead');
+        })->whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'Client');
+        })->whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'Operation');
+        })->whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'Super Admin');
+        })->get();
+        $team_lead_list = $team_lead_list->merge($other_user_list);
+
         if ($request->ajax()) {
             $data = Website::select('*');
             return Datatables::of($data)
@@ -57,6 +70,7 @@ class WebsiteController extends Controller
                         $company_name = $data->getClient->company_name;
                         return $company_name;
                     })
+                    
                     ->editColumn('import_status', function ($data) {
                         if($data->getCronStatus){
                             if($data->getCronStatus->status==0)
@@ -99,7 +113,7 @@ class WebsiteController extends Controller
                             $enc_id = Crypt::encryptString($data->id);
                             $btns = '';
                             $select = '<select name="action-select" class="action-select" id="action-select"><option value="">Select</option>';
-                            if($data->status == 1){   
+                            if($data->status == 1 && $data->enhance_status == 0){   
                                 // Set Price 
                                 $select .= '<option value="set_price'.$data->id.'">Set Price</option>';
                                 $btns .= '<a href="' . route('support.show', $enc_id) . '" class="action-button" ><img id="set_price'.$data->id.'" src="' . asset('client/images/price.png') . '" alt="price" title="Set Price"></a>';
@@ -139,7 +153,26 @@ class WebsiteController extends Controller
                                     $btns .= '<a href="javascript:void(0)" class="add_more action-button"  data-id="'. $data->id .'"><img id="add_more'.$data->id.'" src="'.asset('client/images/add-more.png').'" alt="Add More" title="Add More"></a>';
                                 }
                                 
-                            }else{
+                            }
+                            else if($data->enhance_status == 1){
+                                // Assign TL
+                                $select .= '<option value="assign_tl'.$data->id.'">Assign TL</option>';
+                                $btns .= '<a href="javascript:void(0)" class="assign_tl action-button" data-id="'. $data->id .'" data-tl-id="'. $data->tl_id .'" ><img id="assign_tl'.$data->id.'" src="'.asset('client/images/user.png').'" alt="Assign TL" title="Assign TL"></a>';
+                                // Project Settings
+                                $select .= '<option value="project_settings'.$data->id.'">Project Settings</option>';
+                                $btns .= '<a href="javascript:void(0)" class="project_settings action-button" 
+                                            data-id="'. $data->id .'"
+                                            data-platform="'. $data->platform .'"
+                                            data-workflow-settings="'. $data->workflow_settings .'"
+                                            data-platform-details="'. $data->platform_details .'"
+                                            data-project-status="'. $data->project_status .'" 
+                                            data-reason="'. $data->reason .'"
+                                            data-download-image="'. $data->download_image .'"
+                                            data-download-asset="'. $data->download_asset .'"
+                                            data-time-track="'. $data->time_track .'"
+                                            data-project-name="'. $data->website .'" ><img id="project_settings'.$data->id.'" src="'.asset('client/images/user.png').'" alt="project_settings" title="project_settings"></a>';
+                            }
+                            else{
                                 $select .= '<option value="validate_site'.$data->id.'">Validate Site</option>';
                                 $btns .= '<a href="javascript:void(0)" class="validate action-button"  data-id="'. $data->id .'" data-vs="'. $data->validation_status .'" data-remark="'. $data->remark .'"><img id="validate_site'.$data->id.'" src="'.asset('client/images/validate.png').'" alt="Valiate" title="Valiate"></a>';
                             }
@@ -480,13 +513,27 @@ class WebsiteController extends Controller
         $website_id = $request->website_id;
         $tl_id = $request->tl;
 
-        $data = Website::where('id',$website_id)->update([
-            'tl_id'             => $tl_id,
-            'tl_assigned_at'    => Carbon::now(),
-        ]);
-        WebsiteData::where('website_id',$website_id)->update([
-            'tl_id' => $tl_id,
-        ]);
+        $exist_data = ProjectUser::where('website_id',$website_id)->where('user_role','Team Lead')->get();
+
+        if(!blank($exist_data)){
+            ProjectUser::where('website_id',$website_id)->where('user_role','Team Lead')->update([
+                'user_id'   => $tl_id,
+            ]);
+        }else{
+            $data = ProjectUser::create([
+                'website_id'=> $website_id,
+                'user_role' => 'Team Lead',
+                'user_id'   => $tl_id,
+            ]);
+        }
+        
+        // $data = Website::where('id',$website_id)->update([
+        //     'tl_id'             => $tl_id,
+        //     'tl_assigned_at'    => Carbon::now(),
+        // ]);
+        // WebsiteData::where('website_id',$website_id)->update([
+        //     'tl_id' => $tl_id,
+        // ]);
         // dd($website_id);
         if($data){
             return redirect()->route('website.index')->with('success','TL Assigned successfully');
@@ -503,6 +550,75 @@ class WebsiteController extends Controller
         
         $filename = uniqid().'.xlsx';
         return Excel::download(new CommonSkuExport($range,$website_id),$filename, \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    public function project_settings(Request $request)
+    {
+        // dd($request);
+        Website::where('id',$request->website_id)->update([
+            'platform'          => $request->platform,
+            'platform_details'  => $request->platform_details,
+            'workflow_settings' => $request->workflow_settings,
+            'project_status'    => $request->project_status,
+            'reason'            => $request->reason,
+            'download_image'    => $request->download_image,
+            'download_asset'    => $request->download_asset,
+            'time_track'        => $request->time_track,
+        ]);
+
+        return redirect()->back()->with('success','Project Settings Updated Successfully');
+    }
+
+    public function get_scrapper_list(Request $request)
+    {
+        if($request->key1){
+            $client_file_id = $request->key1;
+            $website_id     = $request->key2;
+            $data           = ProjectUser::where('website_id',$website_id)->where('user_role','Scrapper')->where('client_file_id',$client_file_id)->pluck('user_id');
+        }else{
+            $website_id     = $request->key2;
+            $data           = ProjectUser::where('website_id',$website_id)->where('user_role','Scrapper')->pluck('user_id');
+        }
+        return response()->json($data);
+    }
+
+    public function get_pa_list(Request $request)
+    {
+        if($request->key1){
+            $client_file_id = $request->key1;
+            $website_id     = $request->key2;
+            $data           = ProjectUser::where('website_id',$website_id)->where('user_role','PA')->where('client_file_id',$client_file_id)->pluck('user_id');
+        }else{
+            $website_id     = $request->key2;
+            $data           = ProjectUser::where('website_id',$website_id)->where('user_role','PA')->pluck('user_id');
+        }
+        return response()->json($data);
+    }
+
+    public function get_qc_list(Request $request)
+    {
+        if($request->key1){
+            $client_file_id = $request->key1;
+            $website_id     = $request->key2;
+            $data           = ProjectUser::where('website_id',$website_id)->where('user_role','QC')->where('client_file_id',$client_file_id)->pluck('user_id');
+        }else{
+            $website_id     = $request->key2;
+            $data           = ProjectUser::where('website_id',$website_id)->where('user_role','QC')->pluck('user_id');
+        }
+        return response()->json($data);
+    }
+
+    public function get_qa_list(Request $request)
+    {
+        if($request->key1){
+            $client_file_id = $request->key1;
+            $website_id     = $request->key2;
+            $data           = ProjectUser::where('website_id',$website_id)->where('user_role','QA')->where('client_file_id',$client_file_id)->pluck('user_id');
+        }else{
+            $website_id     = $request->key2;
+            $data           = ProjectUser::where('website_id',$website_id)->where('user_role','QA')->pluck('user_id');
+        }
+        return response()->json($data);
     }
     
 }

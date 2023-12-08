@@ -3,15 +3,22 @@
                 <!-- Table Heading -->
                 <div class="row heading">
                     <div class="col-md-6 col-xs-12 mt-3">
-                        <h4 class="float-start mt-2">Website List</h4>
+                        <h4 class="float-start mt-2">Project List</h4>
                     </div>
                     <div class="col-md-6 col-xs-12 mt-3">
                         <div class="float-end">
                             <?php $route = Route::current()->getName(); ?>
-                            <a class="menu-item {{$route =='super-admin.index' ? 'active' : '' }}" href="{{route('super-admin.index')}}">Websites</a>
+                            <a class="menu-item {{$route =='super-admin.index' ? 'active' : '' }}" href="{{route('super-admin.index')}}">Projects</a>
                             <a class="menu-item {{$route =='users.index' ? 'active' : '' }}" href="{{route('users.index')}}">Users</a>
                             <a class="menu-item {{$route =='roles.index' ? 'active' : '' }}" href="{{route('roles.index')}}">Roles</a>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Add Project Button -->
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <a href="{{route('super-admin.create')}}" class="btn submit-button" style="margin-left:87%;">Add Project</a>
                     </div>
                 </div>
                 
@@ -21,10 +28,11 @@
                         <table class="table  nowrap" style="width:100%">
                             <thead>
                                 <th>S.No</th>
-                                <th>Client Name</th>
+                                <!-- <th>Client Name</th>
                                 <th>Company Name</th>
-                                <th>Client Email</th>
-                                <th>Website</th>
+                                <th>Client Email</th> -->
+                                <th>Project</th>
+                                <th>Status</th>
                                 <th>Action</th>
                                 <th>History</th>
                             </thead>
@@ -36,10 +44,17 @@
                                 <?php $enc_id = Illuminate\Support\Facades\Crypt::encryptString($data->id); ?>
                                 <tr>
                                     <td class="">{{ $serialNumber++ }}</td>
-                                    <td class="">{{$data->getClient->getUser->first_name}}</td>
+                                    <!-- <td class="">{{$data->getClient->getUser->first_name}}</td>
                                     <td class="">{{$data->getClient->company_name}}</td>
-                                    <td class="">{{$data->getClient->getUser->email}}</td>
+                                    <td class="">{{$data->getClient->getUser->email}}</td> -->
                                     <td class="">{{$data->website}}</td>
+                                    <td class="">
+                                        @if($data->status == '1')
+                                            <span class="badge bg-success">Active</span>
+                                        @else
+                                            <span class="badge bg-danger">Inactive</span>
+                                        @endif
+                                    </td>
                                     <td class="">
                                     <!-- Assign ops -->
                                     <a href="javascript:void(0)" class="assign_ops" data-id="{{ $data->id }}" data-ops-id="{{ $data->ops_id }}" ><img src="{{asset('client/images/user.png')}}" alt="Assign PM" title="Assign PM"></a>
@@ -72,9 +87,9 @@
                 <input type="hidden" name="website_id" value="" id="website_id"> 
                 <!-- Project Manager -->
                 <div class="mb-3">
-                    <label for="ops"><strong>Select Operation</strong></label>
+                    <label for="ops"><strong>Select PM</strong></label>
                     <select name="ops" id="ops" class="form-control">
-                        <option value="">select Operation</option>
+                        <option value="">select PM</option>
                         @foreach($ops_list as $ops_lists)
                             <option value="{{$ops_lists->id}}">{{$ops_lists->first_name}}</option>
                         @endforeach

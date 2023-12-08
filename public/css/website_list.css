@@ -190,6 +190,36 @@ table.dataTable thead th, table.dataTable thead td {
     margin-left: 96%;
     cursor: pointer;
 }
+.batch_close {
+    color: #aaaaaa;
+    /* float: right; */
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 95%;
+}
+
+.batch_close:hover,
+.batch_close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.import_scrapped_file_close {
+    color: #aaaaaa;
+    /* float: right; */
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 95%;
+}
+
+.import_scrapped_file_close:hover,
+.import_scrapped_file_close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .error{
     color: red;
 }
@@ -206,7 +236,7 @@ table.dataTable thead th, table.dataTable thead td {
     display: none;
 }
 /* The Close Button */
-.assign_tl_close {
+.assign_tl_close, .project_settings_close, .assign_users_close, .scrapped_file_close {
     color: #aaaaaa;
     /* float: right; */
     font-size: 28px;
@@ -215,7 +245,13 @@ table.dataTable thead th, table.dataTable thead td {
 }
 
 .assign_tl_close:hover,
-.assign_tl_close:focus {
+.assign_tl_close:focus,
+.project_settings_close:hover,
+.project_settings_close:focus,
+.assign_users_close:hover,
+.assign_users_close:focus,
+.scrapped_file_close:hover,
+.scrapped_file_close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;

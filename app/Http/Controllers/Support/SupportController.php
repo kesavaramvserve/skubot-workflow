@@ -24,6 +24,9 @@ use Excel;
 use App\Models\WebsiteFeature;
 use App\Models\WebsiteSpecification;
 use App\Models\WebsiteImage;
+use App\Models\WebsiteEnhanceFeature;
+use App\Models\WebsiteEnhanceSpecification;
+use App\Models\WebsiteEnhanceImage;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Reader\Csv; 
 use App\Models\Note;
@@ -1021,125 +1024,125 @@ class SupportController extends Controller
                             
             // Declare Title Notes
             if($title_report[0] > 0){
-                $title_notes0 = "<li>".$title_report[0]." SKUs - High Attention Required: The character count of the title must be increased to effectively communicate vital information about these products and their usage. It will ensure they catch the eye of potential customers and provide essential information.";
+                $title_notes0 = "<li> It is recommened to improve the character count of title with vital information of the products and their usage. This will not only grab the attention of potential customers but also deliver essential details about the products.";
             }else{
                 $title_notes0 = "";
             }
 
             if($title_report[1] > 0){
-                $title_notes1 = "<li> ".$title_report[1]." SKUs - Needs Improvement: These titles can be improved by adding important attributes. It's essential to edit them to ensure they are concise, informative, and optimized to increase the CTR of potential customers";
+                $title_notes1 = "<li> These titles can be improved by adding important attributes. It's recommended to ensure they are concise, informative, and optimized to increase the CTR of potential customers.";
             }else{
                 $title_notes1 = "";
             }
 
             if($title_report[2] > 0){
-                $title_notes2 = "<li> ".$title_report[2]." SKUs - Good to Improve: These products have titles of acceptable length but must be edited for better clarity. Clear and attention-grabbing titles are crucial in effectively promoting products in this industry.";
+                $title_notes2 = "<li> These products have titles of optimal length but recommended for better clarity. Clear and attention-grabbing titles are crucial ineffectively promoting products in this industry.";
             }else{
                 $title_notes2 = "";
             }
 
             if($title_report[3] > 0){
-                $title_notes3 = "<li> ".$title_report[3]." SKUs - Average Optimized: While these SKU titles meet the acceptable length criteria, there is an opportunity for enhancement. By highlighting key details about the product, potential buyers can be enticed to click on the product listings.";
+                $title_notes3 = "<li> While these SKU titles meet the acceptable length criteria, there is an opportunity for enhancement. By highlighting key details about the product, potential buyers can be enticed to click on the product listings.";
             }else{
                 $title_notes3 = "";
             }
 
             // Declare Description Notes
             if($description_report[0] > 0){
-                $description_notes0 = "<li> ".$description_report[0]." SKUs - High attention required: Capture the essence of the item by employing descriptive language that brings it to life. Showcase its exceptional qualities, unique features, and how it can elevate the item to the customer. Ensuring that the descriptions are detailed and informative will assist potential customers in making well-informed decisions.";
+                $description_notes0 = "<li> Capture the essence of the item by employing descriptive language that brings it to life. Showcase its exceptional qualities,unique features, and how it can elevate the item to the customer. Ensuring that the descriptions are detailed and informative will assist potential customers in making well-informed decisions.";
             }else{
                 $description_notes0 = "";
             }
 
             if($description_report[1] > 0){
-                $description_notes1 = "<li> ".$description_report[1]." SKUs - Needs Improvement:  Increase the number of words used in the descriptions for these SKUs to ensure that they are further optimized and have the most impactful descriptions possible. By doing so, potential customers can make informed decisions through the information provided.";
+                $description_notes1 = "<li> Increase the number of words used in the descriptions for these SKUs to ensure that they are further optimized and have the most impactful descriptions possible. By doing so, potential customers can make informed decisions throught the information provided.";
             }else{
                 $description_notes1 = "";
             }
 
             if($description_report[2] > 0){
-                $description_notes2 = "<li> ".$description_report[2]." SKUs - Good to Improve: Enhancing these SKUs to be more informative and ensuring all necessary details about the product are included will make them stand out to potential customers.";
+                $description_notes2 = "<li> Enhancing these SKUs to be more informative and ensuring all necessary details about the productare included will make them stand out to potential customers.";
             }else{
                 $description_notes2 = "";
             }
 
             if($description_report[3] > 0){
-                $description_notes3 = "<li> ".$description_report[3]." SKUs - Average Optimized: Although these SKU descriptions meet the required length, their impact can be enhanced. Cover all essential product details so that potential customers can confidently make informed decisions.";
+                $description_notes3 = "<li> Although these SKU descriptions are in optimal length, their impact can been enhanced. Cover all essential product details so that potential customers can confidently make informed decisions.";
             }else{
                 $description_notes3 = "";
             }
 
             // Declare Feature Notes
             if($feature_report[0] > 0){
-                $feature_notes0 = "<li> ".$feature_report[0]." SKUs - High attention required: Break down the product's features and benefits into easy-to-read bullet points. This format helps customers quickly scan and grasp the essential information.";
+                $feature_notes0 = "<li> Break down the product's features and benefits into easy-to-read bullet points. This format helps customers quickly scan and grasp the essential information.";
             }else{
                 $feature_notes0 = "";
             }
 
             if($feature_report[1] > 0){
-                $feature_notes1 = "<li> ".$feature_report[1]." SKUs - Needs Improvement: The number of feature bullets for these SKUs should be increased. This helps potential consumers make informed judgments about the product by being given complete information.";
+                $feature_notes1 = "<li> The number of feature bullets for these SKUs should be increased.This helps potential consumers make informed judgments about the product by being given complete information.";
             }else{
                 $feature_notes1 = "";
             }
 
             if($feature_report[2] > 0){
-                $feature_notes2 = "<li> ".$feature_report[2]." SKUs - Good to Improve: Although the feature bullets for these SKUs are within the range, there is room for improvement. Additional features will make your products stand out from the competition and draw in new customers.";
+                $feature_notes2 = "<li> Although the feature bullets for these SKUs are within the standard range, there is room for improvement. Additional features will make your products stand out from the competition and draw in new customers.";
             }else{
                 $feature_notes2 = "";
             }
 
             if($feature_report[3] > 0){
-                $feature_notes3 = "<li> ".$feature_report[3]." SKUs - Average Optimized: The feature bullet counts for these SKUs are within the required range. However, giving prospective customers all the facts about the product can assist them in making purchasing decisions.";
+                $feature_notes3 = "<li> The feature bullet counts for these SKUs are with in the standard range. However, giving prospective customers all the facts about the product can assist them in making purchasing decisions.";
             }else{
                 $feature_notes3 = "";
             }
 
             // Declare Specification Notes
             if($specification_report[0] > 0){
-                $specification_notes0 = "<li> ".$specification_report[0]." SKUs - High Attention Required: Product specification adds value to the product page and helps customers to take quick purchase decision and improve customer satisfaction.";
+                $specification_notes0 = "<li> Product specification adds value to the product page and helps customers to take quick purchase decision and improve customer satisfaction.";
             }else{
                 $specification_notes0 = "";
             }
 
             if($specification_report[1] > 0){
-                $specification_notes1 = "<li> ".$specification_report[1]." SKUs - Needs Improvement: These SKUs need more specifications added. When more specifications are provided, it increases the buyer's chances to buy the product and increases sales.";
+                $specification_notes1 = "<li> These SKUs need more specifications to be added. When more specifications are provided, it increases the buyer's chances to buy the product and increases sales.";
             }else{
                 $specification_notes1 = "";
             }
 
             if($specification_report[2] > 0){
-                $specification_notes2 = "<li> ".$specification_report[2]." SKUs - Good to Improve: Increase specifications to be comprehensive and informative, incorporating crucial product details. This differentiation will attract potential customers and set the product apart from competitors.";
+                $specification_notes2 = "<li> Increase specifications to be comprehensive and informative,incorporating crucial product details. This differentiation will attract potential customers and set the product apart from competitors.";
             }else{
                 $specification_notes2 = "";
             }
 
             if($specification_report[3] > 0){
-                $specification_notes3 = "<li> ".$specification_report[3]." SKUs - Average Optimized: The product specifications of these SKUs meet count criteria but can be improved for comprehensive information. This enables well-informed decisions by potential customers regarding the product.";
+                $specification_notes3 = "<li> The products specifications of these SKUs are good but can be improved for comprehensive information. This enables well-informed decisions by potential customers regarding the product";
             }else{
                 $specification_notes3 = "";
             }
 
             // Declare Image Notes
             if($image_report[0] > 0){
-                $image_notes0 = "<li> ".$image_report[0]." SKUs - High Attention Required: It is critical to add product images for these SKUs. A visual depiction of your product is vital in online selling to ensure customers can make quick buying decisions.";
+                $image_notes0 = "<li> It is critical to add product images for these SKUs. A visual depiction of your product is vital in online selling to ensure customers can make quick buying decisions.";
             }else{
                 $image_notes0 = "";
             }
 
             if($image_report[1] > 0){
-                $image_notes1 = "<li> ".$image_report[1]." SKUs - Needs improvement: Increase the number of images for these SKUs. Images create an instant visual impact and attract the attention of potential customers. They make the product page visually appealing and engaging, enticing visitors to explore further.";
+                $image_notes1 = "<li> Increase the number of images for these SKUs. Images create an instant visual impactand attract the attention of potential customers. They make the product page visually appealing and engaging, enticing visitors to explore further.";
             }else{
                 $image_notes1 = "";
             }
 
             if($image_report[2] > 0){
-                $image_notes2 = "<li> ".$image_report[2]." SKUs - Good to Improve: While there are acceptable image counts in SKUs, there is room for improvement. Prioritize high-quality images to make an impact on potential customers.";
+                $image_notes2 = "<li> While there are acceptable image in SKUs, there is room for improvement. Prioritize high-quality images to make an impact on potential customers.";
             }else{
                 $image_notes2 = "";
             }
 
             if($image_report[3] > 0){
-                $image_notes3 = "<li> ".$image_report[3]." SKUs - Average Optimized: The image counts of these SKUs are satisfactory, but adding more images will support sales and improve your customers' impression of your e-store.";
+                $image_notes3 = "<li> The image of the SKUs are satisfactory, but adding different angleof the product will support sales and improve your customers' impression of your e-store.";
             }else{
                 $image_notes3 = "";
             }
@@ -1447,8 +1450,11 @@ class SupportController extends Controller
         $enhance = EnhancedData::create([
             'website_id'        => $request->website_id,
             'path'              => $filename,
-        ]);
+        ]); 
 
+        $website_id             = $request->website_id;
+        $client_file_id         = $request->client_file_id;
+        $client_file_name       = ClientRequestData::where('id',$client_file_id)->value('path');
         $title_character_count  =0;
         $description_word_count =0;
         $load_file = public_path($destinationPath . "/" . $filename);
@@ -1479,23 +1485,102 @@ class SupportController extends Controller
                     $url_index                  = array_search("URL",$sheetData);
                     $p_id_index                 = array_search("ID",$sheetData);
                     $mpn_index                  = array_search("MPN",$sheetData);
-                    $tag_index                  = array_search("TAG",$sheetData);
+                    $img_dimension_index        = array_search("image_dimensions",$sheetData);
+                    $img_size_index             = array_search("image_sizes",$sheetData);
+                    $img_alt_index              = array_search("image_alt",$sheetData);
+                    $title_metadata_index       = array_search("title_metadata",$sheetData);
+                    $description_metadata_index = array_search("description_metadata",$sheetData);
+                    $keywords_metadata_index    = array_search("keywords_metadata",$sheetData);
+                    $rating_index               = array_search("star_rating",$sheetData);
+                    $rating_count_index         = array_search("total_rating_count",$sheetData);
+                    $qa_count_index             = array_search("total_qa_count",$sheetData);
 
                     // Column Name Validation
                     if($title_index                 == false ||
-                       $brand_index                 == false ||
-                       $category_index              == false ||
-                       $description_index           == false ||
-                       $feature_start_index         == false ||
-                       $feature_end_index           == false ||
-                       $specification_start_index   == false ||
-                       $specification_end_index     == false ||
-                       $image_start_index           == false ||
-                       $image_end_index             == false ||
-                       $p_id_index                  == false ||
-                       $mpn_index                   == false ||
-                       $tag_index                   == false){
-                        return redirect()->back()->with('error','Invalid File');
+                        $brand_index                 == false ||
+                        $category_index              == false ||
+                        $description_index           == false ||
+                        $feature_start_index         == false ||
+                        $feature_end_index           == false ||
+                        $specification_start_index   == false ||
+                        $specification_end_index     == false ||
+                        $image_start_index           == false ||
+                        $image_end_index             == false ||
+                        $p_id_index                  == false ||
+                        $mpn_index                   == false ||
+                        $img_dimension_index            == false ||
+                        $img_size_index                 == false ||
+                        $img_alt_index                  == false ||
+                        $title_metadata_index           == false ||
+                        $description_metadata_index     == false ||
+                        $keywords_metadata_index        == false ||
+                        $rating_index                   == false ||
+                        $rating_count_index             == false ||
+                        $qa_count_index                 == false){
+                            if($title_index == false){
+                                dd('$title_index');
+                            }
+                            if($brand_index == false){
+                                dd('$brand_index');
+                            }
+                            if($category_index == false){
+                                dd('$category_index');
+                            }
+                            if($description_index == false){
+                                dd('$description_index');
+                            }
+                            if($feature_start_index == false){
+                                dd('$feature_start_index');
+                            }
+                            if($feature_end_index == false){
+                                dd('$feature_end_index');
+                            }
+                            if($specification_start_index == false){
+                                dd('$specification_start_index');
+                            }
+                            if($specification_end_index == false){
+                                dd('$specification_end_index');
+                            }
+                            if($image_start_index == false){
+                                dd('$image_start_index');
+                            }
+                            if($image_end_index == false){
+                                dd('$image_end_index');
+                            }
+                            if($p_id_index == false){
+                                dd('$p_id_index');
+                            }
+                            if($mpn_index == false){
+                                dd('$mpn_index');
+                            }
+                            if($img_dimension_index == false){
+                                dd('$img_dimension_index');
+                            }
+                            if($img_size_index == false){
+                                dd('$img_size_index');
+                            }
+                            if($img_alt_index == false){
+                                dd('$img_alt_index');
+                            }
+                            if($title_metadata_index == false){
+                                dd('$title_metadata_index');
+                            }
+                            if($description_metadata_index == false){
+                                dd('$description_metadata_index');
+                            }
+                            if($keywords_metadata_index == false){
+                                dd('$keywords_metadata_index');
+                            }
+                            if($rating_index == false){
+                                dd('$rating_index');
+                            }
+                            if($rating_count_index == false){
+                                dd('$rating_count_index');
+                            }
+                            if($qa_count_index == false){
+                                dd('$qa_count_index');
+                            }
+                        return redirect()->back()->with('error','Invalid File1');
                     }
 
                     // Feature
@@ -1516,82 +1601,283 @@ class SupportController extends Controller
                     }
                     
                 }else{
-                    // Title Character Count Check
-                    if($sheetData[$title_index]){ 
-                        $title_character_count = strlen($sheetData[$title_index]);
-                    }
-                    
-                    // Description Word Count Check
-                    if($sheetData[$description_index]){ 
-                        // $description_word_count = str_word_count($sheetData[$description_index]);
-                        $str_arr = explode(" ",$sheetData[$description_index]);
-                        $description_word_count=count($str_arr);
+                    // Generate Image Dimension Array
+                    $image_jsonString = $sheetData[$img_dimension_index];
+                    if($image_jsonString != "['']" && $image_jsonString != ""){
+                        $image_array = explode(",", $image_jsonString);
+                        $width_arr = [];
+                        $height_arr = [];
+        
+                        foreach($image_array as $arrays){
+                            $newString = str_replace("[", "", $arrays);
+                            $newString = str_replace("'", "", $newString);
+                            $newString = str_replace("]", "", $newString);
+                            $new_array = explode("x", $newString);
+                            $width = $new_array[0];
+                            $height = $new_array[1];
+                            array_push($width_arr, $width);
+                            array_push($height_arr, $height);                    
+                        }
+                        // exit;
                     }
 
-                    // Feature Count Check
-                    $feature_count = 0;
-                    foreach($feature_keys as $res => $feature_key){ 
-                        if(strlen($sheetData[$feature_key]) > 0){ 
-                            $feature_count++;
-                            // WebsiteFeature::create([
-                            //     'website_id'        => $request->website_id,
-                            //     'website_data_id'   => $data_id,
-                            //     'feature'           => $sheetData[$feature_key]
-                            // ]);
-                        }
-                    }
-                    
-                    // Specification Count Check
-                    $specification_count = 0;
-                    foreach($specification_keys as $res => $specification_key){ 
-                        if(strlen($sheetData[$specification_key]) > 0){ 
-                            $specification_count++;
-                            // WebsiteSpecification::create([
-                            //     'website_id'            => $request->website_id,
-                            //     'website_data_id'       => $data_id,
-                            //     'specification_head'    => $sheetData[$specification_key - 1],
-                            //     'specification_value'   => $sheetData[$specification_key]
-                            // ]);
-                        }
-                    }
-                    
-                    // Image Count Check
-                    $image_count = 0;
-                    foreach($image_keys as $res => $image_key){ 
-                        if(strlen($sheetData[$image_key]) > 0){ 
-                            $image_count++;
-                            // WebsiteImage::create([
-                            //     'website_id'        => $request->website_id,
-                            //     'website_data_id'   => $data_id,
-                            //     'image'             => $sheetData[$image_key]
-                            // ]);
-                        }
-                    }
-                    
-                    // Category
-                    if(strlen($sheetData[$category_index]) > 0){ 
-                        $category = $sheetData[$category_index];
-                    }else{
-                        $category = 'Uncategory';
+                    // Generate Image Size Array
+                    $jsonString = $sheetData[$img_size_index];
+                    $array = explode(",", $jsonString);
+                    $size_arr = [];
+    
+                    foreach($array as $arrays){
+                        $newString = str_replace("[", "", $arrays);
+                        $newString = str_replace("'", "", $newString);
+                        $newString = str_replace("]", "", $newString);
+                        
+                        array_push($size_arr, $newString);
                     }
 
-                    // Data Insert into WebsiteData table
-                    $website_data = WebsiteEnhanceData::create([
-                        'website_id'                => $request->website_id,
-                        'title'                     => $sheetData[$title_index],
-                        'description'               => $sheetData[$description_index],
-                        'brand'                     => $sheetData[$brand_index],
-                        'category'                  => $category,
-                        'title_character_count'     => $title_character_count,
-                        'description_word_count'    => $description_word_count,
-                        'feature_count'             => $feature_count,
-                        'specification_count'       => $specification_count,
-                        'image_count'               => $image_count,
-                        'url'                       => $sheetData[$url_index],
-                        'p_id'                      => $sheetData[$p_id_index],
-                        'mpn'                       => $sheetData[$mpn_index],
-                        'tag'                       => $sheetData[$tag_index],
-                    ]);
+                    // Image alt array generate
+                    $string = $sheetData[$img_alt_index];
+                    $alt_arr = json_decode($string, true);
+                    
+                    if ($alt_arr === null) {
+                        // Handle JSON decoding error
+                        \Log::info("Error decoding JSON string");
+                        
+                    } else {
+                        \Log::info($alt_arr[0]);
+                        // print_r($array);
+                    }
+
+                    if(strlen($sheetData[$url_index]) > 0){
+                        // Title Character Count Check
+                        $title_character_count = 0;
+                        if($sheetData[$title_index]){ 
+                            $title_character_count = strlen($sheetData[$title_index]);
+                        }
+                        
+                        // Description Word Count Check
+                        $description_word_count = 0;
+                        if($sheetData[$description_index]){ 
+                            // $description_word_count = str_word_count($sheetData[$description_index]);
+                            $str_arr = explode(" ",$sheetData[$description_index]);
+                            $description_word_count=count($str_arr);
+                        }
+    
+                        // Feature Count Check
+                        $feature_count = 0;
+                        foreach($feature_keys as $res => $feature_key){ 
+                            if(strlen($sheetData[$feature_key]) > 0){ 
+                                $feature_count++;
+                            }
+                        }
+                        
+                        // Specification Count Check
+                        $specification_count = 0;
+                        foreach($specification_keys as $res => $specification_key){ 
+                            if(strlen($sheetData[$specification_key]) > 0){ 
+                                $specification_count++;
+                            }
+                        }
+                        
+                        // Image Count Check
+                        $image_count = 0;
+                        foreach($image_keys as $res => $image_key){ 
+                            if(strlen($sheetData[$image_key]) > 0){ 
+                                $image_count++;
+                            }
+                        }
+
+                        // title_metadata length Check
+                        $title_metadata_length = 0;
+                        if($sheetData[$title_metadata_index]){ 
+                            $title_metadata_length = strlen($sheetData[$title_metadata_index]);
+                        }
+
+                        // description_metadata length Check
+                        $description_metadata_length = 0;
+                        if($sheetData[$description_metadata_index]){ 
+                            $description_metadata_length = strlen($sheetData[$description_metadata_index]);
+                        }
+
+                        // keywords_metadata Count Check
+                        $keywords_metadata_count = 0;
+                        if($sheetData[$keywords_metadata_index]){ 
+                            $str_arr = explode(",",$sheetData[$keywords_metadata_index]);
+                            $keywords_metadata_count=count($str_arr);
+                            // $keywords_metadata_count = strlen($sheetData[$keywords_metadata_index]);
+                        }
+                        
+                        // Category
+                        if(strlen($sheetData[$category_index]) > 0){ 
+                            $category = $sheetData[$category_index];
+                        }else{
+                            $category = 'Uncategory';
+                        }
+
+                        // Rating
+                        if($sheetData[$rating_index] === null){
+                            $rating = 0;
+                        }else{
+                            $rating = $sheetData[$rating_index];
+                        }
+
+                        // Rating Count
+                        if($sheetData[$rating_count_index] === null){
+                            $rating_count = 0;
+                        }else{
+                            $rating_count = $sheetData[$rating_count_index];
+                        }
+
+                        // QA Count
+                        if($sheetData[$qa_count_index] === null){
+                            $qa_count = 0;
+                        }else{
+                            $qa_count = $sheetData[$qa_count_index];
+                        }
+    
+                        
+                        // Data Insert into WebsiteData table
+                        $website_data = WebsiteEnhanceData::create([
+                            'website_id'                    => $website_id,
+                            'batch_id'                      => $client_file_name,
+                            'title'                         => $sheetData[$title_index],
+                            'description'                   => $sheetData[$description_index],
+                            'title_metadata'                => $sheetData[$title_metadata_index],
+                            'description_metadata'          => $sheetData[$description_metadata_index],
+                            'keywords_metadata'             => $sheetData[$keywords_metadata_index],
+                            'title_metadata_length'         => $title_metadata_length,
+                            'description_metadata_length'   => $description_metadata_length,
+                            'keywords_metadata_length'      => $keywords_metadata_count,
+                            'rating'                        => $rating,
+                            'rating_count'                  => $rating_count,
+                            'qa_count'                      => $qa_count,
+                            'brand'                         => $sheetData[$brand_index],
+                            'category'                      => $category,
+                            'title_character_count'         => $title_character_count,
+                            'description_word_count'        => $description_word_count,
+                            'feature_count'                 => $feature_count,
+                            'specification_count'           => $specification_count,
+                            'image_count'                   => $image_count,
+                            'url'                           => $sheetData[$url_index],
+                            'p_id'                          => $sheetData[$p_id_index],
+                            'mpn'                           => $sheetData[$mpn_index],
+                        ]);
+    
+                        // Insert Feature to website_features Table
+                        foreach($feature_keys as $res => $feature_key){ 
+                            if(strlen($sheetData[$feature_key]) > 0){ 
+                                WebsiteEnhanceFeature::create([
+                                    'website_id'                => $website_id,
+                                    'website_enhance_data_id'   => $website_data->id,
+                                    'feature'                   => $sheetData[$feature_key]
+                                ]);
+                            }
+                        }
+                        
+                        // Insert Specification to website_specifications Table
+                        foreach($specification_keys as $res => $specification_key){ 
+                            if(strlen($sheetData[$specification_key]) > 0){ 
+                                WebsiteEnhanceSpecification::create([
+                                    'website_id'                => $website_id,
+                                    'website_enhance_data_id'   => $website_data->id,
+                                    'specification_head'        => $sheetData[$specification_key - 1],
+                                    'specification_value'       => $sheetData[$specification_key]
+                                ]);
+                            }
+                        }
+                        
+                        // Insert Image to website_images Table
+                        foreach($image_keys as $res => $image_key){ 
+                            if(strlen($sheetData[$image_key]) > 0){ 
+                                WebsiteEnhanceImage::create([
+                                    'website_id'                => $website_id,
+                                    'website_enhance_data_id'   => $website_data->id,
+                                    'image'                     => $sheetData[$image_key],
+                                    'width'                     => $width_arr[$res],
+                                    'height'                    => $height_arr[$res],
+                                    'size'                      => $size_arr[$res],
+                                    'alt'                       => $alt_arr[$res],
+                                ]);
+                            }
+                        }
+                    }
+
+                    
+                    // // Title Character Count Check
+                    // if($sheetData[$title_index]){ 
+                    //     $title_character_count = strlen($sheetData[$title_index]);
+                    // }
+                    
+                    // // Description Word Count Check
+                    // if($sheetData[$description_index]){ 
+                    //     // $description_word_count = str_word_count($sheetData[$description_index]);
+                    //     $str_arr = explode(" ",$sheetData[$description_index]);
+                    //     $description_word_count=count($str_arr);
+                    // }
+
+                    // // Feature Count Check
+                    // $feature_count = 0;
+                    // foreach($feature_keys as $res => $feature_key){ 
+                    //     if(strlen($sheetData[$feature_key]) > 0){ 
+                    //         $feature_count++;
+                    //         // WebsiteFeature::create([
+                    //         //     'website_id'        => $request->website_id,
+                    //         //     'website_data_id'   => $data_id,
+                    //         //     'feature'           => $sheetData[$feature_key]
+                    //         // ]);
+                    //     }
+                    // }
+                    
+                    // // Specification Count Check
+                    // $specification_count = 0;
+                    // foreach($specification_keys as $res => $specification_key){ 
+                    //     if(strlen($sheetData[$specification_key]) > 0){ 
+                    //         $specification_count++;
+                    //         // WebsiteSpecification::create([
+                    //         //     'website_id'            => $request->website_id,
+                    //         //     'website_data_id'       => $data_id,
+                    //         //     'specification_head'    => $sheetData[$specification_key - 1],
+                    //         //     'specification_value'   => $sheetData[$specification_key]
+                    //         // ]);
+                    //     }
+                    // }
+                    
+                    // // Image Count Check
+                    // $image_count = 0;
+                    // foreach($image_keys as $res => $image_key){ 
+                    //     if(strlen($sheetData[$image_key]) > 0){ 
+                    //         $image_count++;
+                    //         // WebsiteImage::create([
+                    //         //     'website_id'        => $request->website_id,
+                    //         //     'website_data_id'   => $data_id,
+                    //         //     'image'             => $sheetData[$image_key]
+                    //         // ]);
+                    //     }
+                    // }
+                    
+                    // // Category
+                    // if(strlen($sheetData[$category_index]) > 0){ 
+                    //     $category = $sheetData[$category_index];
+                    // }else{
+                    //     $category = 'Uncategory';
+                    // }
+
+                    // // Data Insert into WebsiteData table
+                    // $website_data = WebsiteEnhanceData::create([
+                    //     'website_id'                => $request->website_id,
+                    //     'title'                     => $sheetData[$title_index],
+                    //     'description'               => $sheetData[$description_index],
+                    //     'brand'                     => $sheetData[$brand_index],
+                    //     'category'                  => $category,
+                    //     'title_character_count'     => $title_character_count,
+                    //     'description_word_count'    => $description_word_count,
+                    //     'feature_count'             => $feature_count,
+                    //     'specification_count'       => $specification_count,
+                    //     'image_count'               => $image_count,
+                    //     'url'                       => $sheetData[$url_index],
+                    //     'p_id'                      => $sheetData[$p_id_index],
+                    //     'mpn'                       => $sheetData[$mpn_index],
+                    //     'tag'                       => $sheetData[$tag_index],
+                    // ]);
 
                     // Feature Count Check
                     // foreach($feature_keys as $res => $feature_key){ 
@@ -1637,7 +1923,8 @@ class SupportController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->with('error','Invalid File');
+            dd($e);
+            return redirect()->back()->with('error','Invalid File2');
         }
 
         DB::commit();

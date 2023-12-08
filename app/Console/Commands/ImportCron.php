@@ -62,6 +62,7 @@ class ImportCron extends Command
         $exist_cron = CronJob::where('status',1)->get()->first();  
         if(!blank($exist_cron)){
             $website_id         = $exist_cron->website_id;
+            $client_file_id     = $exist_cron->client_file_id;
             $scrappe_file_id    = $exist_cron->scrappe_file_id;
             $scrappe_file       = ScraperData::where('id',$scrappe_file_id)->value('path');
             $arr_file = explode('.', $scrappe_file);
@@ -111,7 +112,6 @@ class ImportCron extends Command
                         $url_index                  = array_search("URL",$sheetData);
                         $p_id_index                 = array_search("ID",$sheetData);
                         $mpn_index                  = array_search("MPN",$sheetData);
-                        $tag_index                  = array_search("TAG",$sheetData);
                         $img_dimension_index        = array_search("image_dimensions",$sheetData);
                         $img_size_index             = array_search("image_sizes",$sheetData);
                         $img_alt_index              = array_search("image_alt",$sheetData);
@@ -143,8 +143,7 @@ class ImportCron extends Command
                         $keywords_metadata_index        == false ||
                         $rating_index                   == false ||
                         $rating_count_index             == false ||
-                        $qa_count_index                 == false ||
-                        $tag_index                   == false){
+                        $qa_count_index                 == false){
                             $email = "testing@vserve.co"; 
                             $website = Website::where('id',$website_id)->value('website');
                             CronJob::where('website_id',$website_id)->update([
@@ -179,19 +178,21 @@ class ImportCron extends Command
 
                         // Generate Image Dimension Array
                         $image_jsonString = $sheetData[$img_dimension_index];
-                        $image_array = explode(",", $image_jsonString);
-                        $width_arr = [];
-                        $height_arr = [];
-        
-                        foreach($image_array as $arrays){
-                            $newString = str_replace("[", "", $arrays);
-                            $newString = str_replace("'", "", $newString);
-                            $newString = str_replace("]", "", $newString);
-                            $new_array = explode("x", $newString);
-                            $width = $new_array[0];
-                            $height = $new_array[1];
-                            array_push($width_arr, $width);
-                            array_push($height_arr, $height);                    
+                        if($image_jsonString != "['']"){
+                            $image_array = explode(",", $image_jsonString);
+                            $width_arr = [];
+                            $height_arr = [];
+            
+                            foreach($image_array as $arrays){
+                                $newString = str_replace("[", "", $arrays);
+                                $newString = str_replace("'", "", $newString);
+                                $newString = str_replace("]", "", $newString);
+                                $new_array = explode("x", $newString);
+                                $width = $new_array[0];
+                                $height = $new_array[1];
+                                array_push($width_arr, $width);
+                                array_push($height_arr, $height);                    
+                            }
                         }
 
                         // Generate Image Size Array
@@ -325,6 +326,7 @@ class ImportCron extends Command
                             // Data Insert into WebsiteData table
                             $website_data = WebsiteData::create([
                                 'website_id'                    => $website_id,
+                                'client_file_id'                => $client_file_id,
                                 'title'                         => $sheetData[$title_index],
                                 'description'                   => $sheetData[$description_index],
                                 'title_metadata'                => $sheetData[$title_metadata_index],
@@ -346,7 +348,6 @@ class ImportCron extends Command
                                 'url'                           => $sheetData[$url_index],
                                 'p_id'                          => $sheetData[$p_id_index],
                                 'mpn'                           => $sheetData[$mpn_index],
-                                'tag'                           => $sheetData[$tag_index],
                             ]);
 
                             // Insert Feature to website_features Table
@@ -399,6 +400,7 @@ class ImportCron extends Command
         if(!blank($new_cron)){
             \Log::info("Enter new");
             $website_id         = $new_cron->website_id;
+            $client_file_id     = $new_cron->client_file_id;
             $scrappe_file_id    = $new_cron->scrappe_file_id;
             $scrappe_file       = ScraperData::where('id',$scrappe_file_id)->value('path');
             
@@ -434,7 +436,6 @@ class ImportCron extends Command
                         $url_index                  = array_search("URL",$sheetData);
                         $p_id_index                 = array_search("ID",$sheetData);
                         $mpn_index                  = array_search("MPN",$sheetData);
-                        $tag_index                  = array_search("TAG",$sheetData);
                         $img_dimension_index        = array_search("image_dimensions",$sheetData);
                         $img_size_index             = array_search("image_sizes",$sheetData);
                         $img_alt_index              = array_search("image_alt",$sheetData);
@@ -466,8 +467,7 @@ class ImportCron extends Command
                         $keywords_metadata_index        == false ||
                         $rating_index                   == false ||
                         $rating_count_index             == false ||
-                        $qa_count_index                 == false ||
-                        $tag_index                   == false){
+                        $qa_count_index                 == false ){
                             // \Log::info("Invalid Column");
                             // $email = "kesavaram@vservesolution.com";
                             // $website = Website::where('id',$website_id)->value('website');
@@ -510,19 +510,21 @@ class ImportCron extends Command
 
                         // Generate Image Dimension Array
                         $image_jsonString = $sheetData[$img_dimension_index];
-                        $image_array = explode(",", $image_jsonString);
-                        $width_arr = [];
-                        $height_arr = [];
-        
-                        foreach($image_array as $arrays){
-                            $newString = str_replace("[", "", $arrays);
-                            $newString = str_replace("'", "", $newString);
-                            $newString = str_replace("]", "", $newString);
-                            $new_array = explode("x", $newString);
-                            $width = $new_array[0];
-                            $height = $new_array[1];
-                            array_push($width_arr, $width);
-                            array_push($height_arr, $height);                    
+                        if($image_jsonString != "['']"){
+                            $image_array = explode(",", $image_jsonString);
+                            $width_arr = [];
+                            $height_arr = [];
+            
+                            foreach($image_array as $arrays){
+                                $newString = str_replace("[", "", $arrays);
+                                $newString = str_replace("'", "", $newString);
+                                $newString = str_replace("]", "", $newString);
+                                $new_array = explode("x", $newString);
+                                $width = $new_array[0];
+                                $height = $new_array[1];
+                                array_push($width_arr, $width);
+                                array_push($height_arr, $height);                    
+                            }
                         }
 
                         // Generate Image Size Array
@@ -643,6 +645,7 @@ class ImportCron extends Command
                             // Data Insert into WebsiteData table
                             $website_data = WebsiteData::create([
                                 'website_id'                    => $website_id,
+                                'client_file_id'                => $client_file_id,
                                 'title'                         => $sheetData[$title_index],
                                 'description'                   => $sheetData[$description_index],
                                 'title_metadata'                => $sheetData[$title_metadata_index],
@@ -664,7 +667,6 @@ class ImportCron extends Command
                                 'url'                           => $sheetData[$url_index],
                                 'p_id'                          => $sheetData[$p_id_index],
                                 'mpn'                           => $sheetData[$mpn_index],
-                                'tag'                           => $sheetData[$tag_index],
                             ]);
         
                             // Insert Feature to website_features Table
@@ -756,7 +758,6 @@ class ImportCron extends Command
                         $url_index                  = array_search("URL",$sheetData);
                         $p_id_index                 = array_search("ID",$sheetData);
                         $mpn_index                  = array_search("MPN",$sheetData);
-                        $tag_index                  = array_search("TAG",$sheetData);
                         $img_dimension_index        = array_search("image_dimensions",$sheetData);
                         $img_size_index             = array_search("image_sizes",$sheetData);
                         $img_alt_index              = array_search("image_alt",$sheetData);
@@ -788,8 +789,7 @@ class ImportCron extends Command
                         $keywords_metadata_index        == false ||
                         $rating_index                   == false ||
                         $rating_count_index             == false ||
-                        $qa_count_index                 == false ||
-                        $tag_index                   == false){
+                        $qa_count_index                 == false){
                             $email = "testing@vserve.co"; 
                             $website = Website::where('id',$website_id)->value('website');
                             CronJob::where('website_id',$website_id)->update([
@@ -823,19 +823,21 @@ class ImportCron extends Command
                     }elseif($key <= 10000){
                         // Generate Image Dimension Array
                         $image_jsonString = $sheetData[$img_dimension_index];
-                        $image_array = explode(",", $image_jsonString);
-                        $width_arr = [];
-                        $height_arr = [];
-        
-                        foreach($image_array as $arrays){
-                            $newString = str_replace("[", "", $arrays);
-                            $newString = str_replace("'", "", $newString);
-                            $newString = str_replace("]", "", $newString);
-                            $new_array = explode("x", $newString);
-                            $width = $new_array[0];
-                            $height = $new_array[1];
-                            array_push($width_arr, $width);
-                            array_push($height_arr, $height);                    
+                        if($image_jsonString != "['']"){
+                            $image_array = explode(",", $image_jsonString);
+                            $width_arr = [];
+                            $height_arr = [];
+            
+                            foreach($image_array as $arrays){
+                                $newString = str_replace("[", "", $arrays);
+                                $newString = str_replace("'", "", $newString);
+                                $newString = str_replace("]", "", $newString);
+                                $new_array = explode("x", $newString);
+                                $width = $new_array[0];
+                                $height = $new_array[1];
+                                array_push($width_arr, $width);
+                                array_push($height_arr, $height);                    
+                            }
                         }
 
                         // Generate Image Size Array
@@ -956,6 +958,7 @@ class ImportCron extends Command
                             // Data Insert into WebsiteData table
                             $website_data = WebsiteData::create([
                                 'website_id'                    => $website_id,
+                                'client_file_id'                => $client_file_id,
                                 'title'                         => $sheetData[$title_index],
                                 'description'                   => $sheetData[$description_index],
                                 'title_metadata'                => $sheetData[$title_metadata_index],
@@ -977,7 +980,6 @@ class ImportCron extends Command
                                 'url'                           => $sheetData[$url_index],
                                 'p_id'                          => $sheetData[$p_id_index],
                                 'mpn'                           => $sheetData[$mpn_index],
-                                'tag'                           => $sheetData[$tag_index],
                             ]);
 
                             // Insert Feature to website_features Table

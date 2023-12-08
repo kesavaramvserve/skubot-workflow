@@ -16,6 +16,10 @@ return new class extends Migration
             $table->integer('website_id');
             $table->integer('website_enhance_data_id');
             $table->text('image');
+            $table->double('width')->nullable();
+            $table->double('height')->nullable();
+            $table->double('size')->nullable();
+            $table->string('alt')->nullable();
             $table->timestamps();
         });
     }

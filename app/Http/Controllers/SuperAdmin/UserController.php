@@ -58,12 +58,14 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            'roles' => 'required',
+            'status' => 'required'
         ]);
     
         $input = $request->all();
         $input['password']      = Hash::make($input['password']);
         $input['first_name']    = $input['name'];
+        $input['status']        = $input['status'];
         if($request->tl_id){
             $input['tl_id']     = $input['tl_id'];
         }
@@ -96,6 +98,7 @@ class UserController extends Controller
         $input['password']      = Hash::make($password);
         $input['first_name']    = $request->first_name;
         $input['last_name']     = $input['last_name'];
+        $input['status']        = 1;
     
         // Date Store
         DB::beginTransaction();
@@ -112,10 +115,15 @@ class UserController extends Controller
 
             $website = Website::create([
                 'client_id'     => $client->id,
-                'pm_id'         => $request->pm_id,
+                'ops_id'         => $request->pm_id,
                 'vserve_status' => 'New',
                 'client_status' => 'New',
+                'status'        => 1,
                 'website'       => $request->website,
+                'first_name'    => $request->first_name,
+                'last_name'     => $request->last_name,
+                'email'         => $request->email,
+                'company_name'  => $request->company_name,
             ]);
 
             // Set Default Price
