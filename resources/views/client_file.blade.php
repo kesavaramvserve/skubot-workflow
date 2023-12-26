@@ -85,7 +85,9 @@
                 <!-- Back Button -->
                 <div class="row">
                     <div class="col-11">
-                        <a class="float-end mt-2 btn submit-button-reverse" href="{{route('website_list.index')}}">Back</a>
+                        @if(!$defult_scrapper)
+                            <a class="float-end mt-2 btn submit-button-reverse" href="{{ url()->previous() }}">Back</a>
+                        @endif
                     </div>
                     <div class="col-1">
                     </div>
@@ -99,37 +101,65 @@
                                 <th style="min-width:30px !important;">ID</th>
                                 <th style="min-width:80px !important;">Project Name</th>
                                 <th style="min-width:80px !important;">File Name</th>
+                                <th style="min-width:80px !important;">Notes</th>
                                 <th style="min-width:80px !important;">Updated at </th>
                                 <th style="min-width:50px !important;">Action </th>
                             </thead>
                             <tbody>
-                                @foreach($datas as $data)
-                                    <tr>
-                                        <?php $enc_id = Crypt::encryptString($data->id); ?>
-                                        <td>{{$data->id}}</td>
-                                        <td>{{$project_name}}</td>
-                                        <td>{{$data->path}}</td>
-                                        <td>{{$data->updated_at}}</td>
-                                        <td>
-                                            @if($project_role == 'Team Lead' || $project_role == 'Scrapper')
+                                @if($defult_scrapper)
+                                    @foreach($datas as $data)
+                                        <tr>
+                                            <td>{{$data->id}}</td>
+                                            <td>{{$data->getWebsite->website}}</td>
+                                            <td>{{$data->path}}</td>
+                                            <td>{{$data->notes}}</td>
+                                            <td>{{$data->updated_at}}</td>
+                                            <td>
                                                 <a href="{{asset('client-sku-files/')}}/{{$data->path}}" class="btn btn-info" download><img id="" src="{{asset('client/images/download.png')}}" alt="Download Client File" title="Download Client File"></a>
-                                                <!-- @if($project_role == 'Team Lead')
-                                                    <a href="javascript:void(0)" data-id="{{$data->id}}" data-website-id="{{$website_id}}" class="btn btn-primary assign_users"><img id="" src="{{asset('client/images/users.png')}}" alt="Assign Users" title="Assign Users"></a>
-                                                    <a href="{{route('batch_list.show',$enc_id)}}" class="btn btn-success"><img id="" src="{{asset('client/images/view.png')}}" alt="View Client File" title="View Client File"></a>
-                                                @endif -->
-                                                @if($project_role == 'Scrapper')
-                                                    @if($data->getScarperData)
-                                                        <a href="{{asset('scraper-data/')}}/{{$data->getScarperData->path}}" class="btn btn-info" download><img id="" src="{{asset('client/images/download.png')}}" alt="Download Scrapped File" title="Download Scrapped File"></a>
-                                                    @else
-                                                        <a href="javascript:void(0)" data-id="{{$data->id}}" data-website-id="{{$website_id}}" class="btn btn-primary upload_scrapped_file"><img id="" src="{{asset('client/images/import.png')}}" alt="Upload Scrapped File" title="Upload Scrapped File"></a>
+                                                @if($data->getScarperData)
+                                                    <a href="{{asset('scraper-data/')}}/{{$data->getScarperData->path}}" class="btn btn-info" download><img id="" src="{{asset('client/images/download.png')}}" alt="Download Scrapped File" title="Download Scrapped File"></a>
+                                                @else
+                                                    <a href="javascript:void(0)" data-id="{{$data->id}}" data-website-id="{{$data->website_id}}" class="btn btn-primary upload_scrapped_file"><img id="" src="{{asset('client/images/import.png')}}" alt="Upload Scrapped File" title="Upload Scrapped File"></a>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    @foreach($datas as $data)
+                                        <tr>
+                                            <?php $enc_id = Crypt::encryptString($data->id); ?>
+                                            <td>{{$data->id}}</td>
+                                            <td>{{$project_name}}</td>
+                                            <td>{{$data->path}}</td>
+                                            <td>{{$data->notes}}</td>
+                                            <td>{{$data->updated_at}}</td>
+                                            <td>
+                                                @if($project_role == 'Team Lead' || $project_role == 'Scrapper')
+                                                    <a href="{{asset('client-sku-files/')}}/{{$data->path}}" class="btn btn-info" download><img id="" src="{{asset('client/images/download.png')}}" alt="Download Client File" title="Download Client File"></a>
+                                                    <!-- @if($project_role == 'Team Lead')
+                                                        <a href="javascript:void(0)" data-id="{{$data->id}}" data-website-id="{{$website_id}}" class="btn btn-primary assign_users"><img id="" src="{{asset('client/images/users.png')}}" alt="Assign Users" title="Assign Users"></a>
+                                                        <a href="{{route('batch_list.show',$enc_id)}}" class="btn btn-success"><img id="" src="{{asset('client/images/view.png')}}" alt="View Client File" title="View Client File"></a>
+                                                    @endif -->
+                                                    @if($project_role == 'Scrapper')
+                                                        @if($data->getScarperData)
+                                                            <a href="{{asset('scraper-data/')}}/{{$data->getScarperData->path}}" class="btn btn-info" download><img id="" src="{{asset('client/images/download.png')}}" alt="Download Scrapped File" title="Download Scrapped File"></a>
+                                                        @else
+                                                            <a href="javascript:void(0)" data-id="{{$data->id}}" data-website-id="{{$website_id}}" class="btn btn-primary upload_scrapped_file"><img id="" src="{{asset('client/images/import.png')}}" alt="Upload Scrapped File" title="Upload Scrapped File"></a>
+                                                        @endif
                                                     @endif
                                                 @endif
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
+                    </div>
+                    <!-- Pagination -->
+                    <div class="col-12 mt-3">
+                        <div style="margin-left:20%;">
+                            {{$datas->links("pagination::bootstrap-4")}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,68 +167,6 @@
         </div>
     </div>
 
-    <!-- Assign Users from TL login-->
-    <div id="assign_users_modal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="assign_users_close">&times;</span>
-            <div class="row">
-                <form action="{{route('assign_file_users')}}" method="post" enctype="multipart/form-data" id="assign_users_form">
-                    @csrf
-                    <input type="hidden" name="website_id" value="{{$website_id}}" id="assign_users_website_id">
-                    <input type="hidden" name="file_id" value="" id="file_id">
-
-                    <!-- Select Scrapper -->
-                    <div class="mb-3">
-                        <label for="scrapper">Select Scrapper</label>
-                        <select name="scrapper[]" id="scrapper" class="form-control" multiple
-                            onchange="console.log(Array.from(this.selectedOptions).map(x=>x.value??x.text))" multiselect-hide-x="true">
-                            @foreach($scrapper_list as $scrapper_lists)
-                                <option value="{{$scrapper_lists->id}}" >{{$scrapper_lists->first_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    
-                    <!-- Select PA -->
-                    <div class="mb-3">
-                        <label for="pa">Select PA</label>
-                        <select name="pa[]" id="pa" class="form-control" multiple
-                            onchange="console.log(Array.from(this.selectedOptions).map(x=>x.value??x.text))" multiselect-hide-x="true">
-                            @foreach($pa_list as $pa_lists)
-                                <option value="{{$pa_lists->id}}" >{{$pa_lists->first_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- Select QC -->
-                    <div class="mb-3">
-                        <label for="qc">Select QC</label>
-                        <select name="qc[]" id="qc" class="form-control" multiple
-                            onchange="console.log(Array.from(this.selectedOptions).map(x=>x.value??x.text))" multiselect-hide-x="true">
-                            @foreach($qc_list as $qc_lists)
-                                <option value="{{$qc_lists->id}}" >{{$qc_lists->first_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- Select QA -->
-                    <div class="mb-3">
-                        <label for="qa">Select QA</label>
-                        <select name="qa[]" id="qa" class="form-control" multiple
-                            onchange="console.log(Array.from(this.selectedOptions).map(x=>x.value??x.text))" multiselect-hide-x="true">
-                            @foreach($qa_list as $qa_lists)
-                                <option value="{{$qa_lists->id}}" >{{$qa_lists->first_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <input type="submit" class="btn btn-primary">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <!-- Import Scrapped File from Scrapper Login-->
     <div id="scrapped_file_modal" class="modal">
@@ -208,7 +176,7 @@
             <div class="row">
                 <form action="{{route('enhance_data')}}" method="post" enctype="multipart/form-data" id="scrapped_file_form">
                     @csrf
-                    <input type="hidden" name="website_id" value="{{$website_id}}" id="scrapped_file_website_id"> 
+                    <input type="hidden" name="website_id" value="" id="scrapped_file_website_id"> 
                     <input type="hidden" name="client_file_id" value="" id="scrapped_modal_file_id">
                     <input type="hidden" name="enhance_status" value="1" id="enhance_status">
                     <div class="mb-3">
@@ -348,6 +316,7 @@
         var file_id     = $(this).attr('data-id');
         var website_id  = $(this).attr('data-website-id');
         $("#scrapped_modal_file_id").val(file_id);
+        $("#scrapped_file_website_id").val(website_id);
     });
 
     // Import Scrapped File Form Validation

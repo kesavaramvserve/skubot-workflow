@@ -17,6 +17,7 @@ class CreateClientRequestDatasTable extends Migration
             $table->id();
             $table->integer('website_id');
             $table->string('path');
+            $table->string('notes')->nullable();
             $table->timestamps();
         });
     }

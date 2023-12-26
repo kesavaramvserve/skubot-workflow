@@ -25,6 +25,8 @@ class WebsiteListController extends Controller
         $user_id    = auth()->user()->id;
         $user_role  = auth()->user()->getrole->name;
         $user_where_id = $user_role.'_id';
+        $website_ids = ProjectUser::where('user_id',$user_id)->pluck('website_id');
+
         if($user_role == 'Client'){
             if(auth()->user()->plan == '$49'){
                 $sku_count = 500;
@@ -43,6 +45,16 @@ class WebsiteListController extends Controller
                 return view('client.sku_upload',compact('sku_count'));
             }
         }
+        if($user_role == 'Scrapper'){
+            $user_projects = ProjectUser::where('user_id',$user_id)->where('user_role','!=','Scrapper')->get();
+            if(blank($user_projects)){
+                $project_role = 'Scrapper';
+                $defult_scrapper = true;
+                $datas  = ClientRequestData::whereIn('website_id',$website_ids)->orderBy('id','desc')->paginate(10);
+                return view('client_file',compact('project_role','datas','defult_scrapper'));
+            }
+        }
+
         $other_user_list = User::whereDoesntHave('roles', function ($query) {
             $query->where('name', 'Team Lead');
         })->whereDoesntHave('roles', function ($query) {
@@ -77,7 +89,7 @@ class WebsiteListController extends Controller
         //     $datas = WebsiteEnhanceData::with('getWebsite')->select('*')->where($user_where_id , $user_id)->groupBy('website_id')->paginate(5);
         // }
         // return view('website_list',compact('datas'));
-        $website_ids = ProjectUser::where('user_id',$user_id)->pluck('website_id');
+        // $website_ids = ProjectUser::where('user_id',$user_id)->pluck('website_id');
         // $data = Website::whereIn('id',$website_ids)->get();
 
         //     dd($user_id);
@@ -118,32 +130,33 @@ class WebsiteListController extends Controller
                             // }
                             //  Import Client File
                             // $select .= '<option value="import_client_file'.$data->id.'">Import Client File</option>';
-                            $btns .= '<a href="javascript:void(0)" class="import_client_file" data-id="'. $data->id .'" ><img id="import_client_file'.$data->id.'" src="'.asset('client/images/import.png').'" alt="import_client_file" title="import_client_file"></a>';
+                            // $btns .= '<a href="javascript:void(0)" class="import_client_file" data-id="'. $data->id .'" ><img id="import_client_file'.$data->id.'" src="'.asset('client/images/import.png').'" alt="import_client_file" title="import_client_file"></a>';
                             //  Assign Users
                             // $select .= '<option value="assign_users'.$data->id.'">Assign Users</option>';
-                            $btns .= '<a href="javascript:void(0)" class="assign_users" data-id="'. $data->id .'" ><img id="assign_users'.$data->id.'" src="'.asset('client/images/users.png').'" alt="assign_users" title="assign_users"></a>';
+                            // $btns .= '<a href="javascript:void(0)" class="assign_users" data-id="'. $data->id .'" ><img id="assign_users'.$data->id.'" src="'.asset('client/images/users.png').'" alt="assign_users" title="assign_users"></a>';
                             // Project Aettings
-                            $btns .= '<a href="javascript:void(0)" class="project_settings" 
-                                            data-id="'. $data->id .'"
-                                            data-platform="'. $data->platform .'"
-                                            data-workflow-settings="'. $data->workflow_settings .'"
-                                            data-platform-details="'. $data->platform_details .'"
-                                            data-project-status="'. $data->project_status .'" 
-                                            data-reason="'. $data->reason .'"
-                                            data-download-image="'. $data->download_image .'"
-                                            data-download-asset="'. $data->download_asset .'"
-                                            data-time-track="'. $data->time_track .'"
-                                            data-project-name="'. $data->website .'" ><img id="project_settings'.$data->id.'" src="'.asset('client/images/setting.png').'" alt="project_settings" title="project_settings"></a>';
-                            if($data->getClientRequestData){
+                            // $btns .= '<a href="javascript:void(0)" class="project_settings" 
+                            //                 data-id="'. $data->id .'"
+                            //                 data-platform="'. $data->platform .'"
+                            //                 data-workflow-settings="'. $data->workflow_settings .'"
+                            //                 data-platform-details="'. $data->platform_details .'"
+                            //                 data-project-status="'. $data->project_status .'" 
+                            //                 data-reason="'. $data->reason .'"
+                            //                 data-download-image="'. $data->download_image .'"
+                            //                 data-download-asset="'. $data->download_asset .'"
+                            //                 data-time-track="'. $data->time_track .'"
+                            //                 data-project-name="'. $data->website .'" ><img id="project_settings'.$data->id.'" src="'.asset('client/images/setting.png').'" alt="project_settings" title="project_settings"></a>';
+                            // if($data->getClientRequestData){
                                 // $select .= '<option value="view_client_file'.$data->id.'">View Client File</option>';
-                                $btns .= '<a href="'.route('website_list.view_client_files',$enc_id).'" class="view_client_file" data-id="'. $data->id .'" ><img id="view_client_file'.$data->id.'" src="'.asset('client/images/folder.png').'" alt="view_client_file" title="view_client_file"></a>';
-                            }
-                            if($data->getEnhancedData){
+                                // $btns .= '<a href="'.route('website_list.view_client_files',$enc_id).'" class="view_client_file" data-id="'. $data->id .'" ><img id="view_client_file'.$data->id.'" src="'.asset('client/images/folder.png').'" alt="view_client_file" title="view_client_file"></a>';
+                            // }
+                            // if($data->getEnhancedData){
                                 // $select .= '<option value="view_client_file'.$data->id.'">View Client File</option>';
                                 $btns .= '<a href="'.route('batch_list.show',$enc_id).'" class="view_client_file" data-id="'. $data->id .'" ><img id="view_client_file'.$data->id.'" src="'.asset('client/images/view.png').'" alt="view_menu" title="view_menu"></a>';
-                            }
+                            // }
                         }
                         if($project_role == 'Scrapper'){
+                            
                             // if($data->getClientRequestData){
                             //     //  Download Client File
                             //     $select .= '<option value="download_requiremnet_file'.$data->id.'">Download Client File</option>';
@@ -152,17 +165,18 @@ class WebsiteListController extends Controller
                             // //  Import Scrapped File
                             // $select .= '<option value="import_scrapped_file'.$data->id.'">Import scrapped File</option>';
                             // $btns .= '<a href="javascript:void(0)" class="import_scrapped_file action-button" data-id="'. $data->id .'" ><img id="import_scrapped_file'.$data->id.'" src="'.asset('client/images/user.png').'" alt="import_scrapped_file" title="import_scrapped_file"></a>';
-                            if($data->getClientRequestData){
+                            // if($data->getClientRequestData){
                                 $btns .= '<a href="'.route('website_list.view_client_files',$enc_id).'" class="view_client_file" data-id="'. $data->id .'" ><img id="view_client_file'.$data->id.'" src="'.asset('client/images/folder.png').'" alt="view_client_file" title="view_client_file"></a>';
-                            }
+                            // }
                         }
-                        if($project_role == 'PA'){
+                        if($project_role == 'PA' || $project_role == 'QC' || $project_role == 'QA'){
                            
                             if($data->getEnhancedData){
                                 // dd($project_role);
                                 $btns .= '<a href="'.route('batch_list.show',$enc_id).'" class="view_client_file" data-id="'. $data->id .'" ><img id="view_client_file'.$data->id.'" src="'.asset('client/images/view.png').'" alt="view_menu" title="view_menu"></a>';
                             }
                         }
+                        
   
                         // $select .= '</select>';
                         // $select .= $btns;
@@ -375,6 +389,7 @@ class WebsiteListController extends Controller
 
         $scraper = ClientRequestData::create([
             'website_id'        => $request->website_id,
+            'notes'             => $request->notes,
             'path'              => $filename,
         ]);
 
@@ -484,7 +499,7 @@ class WebsiteListController extends Controller
         }
         
        
-        return redirect()->route('website_list.index')->with('success','Users Assigned successfully');
+        return redirect()->back()->with('success','Users Assigned successfully');
        
         
     }
@@ -583,7 +598,7 @@ class WebsiteListController extends Controller
     {
         $user_id            = auth()->user()->id;
         $website_id         = Crypt::decryptString($id);
-        $datas              = ClientRequestData::where('website_id',$website_id)->get();
+        $datas              = ClientRequestData::where('website_id',$website_id)->paginate(10);
         $project_name       = Website::where('id',$website_id)->value('website');
         $project_role       = ProjectUser::where('website_id',$website_id)->where('user_id',$user_id)->value('user_role');
         $scrapper_user_id   = Projectuser::where('website_id',$website_id)->where('user_role','Scrapper')->pluck('user_id');
@@ -594,8 +609,9 @@ class WebsiteListController extends Controller
         $pa_list            = User::whereIn('id', $pa_user_id)->get();
         $qc_list            = User::whereIn('id', $qc_user_id)->get();
         $qa_list            = User::whereIn('id', $qa_user_id)->get();
+        $defult_scrapper    = false;
         
-        return view('client_file',compact('project_role','datas','project_name','scrapper_list','pa_list','qc_list','qa_list','website_id'));
+        return view('client_file',compact('defult_scrapper','project_role','datas','project_name','scrapper_list','pa_list','qc_list','qa_list','website_id'));
     }
 
 }

@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/enhance_data', [SupportController::class,'enhance_data'])->name('enhance_data');
     Route::get('/sku/{id}', [SingleWorkflowController::class,'sku'])->name('sku');
     Route::post('/update_sku', [SingleWorkflowController::class,'update_sku'])->name('update_sku');
+    Route::post('/project_settings', [WebsiteController::class,'project_settings'])->name('project_settings');
 });
 
 // Super Admin
@@ -90,11 +91,11 @@ Route::group(['middleware' => ['auth','role: PM|Power User']], function() {
     Route::post('/validate_website', [WebsiteController::class,'validate_website'])->name('validate_website');
     Route::post('/add_more', [WebsiteController::class,'add_more'])->name('add_more');
     // Route::post('/assign_tl', [WebsiteController::class,'assign_tl'])->name('assign_tl');
-    Route::post('/project_settings', [WebsiteController::class,'project_settings'])->name('project_settings');
+    // Route::post('/project_settings', [WebsiteController::class,'project_settings'])->name('project_settings');
 });
 
 // Team Lead
-Route::group(['middleware' => ['auth','role:Team Lead']], function() {
+Route::group(['middleware' => ['auth']], function() {
     Route::resource('tl', TLController::class);
     Route::get('split_sku/{id}', [TLController::class,'split_sku'])->name('split_sku');
     Route::post('create_batch', [TLController::class,'create_batch'])->name('create_batch');

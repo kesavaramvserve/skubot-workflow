@@ -241,3 +241,18 @@ margin: 0;
     text-decoration: none;
     cursor: pointer;
 }
+.close, .project_settings_close, .assign_users_close, .import_enhance_file_close {
+    color: #aaaaaa;
+    /* float: right; */
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 95%;
+    cursor: pointer;
+}
+
+.close:hover, .project_settings_close:hover, .assign_users_close:hover, .import_enhance_file_close:hover,
+.close:focus, .project_settings_close:focus, .assign_users_close:focus, .import_enhance_file_close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}

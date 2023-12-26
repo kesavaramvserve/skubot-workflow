@@ -289,6 +289,7 @@
                     <label for="tl"><strong>Select Team Lead</strong></label>
                     
                     <select name="tl" id="tl" class="form-control">
+                        <option value="">Select TL</option>
                         @foreach($team_lead_list as $team_lead_lists)
                         <option value="{{$team_lead_lists->id}}" >{{$team_lead_lists->first_name}}</option>
                         @endforeach

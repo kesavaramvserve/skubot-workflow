@@ -510,13 +510,14 @@ class WebsiteController extends Controller
     
     public function assign_tl(Request $request)
     {
+        // dd($request);
         $website_id = $request->website_id;
         $tl_id = $request->tl;
 
         $exist_data = ProjectUser::where('website_id',$website_id)->where('user_role','Team Lead')->get();
 
         if(!blank($exist_data)){
-            ProjectUser::where('website_id',$website_id)->where('user_role','Team Lead')->update([
+            $data = ProjectUser::where('website_id',$website_id)->where('user_role','Team Lead')->update([
                 'user_id'   => $tl_id,
             ]);
         }else{

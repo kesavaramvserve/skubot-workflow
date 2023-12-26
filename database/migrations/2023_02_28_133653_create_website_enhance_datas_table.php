@@ -55,6 +55,15 @@ class CreateWebsiteEnhanceDatasTable extends Migration
             $table->integer('rating_count')->nullable();
             $table->integer('qa_count')->nullable();
             $table->text('category')->nullable();
+            $table->string('color')->nullable();
+            $table->string('pack_of')->nullable();
+            $table->string('size')->nullable();
+            $table->string('product_type')->nullable();
+            $table->string('ref_link1')->nullable();
+            $table->string('ref_link2')->nullable();
+            $table->string('ref_link3')->nullable();
+            $table->string('ref_link4')->nullable();
+            $table->string('ref_link5')->nullable();
             $table->string('stock')->nullable();
             $table->integer('title_character_count');
             $table->integer('description_word_count');

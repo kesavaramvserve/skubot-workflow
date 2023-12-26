@@ -152,7 +152,7 @@
                                 <img src="{{asset('images/website.png')}}" alt="website" class="" width="50px">
                             </div>
                             <div style="float: left;width: 35%;margin-left:12%;" class="mt-2">
-                                <span class=""><strong>Website</strong></span>
+                                <span class=""><strong>Website</strong></span><br>
                                 <span class="" style="font-size:12px;"><strong>{{$website_name}}</strong></span>
                             </div>
                         </div>
@@ -167,7 +167,7 @@
                                     <a href="javascript:void(0)" class="btn submit-button-reverse update_to_live">Update to Live</a>
                                 @endif
                             @endif
-                            @if($workflow != 'single')
+                            @if($user_role != 'PA')
                                 <!-- Export Button -->
                                 <a href="javascript:void(0)" class="btn submit-button export mb-3">Export</a>
                             @endif
@@ -176,8 +176,15 @@
                     
                     <!-- Error Message Row -->
                     <div class="row">
-                        <div class="col-md-12 col-xs-12">
+                        <div class="col-md-6 col-xs-12">
                             <span class="checkbox_error" id="checkbox_error"></span>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            @if($datas)
+                                <span class="float-end mt-3" id="">{{count($datas)}} Records Found</span>
+                            @else
+                                <span class="float-end mt-3" id="">No Records Found</span>
+                            @endif
                         </div>
                     </div>
 
@@ -229,10 +236,12 @@
                                                 @endif
                                                 <td class="">
                                                     {{$data->category}}
-                                                    @if($data->pa_started_at == null)
-                                                        <a href="#" data-route="{{route('sku',$enc_sku_id)}}" class="input-link">Input</a>
-                                                    @else
-                                                        <a href="{{route('sku',$enc_sku_id)}}" target="__blank" class="">Input</a>
+                                                    @if($user_role != 'Team Lead' && $status != 'completed')
+                                                        @if($data->pa_started_at == null)
+                                                            <a href="#" data-route="{{route('sku',$enc_sku_id)}}" class="input-link">Input</a>
+                                                        @else
+                                                            <a href="{{route('sku',$enc_sku_id)}}" target="__blank" class="">Input</a>
+                                                        @endif
                                                     @endif
                                                 </td>
                                                 <td class="">{{$data->mpn}}</td>
@@ -405,6 +414,12 @@
                                 <input type="submit" id="submit_button">
                             </form>
                         </div>
+                        <!-- Pagination -->
+                        <div class="col-12 mt-3">
+                            <div style="margin-left:20%;">
+                                {{$datas->links("pagination::bootstrap-4")}}
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -413,7 +428,7 @@
     </div>
 
  <!-- Enhance data import Modal)-->
- <div id="myModal3" class="modal">
+    <div id="myModal3" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>

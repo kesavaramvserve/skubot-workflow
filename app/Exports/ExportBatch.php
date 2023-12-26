@@ -48,12 +48,13 @@ class ExportBatch implements WithHeadings, WithMapping, FromCollection
     protected $image_sku3;
     protected $image_sku4;
     protected $image_sku5;
+    protected $workflow;
 
     function __construct($batch_id,$user_role,$status,$title_sku1,$title_sku2,$title_sku3,$title_sku4,$title_sku5,
     $description_sku1,$description_sku2,$description_sku3,$description_sku4,$description_sku5,
     $feature_sku1,$feature_sku2,$feature_sku3,$feature_sku4,$feature_sku5,
     $specification_sku1,$specification_sku2,$specification_sku3,$specification_sku4,$specification_sku5,
-    $image_sku1,$image_sku2,$image_sku3,$image_sku4,$image_sku5)
+    $image_sku1,$image_sku2,$image_sku3,$image_sku4,$image_sku5,$workflow)
     {
         $this->batch_id = $batch_id;
         $this->user_role  = $user_role;
@@ -83,6 +84,7 @@ class ExportBatch implements WithHeadings, WithMapping, FromCollection
         $this->image_sku3 = $image_sku3;
         $this->image_sku4 = $image_sku4;
         $this->image_sku5 = $image_sku5;
+        $this->workflow   = $workflow;
     }
 
     public function collection()
@@ -93,22 +95,41 @@ class ExportBatch implements WithHeadings, WithMapping, FromCollection
         //     $data = WebsiteEnhanceData::with('getFeature','getSpecification','getImage')->where('status',1)->whereIn('batch_id', $this->batch_id)->get();
         // }
         $user_where_done = $this->user_role.'_done';
-        if($this->status == 'inqueue'){
-            $data = WebsiteEnhanceData::with('getFeature','getSpecification','getImage','getTL','getPA','getQC','getDA','getQA')->whereIn('batch_id', $this->batch_id)->where($user_where_done,null)->get();
+        if($this->workflow != 'single'){
+            if($this->status == 'inqueue'){
+                $data = WebsiteEnhanceData::with('getFeature','getSpecification','getImage','getTL','getPA','getQC','getDA','getQA')->whereIn('batch_id', $this->batch_id)->where($user_where_done,null)->get();
+            }
+            if($this->status == 'inprogress'){
+                $data = WebsiteEnhanceData::with('getFeature','getSpecification','getImage','getTL','getPA','getQC','getDA','getQA')->whereIn('batch_id', $this->batch_id)->where($user_where_done,0)->get();
+            }
+            if($this->status == 'rejected'){
+                $data = WebsiteEnhanceData::with('getFeature','getSpecification','getImage','getTL','getPA','getQC','getDA','getQA')->where($user_where_done,0)->where('reject_status',1)->whereIn('batch_id', $this->batch_id)->get();
+            }
+            if($this->status == 'completed'){
+                $data = WebsiteEnhanceData::with('getFeature','getSpecification','getImage','getTL','getPA','getQC','getDA','getQA')->where($user_where_done,1)->whereIn('batch_id', $this->batch_id)->get();
+            }
+            if($this->status == ''){
+                $data = WebsiteEnhanceData::with('getFeature','getSpecification','getImage','getTL','getPA','getQC','getDA','getQA')->whereIn('batch_id', $this->batch_id)->get();
+            }
         }
-        if($this->status == 'inprogress'){
-            $data = WebsiteEnhanceData::with('getFeature','getSpecification','getImage','getTL','getPA','getQC','getDA','getQA')->whereIn('batch_id', $this->batch_id)->where($user_where_done,0)->get();
+        if($this->workflow == 'single'){
+            if($this->status == 'inqueue'){
+                $data = WebsiteEnhanceData::with('getEnhanceFeature','getEnhanceSpecification','getEnhanceImage','getTL','getPA','getQC','getDA','getQA')->whereIn('id', $this->batch_id)->where($user_where_done,null)->get();
+            }
+            if($this->status == 'inprogress'){
+                $data = WebsiteEnhanceData::with('getEnhanceFeature','getEnhanceSpecification','getEnhanceImage','getTL','getPA','getQC','getDA','getQA')->whereIn('id', $this->batch_id)->where($user_where_done,0)->get();
+            }
+            if($this->status == 'rejected'){
+                $data = WebsiteEnhanceData::with('getEnhanceFeature','getEnhanceSpecification','getEnhanceImage','getTL','getPA','getQC','getDA','getQA')->where($user_where_done,0)->where('reject_status',1)->whereIn('id', $this->batch_id)->get();
+            }
+            if($this->status == 'completed'){
+                $data = WebsiteEnhanceData::with('getEnhanceFeature','getEnhanceSpecification','getEnhanceImage','getTL','getPA','getQC','getDA','getQA')->where($user_where_done,1)->whereIn('id', $this->batch_id)->get();
+            }
+            if($this->status == ''){
+                $data = WebsiteEnhanceData::with('getEnhanceFeature','getEnhanceSpecification','getEnhanceImage','getTL','getPA','getQC','getDA','getQA')->whereIn('id', $this->batch_id)->get();
+            }
         }
-        if($this->status == 'rejected'){
-            $data = WebsiteEnhanceData::with('getFeature','getSpecification','getImage','getTL','getPA','getQC','getDA','getQA')->where($user_where_done,0)->where('reject_status',1)->whereIn('batch_id', $this->batch_id)->get();
-        }
-        if($this->status == 'completed'){
-            $data = WebsiteEnhanceData::with('getFeature','getSpecification','getImage','getTL','getPA','getQC','getDA','getQA')->where($user_where_done,1)->whereIn('batch_id', $this->batch_id)->get();
-        }
-        if($this->status == ''){
-            $data = WebsiteEnhanceData::with('getFeature','getSpecification','getImage','getTL','getPA','getQC','getDA','getQA')->whereIn('batch_id', $this->batch_id)->get();
-        }
-        // dd($this->status);
+        // dd($data);
         return $data;
     }
 
@@ -118,7 +139,8 @@ class ExportBatch implements WithHeadings, WithMapping, FromCollection
         foreach($data as $datas){
             $this->pa_done = $datas->pa_done;
         }
-        $user_role = auth()->user()->getrole->name;
+        // $user_role = auth()->user()->getrole->name; // old
+        $user_role = $this->user_role;
         // if($this->pa_done != 0){
         //     return [
         //         'name_error',
@@ -566,6 +588,12 @@ class ExportBatch implements WithHeadings, WithMapping, FromCollection
                 'MPN',
                 'NAME',
                 'BRAND',
+                'title_metadata',
+                'description_metadata',
+                'keywords_metadata',
+                'star_rating',
+                'total_rating_count',
+                'total_qa_count',
                 'CATEGORY',
                 'TAG',
                 'OVERVIEW',
@@ -793,6 +821,12 @@ class ExportBatch implements WithHeadings, WithMapping, FromCollection
                 'MPN',
                 'NAME',
                 'BRAND',
+                'title_metadata',
+                'description_metadata',
+                'keywords_metadata',
+                'star_rating',
+                'total_rating_count',
+                'total_qa_count',
                 'CATEGORY',
                 'TAG',
                 'OVERVIEW',
@@ -1222,7 +1256,7 @@ class ExportBatch implements WithHeadings, WithMapping, FromCollection
            $rework      = '';
             // dd($data->name_error);
         // // Feature
-        $feature_list = $data->getFeature;
+        $feature_list = $data->getEnhanceFeature;
         $feature_count = count($feature_list);
         
         for ($x = 1; $x <= $feature_count; $x++) {
@@ -1230,7 +1264,7 @@ class ExportBatch implements WithHeadings, WithMapping, FromCollection
         }
 
         // // Specification
-        $specification_list = $data->getSpecification;
+        $specification_list = $data->getEnhanceSpecification;
         $specification_count = count($specification_list);
         // dd($data);
         for ($x = 1; $x <= $specification_count; $x++) {
@@ -1239,7 +1273,7 @@ class ExportBatch implements WithHeadings, WithMapping, FromCollection
         }
 
         // // Image
-        $image_list = $data->getImage;
+        $image_list = $data->getEnhanceImage;
         $image_count = count($image_list);
         for ($x = 1; $x <= $image_count; $x++) {
             ${"IMG_SRC_".$x} = $image_list[$x-1]->image;
@@ -1376,7 +1410,8 @@ class ExportBatch implements WithHeadings, WithMapping, FromCollection
         if(!blank($data->getQA)){
             $qa_id = $data->getQA->first_name;
         }
-        $user_role = auth()->user()->getrole->name;
+        // $user_role = auth()->user()->getrole->name; // old
+        $user_role = $this->user_role;
         // if($this->pa_done != 0){
         //     return [
         //         $data->name_error,
@@ -1825,6 +1860,12 @@ class ExportBatch implements WithHeadings, WithMapping, FromCollection
                 $data->mpn,
                 $data->title,
                 $data->brand,
+                $data->title_metadata,
+                $data->description_metadata,
+                $data->keywords_metadata,
+                $data->rating,
+                $data->rating_count,
+                $data->qa_count,
                 $data->category,
                 $data->tag,
                 $data->description,
@@ -2052,6 +2093,12 @@ class ExportBatch implements WithHeadings, WithMapping, FromCollection
                 $data->mpn,
                 $data->title,
                 $data->brand,
+                $data->title_metadata,
+                $data->description_metadata,
+                $data->keywords_metadata,
+                $data->rating,
+                $data->rating_count,
+                $data->qa_count,
                 $data->category,
                 $data->tag,
                 $data->description,
