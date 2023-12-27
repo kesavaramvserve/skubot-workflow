@@ -152,7 +152,7 @@
                                 <img src="{{asset('images/website.png')}}" alt="website" class="" width="50px">
                             </div>
                             <div style="float: left;width: 35%;margin-left:12%;" class="mt-2">
-                                <span class=""><strong>Website</strong></span><br>
+                                <span class=""><strong>Project</strong></span><br>
                                 <span class="" style="font-size:12px;"><strong>{{$website_name}}</strong></span>
                             </div>
                         </div>
@@ -164,12 +164,12 @@
                                 @endif
                                 <!-- Update Live Button -->
                                 @if($status == 'completed')
-                                    <a href="javascript:void(0)" class="btn submit-button-reverse update_to_live">Update to Live</a>
+                                    <!-- <a href="javascript:void(0)" class="btn submit-button-reverse update_to_live">Update to Live</a> -->
                                 @endif
                             @endif
                             @if($user_role != 'PA')
                                 <!-- Export Button -->
-                                <a href="javascript:void(0)" class="btn submit-button export mb-3">Export</a>
+                                <a href="javascript:void(0)" class="btn submit-button export">Export</a>
                             @endif
                         </div>
                     </div>
@@ -180,8 +180,8 @@
                             <span class="checkbox_error" id="checkbox_error"></span>
                         </div>
                         <div class="col-md-6 col-xs-12">
-                            @if($datas)
-                                <span class="float-end mt-3" id="">{{count($datas)}} Records Found</span>
+                            @if($sku_count != '')
+                                <span class="float-end mt-3" id="">{{$sku_count}} Records Found</span>
                             @else
                                 <span class="float-end mt-3" id="">No Records Found</span>
                             @endif

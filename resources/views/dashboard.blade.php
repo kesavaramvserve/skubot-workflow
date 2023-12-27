@@ -129,7 +129,7 @@
                                 <img src="{{asset('images/website.png')}}" alt="website" class="" width="50px">
                             </div>
                             <div style="float: left;width: 35%;margin-left:5%;" class="mt-2">
-                                <span class=""><strong>Website</strong></span><br>
+                                <span class=""><strong>Project</strong></span><br>
                                 <span class="">{{$website_name}}</span>
                             </div>
                         </div>
@@ -288,9 +288,9 @@
                                     <a class="btn btn-queue select_batch" data-id="{{$website_id}}" data-role="QA" data-status="completed" href="javascript:void(0)">Completed Queue</a>
                                 </div>
                                 <!-- Live Updated -->
-                                <div class="col-md-3 col-xs-12 mb-3 text-center">
+                                <!-- <div class="col-md-3 col-xs-12 mb-3 text-center">
                                     <a class="btn btn-progress select_batch" data-id="{{$website_id}}" data-role="" data-status="updated" href="javascript:void(0)">Live Updated</a>
-                                </div>
+                                </div> -->
                             </div>
                             @endif
                         </div>
