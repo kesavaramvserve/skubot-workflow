@@ -27,10 +27,24 @@
         .multiselect-dropdown{
             width : 100% !important;
         }
+        .submit-button{
+            font-size: 14px !important;
+            border: 1px solid #C8EB7D;
+            border-radius: 10px;
+            background-color : #C8EB7D;
+        }
         .submit-button-reverse{
             font-size: 14px !important;
             border: 1px solid #C8EB7D;
             border-radius: 10px;
+        }
+        .submit-button:hover{
+            border: 1px solid #C8EB7D;
+            background-color : #fff;
+        }
+        .submit-button-reverse:hover{
+            background-color : #C8EB7D;
+            color: #fff;
         }
     </style>
 </head>
@@ -77,16 +91,26 @@
             <div class="main-section col-10">
                 <!-- Table Heading -->
                 <div class="row heading">
-                    <div class="col-12">
+                    <div class="col-6">
                         <h4 class="float-start mt-2">Client File List</h4>
+                    </div>
+                    <div class="col-3">
+                        <div class="mt-2">    
+                            <span>Project : <b>{{$project_name}}</b></span>
+                        </div>  
+                    </div>
+                    <div class="col-3">
+                        @if(!$defult_scrapper)
+                            <a class="float-end mt-2 btn submit-button-reverse" href="{{ url()->previous() }}">Back</a>
+                        @endif
                     </div>
                 </div>
 
                 <!-- Back Button -->
                 <div class="row">
                     <div class="col-11">
-                        @if(!$defult_scrapper)
-                            <a class="float-end mt-2 btn submit-button-reverse" href="{{ url()->previous() }}">Back</a>
+                        @if($project_role == 'Team Lead')
+                            <a class="float-end mt-2 btn submit-button import_client_file" data-id="{{$website_id}}" href="javascript:void(0)">Import</a>
                         @endif
                     </div>
                     <div class="col-1">
@@ -99,7 +123,7 @@
                         <table class="data-table table  nowrap" style="width:100%">
                             <thead>
                                 <th style="min-width:30px !important;">ID</th>
-                                <th style="min-width:80px !important;">Project Name</th>
+                                <!-- <th style="min-width:80px !important;">Project Name</th> -->
                                 <th style="min-width:80px !important;">File Name</th>
                                 <th style="min-width:80px !important;">Notes</th>
                                 <th style="min-width:80px !important;">Updated at </th>
@@ -110,7 +134,7 @@
                                     @foreach($datas as $data)
                                         <tr>
                                             <td>{{$data->id}}</td>
-                                            <td>{{$data->getWebsite->website}}</td>
+                                            <!-- <td>{{$data->getWebsite->website}}</td> -->
                                             <td>{{$data->path}}</td>
                                             <td>{{$data->notes}}</td>
                                             <td>{{$data->updated_at}}</td>
@@ -129,7 +153,7 @@
                                         <tr>
                                             <?php $enc_id = Crypt::encryptString($data->id); ?>
                                             <td>{{$data->id}}</td>
-                                            <td>{{$project_name}}</td>
+                                            <!-- <td>{{$project_name}}</td> -->
                                             <td>{{$data->path}}</td>
                                             <td>{{$data->notes}}</td>
                                             <td>{{$data->updated_at}}</td>
@@ -167,8 +191,31 @@
         </div>
     </div>
 
-
-    <!-- Import Scrapped File from Scrapper Login-->
+<!-- Import Client File from TL Login-->
+    <div id="myModal3" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="row">
+                <form action="{{route('import_client_file')}}" method="post" enctype="multipart/form-data" id="support_enhance">
+                    @csrf
+                    <input type="hidden" name="website_id" value="" id="website_id3"> 
+                    <div class="mb-3">
+                        <label for="file">Import File</label>
+                        <input type="file" name="file" class="form-control" id="fileinput3">
+                    </div>
+                    <div class="mb-3">
+                        <label for="notes">Notes</label>
+                        <input type="text" name="notes" class="form-control" id="notes">
+                    </div>
+                    <div class="mb-3">
+                        <input type="submit" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!-- Import Scrapped File from Scrapper Login-->
     <div id="scrapped_file_modal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
@@ -197,6 +244,30 @@
 <script src="{{ asset('js/multiselect-dropdown.js') }}"></script>
 
 <script>
+
+    // Import Client File Open
+    $(document).on("click",".import_client_file",function() {
+        $("#myModal3").show();
+        var website_id = $(this).attr('data-id');
+        $("#website_id3").val(website_id);
+    });
+
+    // Import Client File Form Submit
+    $("#support_enhance").on("submit", function (e) {
+        var data = $("#fileinput3").val();
+        $(".error").empty();
+        if(data.length < 1){
+            e.preventDefault();
+            $("#fileinput3").after('<span class="error">This field is required </span>');
+        }
+    });
+
+    // Import Client File Close
+    $(document).on("click",".close",function() {
+        $("#support_enhance")[0].reset();
+        $(".error").empty();
+        $("#myModal3").hide();
+    });
 
     // Assign Users Modal Open
     $(document).on("click",".assign_users",function() {

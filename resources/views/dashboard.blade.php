@@ -147,12 +147,12 @@
                                     </div>
                                 </div>
                                 <!-- Import Client File -->
-                                <div class="col-md-3 col-xs-12 text-center mb-3 mt-3">
+                                <!-- <div class="col-md-3 col-xs-12 text-center mb-3 mt-3">
                                     <a class="btn btn-queue import_client_file" data-id="{{$website_id}}" href="javascript:void(0)">Import</a>
-                                </div>
+                                </div> -->
                                 <!-- Project Settings -->
                                 <div class="col-md-3 col-xs-12 text-center mb-3 mt-3">
-                                    <a class="btn btn-progress project_settings"
+                                    <a class="btn btn-queue project_settings"
                                         data-id="{{ $data[0]->id }}"
                                         data-platform="{{ $data[0]->platform }}"
                                         data-workflow-settings="{{ $data[0]->workflow_settings }}"
@@ -167,12 +167,12 @@
                                 </div>
                                 <!-- Assign Users -->
                                 <div class="col-md-3 col-xs-12 text-center mb-3 mt-3">
-                                    <a class="btn btn-rejected assign_users" data-id="{{$website_id}}" href="javascript:void(0)">Assign Users</a>
+                                    <a class="btn btn-progress assign_users" data-id="{{$website_id}}" href="javascript:void(0)">Assign Users</a>
                                 </div>
                                 <!-- View Client Files -->
                                 <div class="col-md-3 col-xs-12 text-center mb-3 mt-3">
                                     <?php $enc_id = Crypt::encryptString($website_id); ?>
-                                    <a class="btn btn-completed" data-id="{{$website_id}}" href="{{route('website_list.view_client_files',$enc_id)}}">View Client Files</a>
+                                    <a class="btn btn-rejected" data-id="{{$website_id}}" href="{{route('website_list.view_client_files',$enc_id)}}">View Client Files</a>
                                 </div>
                             </div>
                             @endif
