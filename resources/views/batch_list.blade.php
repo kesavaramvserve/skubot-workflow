@@ -238,7 +238,11 @@
                                                 <td class="">
                                                     {{$data->category}}
                                                     @if($user_role != 'Team Lead' && $status != 'completed' && $status != 'reworked')
-                                                        <a href="{{route('sku',$enc_sku_id)}}" class="">Input</a>
+                                                        @if($data->pa_started_at == null)
+                                                            <a href="{{route('sku',$enc_sku_id)}}" onclick="return confirm('Are you sure you want to start?')" class="">Input</a>
+                                                        @else
+                                                            <a href="{{route('sku',$enc_sku_id)}}" class="">Input</a>
+                                                        @endif
                                                     @endif
                                                 </td>
                                                 <td class="">{{$data->mpn}}</td>
