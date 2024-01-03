@@ -109,7 +109,8 @@
                                     <h6 class="user-name mt-2">{{ auth()->user()->first_name }}</h6>
                                 @else
                                     <h6 class="user-name">{{ auth()->user()->first_name }}</h6>
-                                    <span class="user-role">({{ auth()->user()->getRole->name }})</span>
+                                    <span class="user-role">({{ $user_role }})</span>
+                                    <!-- <span class="user-role">({{ auth()->user()->getRole->name }})</span> -->
                                 @endif
                             </div>
                         </div>
@@ -236,12 +237,8 @@
                                                 @endif
                                                 <td class="">
                                                     {{$data->category}}
-                                                    @if($user_role != 'Team Lead' && $status != 'completed')
-                                                        @if($data->pa_started_at == null)
-                                                            <a href="#" data-route="{{route('sku',$enc_sku_id)}}" class="input-link">Input</a>
-                                                        @else
-                                                            <a href="{{route('sku',$enc_sku_id)}}" target="__blank" class="">Input</a>
-                                                        @endif
+                                                    @if($user_role != 'Team Lead' && $status != 'completed' && $status != 'reworked')
+                                                        <a href="{{route('sku',$enc_sku_id)}}" class="">Input</a>
                                                     @endif
                                                 </td>
                                                 <td class="">{{$data->mpn}}</td>
@@ -283,7 +280,24 @@
                                                         @endif
                                                     </td>
                                                     <td class="">
-                                                        
+                                                        @if($data->name_error)
+                                                            Name Error      : {{$data->name_error}},<br>
+                                                        @endif
+                                                        @if($data->caption_error)
+                                                            Caption Error   : {{$data->caption_error}},<br>
+                                                        @endif
+                                                        @if($data->manf_error)
+                                                            Manf Error      : {{$data->manf_error}},<br>
+                                                        @endif
+                                                        @if($data->image_error)
+                                                            Image Error     : {{$data->image_error}},<br>
+                                                        @endif
+                                                        @if($data->path_error)
+                                                            Path Error      : {{$data->path_error}},<br>
+                                                        @endif
+                                                        @if($data->other_error)
+                                                            Other Error     : {{$data->other_error}}
+                                                        @endif
                                                     </td>
                                                 @endif
                                             </tr>

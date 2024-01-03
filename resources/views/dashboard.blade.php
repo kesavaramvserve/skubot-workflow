@@ -31,17 +31,22 @@
             border-radius: 10px 10px 0 0;
         }
         .btn-queue{
+            width : 230px !important;
             background-color: #B2DCB8 !important;
         }
         .btn-progress{
+            width : 230px !important;
             background-color: #FFE29A !important;
         }
         .btn-rejected{
+            width : 230px !important;
             background-color: #FFD3D0 !important;
         }
         .btn-completed{
+            width : 230px !important;
             background-color: #39BC86 !important;
         }
+        
         @media (max-width: 844px) {
     
             .main-section{
@@ -92,7 +97,8 @@
                             </div>
                             <div class="user">
                                 <h6 class="user-name">{{ auth()->user()->first_name }}</h6>
-                                <span class="user-role">({{ auth()->user()->getRole->name }})</span>
+                                <span class="user-role">({{ $project_role }})</span>
+                                <!-- <span class="user-role">({{ auth()->user()->getRole->name }})</span> -->
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -187,21 +193,21 @@
                                 <!-- PA In Queue -->
                                 @if($project_role == 'Team Lead')
                                     <div class="col-md-3 col-xs-12 text-center mb-3 mt-3">
-                                        <a class="btn btn-queue select_batch" data-id="{{$website_id}}" data-role="PA" data-status="inqueue" href="javascript:void(0)">PA Queue</a>
+                                        <a class="btn btn-queue select_batch" data-id="{{$website_id}}" data-role="PA" data-status="inqueue" href="javascript:void(0)">PA Queue <span class="badge bg-danger">{{$pa_inqueue_sku_count}}</span></a>
                                     </div>
                                 @endif
                                 <!-- PA In Progress -->
                                 <div class="col-md-3 col-xs-12 text-center mb-3 mt-3">
-                                    <a class="btn btn-progress select_batch" data-id="{{$website_id}}" data-role="PA" data-status="inprogress" href="javascript:void(0)">PA In Progress</a>
+                                    <a class="btn btn-progress select_batch" data-id="{{$website_id}}" data-role="PA" data-status="inprogress" href="javascript:void(0)">PA In Progress <span class="badge bg-danger">{{$pa_inprogress_sku_count}}</span></a>
                                 </div>
                                 <!-- QC Rejected -->
                                 <div class="col-md-3 col-xs-12 text-center mb-3 mt-3">
-                                    <a class="btn btn-rejected select_batch" data-id="{{$website_id}}" data-role="PA" data-status="rejected" href="javascript:void(0)">QC Rejected</a>
+                                    <a class="btn btn-rejected select_batch" data-id="{{$website_id}}" data-role="PA" data-status="rejected" href="javascript:void(0)">QC Rejected <span class="badge bg-danger">{{$qc_rejected_sku_count}}</span></a>
                                 </div>
                                 <!-- PA Completed -->
                                 @if($project_role == 'PA')
                                     <div class="col-md-3 col-xs-12 text-center mb-3 mt-3">
-                                        <a class="btn btn-completed select_batch" data-id="{{$website_id}}" data-role="PA" data-status="completed" href="javascript:void(0)">PA Completed</a>
+                                        <a class="btn btn-completed select_batch" data-id="{{$website_id}}" data-role="PA" data-status="completed" href="javascript:void(0)">PA Completed <span class="badge bg-danger">{{$pa_completed_sku_count}}</span></a>
                                     </div>
                                 @endif
                             </div>
@@ -217,23 +223,23 @@
                                     <!-- QC In Queue -->
                                     @if($project_role == 'Team Lead')
                                         <div class="col-md-3 col-xs-12 mb-3 text-center">
-                                            <a class="btn btn-queue select_batch" data-id="{{$website_id}}" data-role="QC" data-status="inqueue" href="javascript:void(0)">QC Queue</a>
+                                            <a class="btn btn-queue select_batch" data-id="{{$website_id}}" data-role="QC" data-status="inqueue" href="javascript:void(0)">QC Queue <span class="badge bg-danger">{{$qc_inqueue_sku_count}}</span></a>
                                         </div>
                                     @endif
                                     <!-- QC In Progress -->
                                     <div class="col-md-3 col-xs-12 mb-3 text-center">
-                                        <a class="btn btn-progress select_batch" data-id="{{$website_id}}" data-role="QC" data-status="inprogress" href="javascript:void(0)">QC In Progress</a>
+                                        <a class="btn btn-progress select_batch" data-id="{{$website_id}}" data-role="QC" data-status="inprogress" href="javascript:void(0)">QC In Progress <span class="badge bg-danger">{{$qc_inprogress_sku_count}}</span></a>
                                     </div>
                                     <!-- QC Rework Done -->
                                     @if($project_role == 'QC')
                                         <div class="col-md-3 col-xs-12 mb-3 text-center">
-                                            <a class="btn btn-light select_batch" data-id="{{$website_id}}" data-role="QC" data-status="reworked" href="javascript:void(0)">Rework Done</a>
+                                            <a class="btn btn-light select_batch" data-id="{{$website_id}}" data-role="QC" data-status="reworked" href="javascript:void(0)">Rework Done <span class="badge bg-danger">{{$qc_reworked_sku_count}}</span></a>
                                         </div>
                                     @endif
                                     <!-- QC Completed -->
                                     @if($project_role == 'QC')
                                         <div class="col-md-3 col-xs-12 mb-3 text-center">
-                                            <a class="btn btn-completed select_batch" data-id="{{$website_id}}" data-role="QC" data-status="completed" href="javascript:void(0)">QC Completed</a>
+                                            <a class="btn btn-completed select_batch" data-id="{{$website_id}}" data-role="QC" data-status="completed" href="javascript:void(0)">QC Completed <span class="badge bg-danger">{{$qc_completed_sku_count}}</span></a>
                                         </div>
                                     @endif
                                     <!-- QC Import Enhance File -->
@@ -255,16 +261,16 @@
                                 <!-- QA IN Queue -->
                                 @if($project_role == 'Team Lead')
                                     <div class="col-md-3 col-xs-12 mb-3 text-center">
-                                        <a class="btn btn-queue select_batch" data-id="{{$website_id}}" data-role="QA" data-status="inqueue" href="javascript:void(0)">QA Queue</a>
+                                        <a class="btn btn-queue select_batch" data-id="{{$website_id}}" data-role="QA" data-status="inqueue" href="javascript:void(0)">QA Queue <span class="badge bg-danger">{{$qa_inqueue_sku_count}}</span></a>
                                     </div>
                                 @endif
                                 <div class="col-md-3 col-xs-12 mb-3 text-center">
-                                    <a class="btn btn-progress select_batch" data-id="{{$website_id}}" data-role="QA" data-status="inprogress" href="javascript:void(0)">QA In Progress</a>
+                                    <a class="btn btn-progress select_batch" data-id="{{$website_id}}" data-role="QA" data-status="inprogress" href="javascript:void(0)">QA In Progress <span class="badge bg-danger">{{$qa_inprogress_sku_count}}</span></a>
                                 </div>
                                 <!-- QA Completed -->
                                 @if($project_role == 'QA')
                                     <div class="col-md-3 col-xs-12 mb-3 text-center">
-                                        <a class="btn btn-completed select_batch" data-id="{{$website_id}}" data-role="QA" data-status="completed" href="javascript:void(0)">QA Completed</a>
+                                        <a class="btn btn-completed select_batch" data-id="{{$website_id}}" data-role="QA" data-status="completed" href="javascript:void(0)">QA Completed <span class="badge bg-danger">{{$qa_completed_sku_count}}</span></a>
                                     </div>
                                 @endif
                                 <!-- QA Import Enhance File -->
@@ -285,7 +291,7 @@
                                 </div>
                                 <!-- Completed Queue -->
                                 <div class="col-md-3 col-xs-12 mb-3 text-center">
-                                    <a class="btn btn-queue select_batch" data-id="{{$website_id}}" data-role="QA" data-status="completed" href="javascript:void(0)">Completed Queue</a>
+                                    <a class="btn btn-queue select_batch" data-id="{{$website_id}}" data-role="QA" data-status="completed" href="javascript:void(0)">Completed Queue <span class="badge bg-danger">{{$qa_completed_sku_count}}</span></a>
                                 </div>
                                 <!-- Live Updated -->
                                 <!-- <div class="col-md-3 col-xs-12 mb-3 text-center">

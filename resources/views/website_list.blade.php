@@ -111,6 +111,7 @@
                                 <th style="min-width:80px !important;">Project </th>
                                 <th style="min-width:80px !important;">Role </th>
                                 <th style="min-width:50px !important;">Action </th>
+                                <th style="min-width:50px !important;">Updated at </th>
                             </thead>
                             <tbody>
                                 
@@ -369,6 +370,7 @@
             {data: 'website', name: 'website', orderable: true},
             {data: 'role', name: 'role', orderable: true},
             {data: 'action', name: 'action', orderable: false, searchable: false},
+            {data: 'updated_at', name: 'updated_at', orderable: true},
         ]
     });
 

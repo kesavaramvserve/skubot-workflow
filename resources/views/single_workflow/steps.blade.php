@@ -169,7 +169,8 @@
                                     <h6 class="user-name mt-2">{{ auth()->user()->first_name }}</h6>
                                 @else
                                     <h6 class="user-name">{{ auth()->user()->first_name }}</h6>
-                                    <span class="user-role">({{ auth()->user()->getRole->name }})</span>
+                                    <span class="user-role">({{ $project_role }})</span>
+                                    <!-- <span class="user-role">({{ auth()->user()->getRole->name }})</span> -->
                                 @endif
                             </div>
                         </div>
@@ -194,9 +195,12 @@
 
                     <!-- Page Heading -->
                     <div class="row heading">
-                        <div class="col-12">
+                        <div class="col-6">
                             <h4 class="mt-1">SKU Edit</h4>
                         </div>
+                        <dv class="col-6">
+                            <a class="float-end btn submit-button-reverse" href="{{ url()->previous() }}">Back</a>
+                        </dv>
                     </div>
                     
                     <!-- Error Message Row -->
@@ -1218,31 +1222,31 @@
         $("#title").val(title);
     });
 
-    $('#steps_form').on('submit', function(e) {
-        var pa_done = $("#pa_done").val();
-        if(pa_done == 1){
-            e.preventDefault(); // Prevent the default form submission
+    // $('#steps_form').on('submit', function(e) {
+    //     var pa_done = $("#pa_done").val();
+    //     if(pa_done == 1){
+    //         e.preventDefault(); // Prevent the default form submission
             
-            // AJAX submission example
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                success: function(response) {
-                    // On successful form submission
-                    alert('Form submitted successfully!');
-                    window.close(); // Close the window
-                },
-                error: function(error) {
-                    // Handle error if the form submission fails
-                    console.error(error);
-                }
-            });
-        }
+    //         // AJAX submission example
+    //         $.ajax({
+    //             type: 'POST',
+    //             url: $(this).attr('action'),
+    //             data: $(this).serialize(),
+    //             success: function(response) {
+    //                 // On successful form submission
+    //                 alert('Form submitted successfully!');
+    //                 window.close(); // Close the window
+    //             },
+    //             error: function(error) {
+    //                 // Handle error if the form submission fails
+    //                 console.error(error);
+    //             }
+    //         });
+    //     }
 
-        // If you're using traditional form submission, you can directly use window.close() here.
-        // window.close();
-    });
+    //     // If you're using traditional form submission, you can directly use window.close() here.
+    //     // window.close();
+    // });
 
 </script>
  

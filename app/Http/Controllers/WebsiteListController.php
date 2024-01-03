@@ -113,6 +113,10 @@ class WebsiteListController extends Controller
                     $role = ProjectUser::where('website_id',$data->id)->where('user_id',auth()->user()->id)->value('user_role');
                     return $role;
                 })
+                ->editColumn('updated_at', function ($data) {
+                    $updated_at = $data->updated_at;
+                    return $updated_at;
+                })
                 ->addColumn('action', function($data){
                         $enc_id = Crypt::encryptString($data->id);
                         $btns = '';

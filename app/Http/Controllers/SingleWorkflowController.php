@@ -17,9 +17,11 @@ use Carbon\Carbon;
 class SingleWorkflowController extends Controller
 {
     public function sku($id){
-        $sku_id     = Crypt::decryptString($id);
-        $website_id = WebsiteEnhanceData::where('id',$sku_id)->value('website_id');
-        $time_track = Website::where('id',$website_id)->value('time_track');
+        $user_id        = auth()->user()->id;
+        $sku_id         = Crypt::decryptString($id);
+        $website_id     = WebsiteEnhanceData::where('id',$sku_id)->value('website_id');
+        $time_track     = Website::where('id',$website_id)->value('time_track');
+        $project_role   = ProjectUser::where('website_id',$website_id)->where('user_id',$user_id)->value('user_role');
         
         if($time_track ==1){
             WebsiteEnhanceData::where('id',$sku_id)->update([
@@ -41,11 +43,10 @@ class SingleWorkflowController extends Controller
         $selection_guide        = DigitalAsset::where('website_enhance_data_id',$sku_id)->where('file_type','selection_guide')->get();
         $video                  = DigitalAsset::where('website_enhance_data_id',$sku_id)->where('file_type','video')->get();
 
-        return view('single_workflow.steps',compact('website_id','data','img_src','data_360','spec_sheet','part_drawing','brochure','catalog_page','white_paper','warranty_document','installation_manual','how_to_document','selection_guide','video'));
+        return view('single_workflow.steps',compact('project_role','website_id','data','img_src','data_360','spec_sheet','part_drawing','brochure','catalog_page','white_paper','warranty_document','installation_manual','how_to_document','selection_guide','video'));
     }
 
     public function update_sku(Request $request){
-        // dd($request);
         $user_id            = auth()->user()->id;
         $website_id         = $request->website_id;
         $sku_id             = $request->sku_id;
@@ -54,9 +55,10 @@ class SingleWorkflowController extends Controller
         $image_arr          = $request->img_src;
         $download_status    = $request->download_status;
         $project_role       = ProjectUser::where('website_id',$website_id)->where('user_id',$user_id)->value('user_role');
-        $pa_done            = $request->db_pa_done;;
-        $qc_done            = $request->db_qc_done;;
-        $qa_done            = $request->db_qa_done;;
+        $pa_done            = $request->db_pa_done;
+        $qc_done            = $request->db_qc_done;
+        $qa_done            = $request->db_qa_done;
+        $complete_status    = $request->pa_done;
         
         // Digital Asset Upload
         function digital_image_upload($imageUrl,$mpn,$imgname) {
@@ -1149,6 +1151,10 @@ class SingleWorkflowController extends Controller
         }
 
         DB::commit();
+
+        if($complete_status == 1){
+            return redirect()->route('batch_list.index')->with('success','SKU Updated Successfully!!!');
+        }
         
         $enc_id = Crypt::encryptString($sku_id);
         $data = WebsiteEnhanceData::where('id',$sku_id)->get();

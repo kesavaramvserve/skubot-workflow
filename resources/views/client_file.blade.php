@@ -68,7 +68,8 @@
                                     <h6 class="user-name mt-2">{{ auth()->user()->first_name }}</h6>
                                 @else
                                     <h6 class="user-name">{{ auth()->user()->first_name }}</h6>
-                                    <span class="user-role">({{ auth()->user()->getRole->name }})</span>
+                                    <span class="user-role">({{ $project_role }})</span>
+                                    <!-- <span class="user-role">({{ auth()->user()->getRole->name }})</span> -->
                                 @endif
                             </div>
                         </div>

@@ -432,28 +432,49 @@ class BatchListController extends Controller
      */
     public function show($id)
     {
-        // dd($id);
-        // if(!empty($request->website_id)){
-        //     $website_id = Crypt::decryptString($request->id);
-        // }else{
-            // $website_id     = Crypt::decryptString($id);
-            // $website_name   = Website::where('id',$website_id)->value('website');
-            // dd($website_name);
-        // }
-        // $tl_id = auth()->user()->id;
-        // $datas = WebsiteEnhanceData::with('getTL','getPA','getQC','getDA','getQA')->select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->orderBy('total', 'desc')->groupBy('batch_id')->get();
-        // $pa_lists = User::where('tl_id',$tl_id)->role('PA')->get();
-        // $qc_lists = User::where('tl_id',$tl_id)->role('QC')->get();
-        // $da_lists = User::where('tl_id',$tl_id)->role('DA')->get();
-        // $qa_lists = User::where('tl_id',$tl_id)->role('QA')->get();
-        // // dd($datas);
-        // $status = '';
-        // return view('batch_list',compact('status','datas','pa_lists','qc_lists','da_lists','qa_lists','website_id'));
         $user_id        = auth()->user()->id; 
         $website_id     = Crypt::decryptString($id);
         $project_role   = ProjectUser::where('website_id',$website_id)->where('user_id',$user_id)->value('user_role');
         $data           = Website::where('id',$website_id)->get();
         $website_name   = Website::where('id',$website_id)->value('website');
+        $workflow       = Website::where('id',$website_id)->value('workflow_settings');
+
+        
+        if($workflow == 'bluk'){                
+            $pa_inqueue_sku_count = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where($pa_id,null)->orderBy('total', 'desc')->groupBy('batch_id')->count();
+            $qc_inqueue_sku_count = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where($qc_id,null)->where('pa_done',1)->orderBy('total', 'desc')->groupBy('batch_id')->count();
+            $qa_inqueue_sku_count = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where($qa_id,null)->where('qc_done',1)->orderBy('total', 'desc')->groupBy('batch_id')->count();
+            $pa_inprogress_sku_count = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where($pa_done,0)->orWhere('reject_status',1)->orderBy('total', 'desc')->groupBy('batch_id')->count();
+            $qc_inprogress_sku_count = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where($qc_id,null)->where('pa_done',1)->orderBy('total', 'desc')->groupBy('batch_id')->count();
+            $qa_inprogress_sku_count = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where($qa_id,null)->where('qc_done',1)->orderBy('total', 'desc')->groupBy('batch_id')->count();
+        }
+        if($workflow == 'single'){
+
+            $pa_inqueue_sku_count       = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('pa_id',null)->count();
+            $qc_inqueue_sku_count       = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('qc_id',null)->where('pa_done',1)->count();
+            $qa_inqueue_sku_count       = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('qa_id',null)->where('qc_done',1)->count();
+            
+            if($project_role == 'Team Lead'){
+                $pa_inprogress_sku_count    = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('pa_id','!=',null)->where('pa_done',0)->count();
+                $qc_inprogress_sku_count    = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('qc_id','!=',null)->where('qc_done',0)->count();
+                $qa_inprogress_sku_count    = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('qa_id','!=',null)->where('qa_done',0)->count();
+                $qc_rejected_sku_count      = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('pa_done',0)->where('reject_status',1)->count();
+                $qc_reworked_sku_count      = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('pa_done',1)->where('reject_status',1)->count();
+                $pa_completed_sku_count     = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('pa_done',1)->count();
+                $qc_completed_sku_count     = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('qc_done',1)->count();
+                $qa_completed_sku_count     = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('qa_done',1)->count();
+            }else{
+                $pa_inprogress_sku_count    = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('pa_id',$user_id)->where('pa_done',0)->count();
+                $qc_inprogress_sku_count    = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('qc_id',$user_id)->where('qc_done',0)->count();
+                $qa_inprogress_sku_count    = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('qa_id',$user_id)->where('qa_done',0)->count();
+                $qc_rejected_sku_count      = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('pa_id',$user_id)->where('pa_done',0)->where('reject_status',1)->count();
+                $qc_reworked_sku_count      = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('qc_id',$user_id)->where('qc_done',1)->where('reject_status',1)->count();
+                $pa_completed_sku_count     = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('pa_id',$user_id)->where('pa_done',1)->count();
+                $qc_completed_sku_count     = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('qc_id',$user_id)->where('qc_done',1)->count();
+                $qa_completed_sku_count     = WebsiteEnhanceData::where('website_id',$website_id)->where('batch_id','!=',null)->where('qa_id',$user_id)->where('qa_done',1)->count();
+            }
+        }         
+
         $other_user_list = User::whereDoesntHave('roles', function ($query) {
                 $query->where('name', 'Team Lead');
             })->whereDoesntHave('roles', function ($query) {
@@ -470,7 +491,11 @@ class BatchListController extends Controller
             $datas = WebsiteEnhanceData::select('*','batch_id', DB::raw('count(*) as total'))->where('website_id',$website_id)->where('batch_id','!=',null)->where('live_updated_at','!=',null)->orderBy('total', 'desc')->groupBy('batch_id')->get();
             return view('batch_list',compact('datas','website_id','heading','website_name','status','current_role'));
         }else{
-            return view('dashboard',compact('website_id','website_name','project_role','data','other_user_list'));
+            return view('dashboard',compact('website_id','website_name',
+            'pa_inqueue_sku_count','qc_inqueue_sku_count','qa_inqueue_sku_count',
+            'pa_inprogress_sku_count','qc_inprogress_sku_count','qa_inprogress_sku_count',
+            'qc_rejected_sku_count','qc_reworked_sku_count','pa_completed_sku_count','qc_completed_sku_count',
+            'qa_completed_sku_count','project_role','data','other_user_list'));
         }
         
     }
