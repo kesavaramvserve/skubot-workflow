@@ -118,6 +118,11 @@
             max-height: 300px; /* Adjust this value as needed */
             overflow-y: auto; /* Add scrollbar if content exceeds max height */
         }
+        #timer{
+            color : red;
+            font-size :16px;
+            font-weight : bold;
+        }
         @media (max-width: 844px) {
     
             .main-section{
@@ -199,6 +204,7 @@
                             <h4 class="mt-1">SKU Edit</h4>
                         </div>
                         <dv class="col-6">
+                            <span id="timer"></span>
                             <a class="float-end btn submit-button-reverse" href="{{ url()->previous() }}">Back</a>
                         </dv>
                     </div>
@@ -248,6 +254,7 @@
                         <input type="hidden" name="db_qc_done" id="" value="{{$data[0]->qc_done}}">
                         <input type="hidden" name="db_qa_done" id="" value="{{$data[0]->qa_done}}">
                         <input type="hidden" name="download_status" id="download_status" value="">
+                        <input type="hidden" name="pa_started_at" id="pa_started_at" value="{{$data[0]->pa_started_at}}">
                         <!-- Step 1 Form -->
                         <div class="row inputs-row ms-4" id="step1_form">
                             <div class="col-6">
@@ -779,6 +786,43 @@
     $(document).ready(function(){
         $(".inputs-row").hide();
         $("#step1_form").show();
+    
+        var pa_started_at = $("#pa_started_at").val();
+        
+        console.log(pa_started_at)
+        if(pa_started_at != null){
+            var specificTime = new Date(pa_started_at); // Replace this with your specific time
+            var currentTime = new Date();
+
+            var timeDifferenceInSeconds = Math.abs((specificTime.getTime() - currentTime.getTime()) / 1000);
+            var seconds = Math.floor(timeDifferenceInSeconds);
+        }else{
+            var seconds = 0;
+        }
+        
+        var timerInterval;
+        startTimer();
+        function startTimer() {
+          timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+          seconds++;
+          $('#timer').text(formatTime(seconds));
+        }
+
+        function formatTime(seconds) {
+          var hours             = Math.floor(seconds / 3600);
+          var remainingminutes  = seconds % 3600;
+          var minutes           = Math.floor(remainingminutes / 60);
+          var remainingSeconds  = seconds % 60;
+          return `${pad(hours)}:${pad(minutes)}:${pad(remainingSeconds)}`;
+        }
+
+        function pad(value) {
+          return value < 10 ? `0${value}` : value;
+        }
+
     });
 
     // Step Bar On Click Form Changes

@@ -21,11 +21,21 @@
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- Website Page CSS -->
     <link rel="stylesheet" href="{{ asset('css/website_list.css') }}">
     <style>
         .multiselect-dropdown{
             width : 100% !important;
+        }
+        .select2-container{
+            width : 100% !important;
+        }
+        #tl {
+            height: 35px !important;
+            border: 1px solid #ddd !important;
+            padding-left: 10px !important;
         }
     </style>
 </head>
@@ -415,7 +425,7 @@
         </div>
     </div>
 </div>
-
+<!-- <script src="{{ asset('js/searchdropdown.js') }}"></script> -->
 <script src="{{ asset('js/website.js') }}"></script>
 <!-- Multi Dropdown JS -->
 <script src="{{ asset('js/multiselect-dropdown.js') }}"></script>
@@ -424,6 +434,7 @@
 
 <script>
     $(document).ready(function() {
+        $("#tl").select2();
         $(".scrape_report").on("click", function (e) {
             var id = $(this).attr("data-id");
             var base_url = '<?php echo config('app.url') ?>'+'public/client/';

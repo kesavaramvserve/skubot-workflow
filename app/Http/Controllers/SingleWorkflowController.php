@@ -20,10 +20,11 @@ class SingleWorkflowController extends Controller
         $user_id        = auth()->user()->id;
         $sku_id         = Crypt::decryptString($id);
         $website_id     = WebsiteEnhanceData::where('id',$sku_id)->value('website_id');
+        $pa_started_at  = WebsiteEnhanceData::where('id',$sku_id)->value('pa_started_at');
         $time_track     = Website::where('id',$website_id)->value('time_track');
         $project_role   = ProjectUser::where('website_id',$website_id)->where('user_id',$user_id)->value('user_role');
         
-        if($time_track ==1){
+        if($time_track ==1 && $pa_started_at == null){
             WebsiteEnhanceData::where('id',$sku_id)->update([
                 'pa_started_at' => Carbon::now(),
             ]);
