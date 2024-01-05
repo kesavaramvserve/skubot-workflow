@@ -204,7 +204,9 @@
                             <h4 class="mt-1">SKU Edit</h4>
                         </div>
                         <dv class="col-6">
-                            <span id="timer"></span>
+                            @if($project_role == 'PA')
+                                <span id="timer"></span>
+                            @endif
                             <a class="float-end btn submit-button-reverse" href="{{ url()->previous() }}">Back</a>
                         </dv>
                     </div>
