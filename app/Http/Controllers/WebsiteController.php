@@ -55,7 +55,7 @@ class WebsiteController extends Controller
         $team_lead_list = $team_lead_list->merge($other_user_list);
 
         if ($request->ajax()) {
-            $data = Website::select('*');
+            $data = Website::select('*')->orderBy('id','DESC');
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('client_name', function ($data) {

@@ -93,8 +93,9 @@ class WebsiteListController extends Controller
         // $data = Website::whereIn('id',$website_ids)->get();
 
         //     dd($user_id);
+        
         if ($request->ajax()) {
-            $data = Website::whereIn('id',$website_ids)->get();
+            $data = Website::whereIn('id',$website_ids)->orderBy('id','DESC');
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->editColumn('client_name', function ($data) {

@@ -96,7 +96,7 @@
         <div class="row head-section">
             <div class="col-md-12 gen-padding">
                 <div class="float-start">
-                    <img src="{{asset('images/MM-logo.png')}}" alt="logo" width="100px" class="site-logo">
+                    <a href="{{route('website_list.index')}}"><img src="{{asset('images/MM-logo.png')}}" alt="logo" width="100px" class="site-logo img-fluid"></a>
                 </div>
                 <div class="float-end user-details ignore-print">
                     <div class="row">

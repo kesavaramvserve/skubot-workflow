@@ -36,7 +36,7 @@
         <div class="row head-section">
             <div class="col-md-12 gen-padding">
                 <div class="float-start">
-                    <img src="{{asset('images/MM-logo.png')}}" alt="logo" width="100px" class="site-logo img-fluid">
+                    <a href="{{route('website_list.index')}}"><img src="{{asset('images/MM-logo.png')}}" alt="logo" width="100px" class="site-logo img-fluid"></a>
                 </div>
                 <div class="float-end user-details">
                     <div class="row">
@@ -371,7 +371,21 @@
             {data: 'role', name: 'role', orderable: true},
             {data: 'action', name: 'action', orderable: false, searchable: false},
             {data: 'updated_at', name: 'updated_at', orderable: true},
-        ]
+        ],
+        "columnDefs": [
+            {
+                "targets": 0, // The first column
+                "data": null,
+                "defaultContent": "",
+                "orderable": false
+            }
+        ],
+        "initComplete": function(settings, json) {
+            var table = this.api();
+            table.column(0, { search: "applied", order: "applied" }).nodes().each(function(cell, i) {
+                cell.innerHTML = i + 1; // Set the serial number
+            });
+        }
     });
 
     // search Filter

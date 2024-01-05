@@ -17,6 +17,12 @@
             border: 1px solid black;
             border-radius: 10px;
         }
+        .user-details {
+            width: 35% !important;
+        }
+        .user{
+            margin-right : 0px !important;
+        }
         .pad-0{
             padding:0%;
         }
@@ -161,11 +167,17 @@
         <div class="row head-section">
             <div class="col-md-12 gen-padding">
                 <div class="float-start">
-                    <img src="{{asset('images/MM-logo.png')}}" alt="logo" width="100px" class="site-logo">
+                    <a href="{{route('website_list.index')}}"><img src="{{asset('images/MM-logo.png')}}" alt="logo" width="100px" class="site-logo img-fluid"></a>
                 </div>
                 <div class="float-end user-details ignore-print">
                     <div class="row">
-                        <div class="col-md-9 personal">
+                        <div class="col-md-6">
+                            <?php
+                                $enc_id = Illuminate\Support\Facades\Crypt::encryptString($website_id);
+                            ?>
+                            <a href="{{route('batch_list.show',$enc_id)}}" class="btn submit-button">Go to Dashboard</a>
+                        </div>
+                        <div class="col-md-3 personal">
                             <div class="profile float-start">
                                 <img src="{{asset('images/profile.png')}}" alt="profile" width="40px">
                             </div>
@@ -207,7 +219,7 @@
                             @if($project_role == 'PA')
                                 <span id="timer"></span>
                             @endif
-                            <a class="float-end btn submit-button-reverse" href="{{ url()->previous() }}">Back</a>
+                            <a class="float-end btn submit-button-reverse" href="{{ route('batch_list.index') }}">Back</a>
                         </dv>
                     </div>
                     
@@ -962,72 +974,72 @@
         });
 
         // meta_title_ckeditor
-        ClassicEditor.create(document.querySelector('.meta_title_ckeditor'), {
-            toolbar: {
-                items: [
-                    'bold', // Include bold
-                    '|',
-                    'bulletedList', // Include bulleted list
-                ],
-            },
-        })
-        .then(editor => {
-            console.log('Editor was initialized', editor);
-        })
-        .catch(error => {
-            console.error('Editor initialization failed', error);
-        });
+        // ClassicEditor.create(document.querySelector('.meta_title_ckeditor'), {
+        //     toolbar: {
+        //         items: [
+        //             'bold', // Include bold
+        //             '|',
+        //             'bulletedList', // Include bulleted list
+        //         ],
+        //     },
+        // })
+        // .then(editor => {
+        //     console.log('Editor was initialized', editor);
+        // })
+        // .catch(error => {
+        //     console.error('Editor initialization failed', error);
+        // });
 
         // meta_description_ckeditor
-        ClassicEditor.create(document.querySelector('.meta_description_ckeditor'), {
-            toolbar: {
-                items: [
-                    'bold', // Include bold
-                    '|',
-                    'bulletedList', // Include bulleted list
-                ],
-            },
-        })
-        .then(editor => {
-            console.log('Editor was initialized', editor);
-        })
-        .catch(error => {
-            console.error('Editor initialization failed', error);
-        });
+        // ClassicEditor.create(document.querySelector('.meta_description_ckeditor'), {
+        //     toolbar: {
+        //         items: [
+        //             'bold', // Include bold
+        //             '|',
+        //             'bulletedList', // Include bulleted list
+        //         ],
+        //     },
+        // })
+        // .then(editor => {
+        //     console.log('Editor was initialized', editor);
+        // })
+        // .catch(error => {
+        //     console.error('Editor initialization failed', error);
+        // });
 
         // meta_keywords_ckeditor
-        ClassicEditor.create(document.querySelector('.meta_keywords_ckeditor'), {
-            toolbar: {
-                items: [
-                    'bold', // Include bold
-                    '|',
-                    'bulletedList', // Include bulleted list
-                ],
-            },
-        })
-        .then(editor => {
-            console.log('Editor was initialized', editor);
-        })
-        .catch(error => {
-            console.error('Editor initialization failed', error);
-        });
+        // ClassicEditor.create(document.querySelector('.meta_keywords_ckeditor'), {
+        //     toolbar: {
+        //         items: [
+        //             'bold', // Include bold
+        //             '|',
+        //             'bulletedList', // Include bulleted list
+        //         ],
+        //     },
+        // })
+        // .then(editor => {
+        //     console.log('Editor was initialized', editor);
+        // })
+        // .catch(error => {
+        //     console.error('Editor initialization failed', error);
+        // });
 
         // search_keywords_ckeditor
-        ClassicEditor.create(document.querySelector('.search_keywords_ckeditor'), {
-            toolbar: {
-                items: [
-                    'bold', // Include bold
-                    '|',
-                    'bulletedList', // Include bulleted list
-                ],
-            },
-        })
-        .then(editor => {
-            console.log('Editor was initialized', editor);
-        })
-        .catch(error => {
-            console.error('Editor initialization failed', error);
-        });
+        // ClassicEditor.create(document.querySelector('.search_keywords_ckeditor'), {
+        //     toolbar: {
+        //         items: [
+        //             'bold', // Include bold
+        //             '|',
+        //             'bulletedList', // Include bulleted list
+        //         ],
+        //     },
+        // })
+        // .then(editor => {
+        //     console.log('Editor was initialized', editor);
+        // })
+        // .catch(error => {
+        //     console.error('Editor initialization failed', error);
+        // });
 
     });
     
