@@ -42,6 +42,7 @@ class WebsiteController extends Controller
         //     $datas = Website::orderBy('id','DESC')->paginate(5);
         //     return view('website.index',compact('datas')); 
         // }
+        $user_id = auth()->user()->id;
         $team_lead_list = User::role('Team Lead')->get();
         $other_user_list = User::whereDoesntHave('roles', function ($query) {
             $query->where('name', 'Team Lead');
@@ -55,7 +56,7 @@ class WebsiteController extends Controller
         $team_lead_list = $team_lead_list->merge($other_user_list);
 
         if ($request->ajax()) {
-            $data = Website::select('*')->orderBy('id','DESC');
+            $data = Website::select('*')->where('ops_id',$user_id)->orderBy('id','DESC');
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('client_name', function ($data) {

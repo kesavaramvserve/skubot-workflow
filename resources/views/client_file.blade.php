@@ -95,12 +95,8 @@
                     <div class="col-6">
                         <h4 class="float-start mt-2">Client File List</h4>
                     </div>
-                    <div class="col-3">
-                        <div class="mt-2">    
-                            <span>Project : <b>{{$project_name}}</b></span>
-                        </div>  
-                    </div>
-                    <div class="col-3">
+                    
+                    <div class="col-6">
                         @if(!$defult_scrapper)
                             <a class="float-end mt-2 btn submit-button-reverse" href="{{ url()->previous() }}">Back</a>
                         @endif
@@ -124,7 +120,7 @@
                         <table class="data-table table  nowrap" style="width:100%">
                             <thead>
                                 <th style="min-width:30px !important;">ID</th>
-                                <!-- <th style="min-width:80px !important;">Project Name</th> -->
+                                <th style="min-width:80px !important;">Project Name</th>
                                 <th style="min-width:80px !important;">File Name</th>
                                 <th style="min-width:80px !important;">Notes</th>
                                 <th style="min-width:80px !important;">Updated at </th>
@@ -135,7 +131,7 @@
                                     @foreach($datas as $data)
                                         <tr>
                                             <td>{{$data->id}}</td>
-                                            <!-- <td>{{$data->getWebsite->website}}</td> -->
+                                            <td>{{$data->getWebsite->website}}</td>
                                             <td>{{$data->path}}</td>
                                             <td>{{$data->notes}}</td>
                                             <td>{{$data->updated_at}}</td>
